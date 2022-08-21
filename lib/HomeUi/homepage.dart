@@ -233,10 +233,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
 
     tabC = TabController(length: widget.rm!.length, vsync: this);
+    refreshImages();
     pickedDate = DateTime.now();
     cutDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
     userPersonalData();
-    refreshImages();
+
     fetchPlace();
 
     scrollController.addListener(() async {
@@ -935,7 +936,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           padding: const EdgeInsets.only(
                             left: 28,
                             right: 18,
-                            top: 16,
+                            top: 6,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

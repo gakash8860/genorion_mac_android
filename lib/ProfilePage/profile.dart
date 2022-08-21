@@ -363,6 +363,9 @@ class _ProfilePageState extends State<ProfilePage> {
       setImage = null;
       var ans = jsonDecode(response.body);
       await AllDatabase.instance.deletePhoto();
+      if(!mounted){
+        return;
+      }
       setState(() {
         photo = PhotoModel.fromMap(ans);
         checkImage = true;

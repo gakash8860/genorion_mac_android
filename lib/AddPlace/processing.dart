@@ -69,7 +69,7 @@ class _ProcessingDataState extends State<ProcessingData> {
     return token;
   }
 
-  getUid() async {
+  Future<void> getUid() async {
     const url = api + 'getuid/';
     String? token = await getToken();
     final response = await http.get(Uri.parse(url), headers: {
@@ -80,6 +80,9 @@ class _ProcessingDataState extends State<ProcessingData> {
     if (response.statusCode == 200) {
       var getUidVariable = response.body;
       getUidVariable2 = int.parse(getUidVariable);
+      return;
+    }else{
+      throw new Exception('Something Went Wrong');
     }
   }
 
