@@ -129,6 +129,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List sensorData = [];
   List deviceData = [];
   bool changeFloorBool = false;
+  bool changeFlatBool = false;
   bool submitClicked = false;
   TextEditingController floorNameEditing = TextEditingController();
   TextEditingController flatNameEditing = TextEditingController();
@@ -926,7 +927,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
             ),
           ),
-        
           body: SafeArea(
               child: remoteBool
                   ? remoteUi()
@@ -986,6 +986,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             ? changePlace()
                             : changeFloorBool
                                 ? changeFloor()
+                        :changeFlatBool? changeFlat()
                                 : SizedBox(
                                     height: MediaQuery.of(context).size.height /
                                         0.5,
@@ -2567,6 +2568,166 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
     );
   }
+
+  Widget changeFlat(){
+    return Container(
+        margin: const EdgeInsets.only(bottom: 45),
+   child:SingleChildScrollView(
+    child:Column(
+      children:[
+           const SizedBox(
+              height: 15,
+            ),
+              Row(
+              children: [
+                const SizedBox(
+                  width: 15,
+                ),
+                InkWell(
+                  child: const Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      changeFlatBool = !changeFlatBool;
+                    });
+                  },
+                )
+              ],
+            ),
+            Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: FutureBuilder<List<FlatType>>(
+                          future: flatVal,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              if (snapshot.data!.isEmpty) {
+                                return const Center(
+                                    child: Text("No Devices on this place"));
+                              }
+                              return Container(
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: 50.0,
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 2,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        boxShadow: const [
+                                          BoxShadow(
+                                              color: Colors.black,
+                                              blurRadius: 30,
+                                              offset: Offset(20, 20))
+                                        ],
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 0.5,
+                                        )),
+                                    child: DropdownButtonFormField<FlatType>(
+                                      decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        contentPadding:
+                                            const EdgeInsets.all(15),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Colors.black),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                      ),
+                                      dropdownColor: Colors.white70,
+                                      icon: const Icon(Icons.arrow_drop_down),
+                                      iconSize: 28,
+                                      hint: const Text('Select Flat'),
+                                      isExpanded: true,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      items: snapshot.data!.map((selectedflat) {
+                                        return DropdownMenuItem<FlatType>(
+                                          value: selectedflat,
+                                          child: Text(selectedflat.fltName),
+                                        );
+                                      }).toList(),
+                                      onChanged: (selectFlat) async {
+                                        setState(() {
+                                          flt = selectFlat;
+                                        });
+
+                                        List roomList = await AllDatabase
+                                            .instance
+                                            .getRoomById(flt!.fltId);
+
+                                        setState(() {
+                                          rm = List.generate(
+                                              roomList.length,
+                                              (index) => RoomType(
+                                                    rId: roomList[index]['r_id']
+                                                        .toString(),
+                                                    fltId: roomList[index]
+                                                            ['flt_id']
+                                                        .toString(),
+                                                    rName: roomList[index]
+                                                            ['r_name']
+                                                        .toString(),
+                                                    user: roomList[index]
+                                                        ['user'],
+                                                  ));
+                                        });
+
+                                        List device = await AllDatabase.instance
+                                            .getDeviceById(rm[0].rId);
+                                        dv = device
+                                            .map((e) => DeviceType.fromJson(e))
+                                            .toList();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 10),
+                              );
+                            } else {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                          }),
+            ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: MaterialButton(
+            elevation: 5.0,
+            child: const Text('Submit'),
+            onPressed: () async {
+              // timer!.cancel();
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(
+                          fl: widget.fl,
+                          flat: flt,
+                          pt: widget.pt,
+                          rm: rm,
+                          dv: dv)));
+            },
+          ),
+        )
+      ]
+    )
+   )
+    );
+  }
+
 
   Widget remoteUi() {
     return SizedBox(
