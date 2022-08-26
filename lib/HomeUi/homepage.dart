@@ -239,7 +239,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     cutDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
     userPersonalData();
 
-    fetchPlace();
+    // fetchPlace();
 
     scrollController.addListener(() async {
       if (kDebugMode) {
