@@ -11,6 +11,7 @@ import 'package:flutter_native_splash/flutter_native_splash_web.dart';
 import 'package:flutter_secure_storage_web/flutter_secure_storage_web.dart';
 import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:shared_preferences_web/shared_preferences_web.dart';
+import 'package:speech_to_text/speech_to_text_web.dart';
 import 'package:url_launcher_web/url_launcher_web.dart';
 import 'package:vibration_web/vibration_web.dart';
 
@@ -23,6 +24,7 @@ void registerPlugins(Registrar registrar) {
   FlutterSecureStorageWeb.registerWith(registrar);
   ImagePickerPlugin.registerWith(registrar);
   SharedPreferencesPlugin.registerWith(registrar);
+  SpeechToTextPlugin.registerWith(registrar);
   UrlLauncherPlugin.registerWith(registrar);
   VibrationWebPlugin.registerWith(registrar);
   registrar.registerMessageHandler();

@@ -652,6 +652,9 @@ class AllDatabase {
     return result;
   }
 
+
+
+
   Future getSensorByDeviceId(String id) async {
     final db = await database;
     var result =

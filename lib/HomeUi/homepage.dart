@@ -225,6 +225,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
+    timer =  Timer.periodic(Duration(seconds: 3), (timer) {
+      // You can also call here any function.
+      setState(() {
+       getAllPinStatusData();
+      });
+    });
 
 
     setState(() {
@@ -290,18 +296,56 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   refreshImages() async {
+    getImage();
     List data = await AllDatabase.instance.getPhoto();
     if (data.isEmpty) {
+      print("Image Not Empty $data");
       return;
     }
     print("Image Not Empty $data");
-    if(!mounted){
-      return;
-    }
+
     setState(() {
       photo = PhotoModel.fromMap(data[0]);
       setImage = Utility.imageFrom64BaseString(photo!.file);
     });
+  }
+  getImage() async {
+    String? token = await getToken();
+
+    final url = api + 'testimages123/?user=' + getUidVariable2.toString();
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Token $token',
+    });
+    if (response.statusCode == 200) {
+      setImage = null;
+      var ans = jsonDecode(response.body);
+      await AllDatabase.instance.deletePhoto();
+      if(!mounted){
+        return;
+      }
+      setState(() {
+        photo = PhotoModel.fromMap(ans);
+
+
+        setImage = Utility.imageFrom64BaseString(photo!.file);
+
+        AllDatabase.instance.savePhoto(photo!);
+        checkPutPostImage(true);
+      });
+
+      // refreshImages();
+    } else {
+      if (kDebugMode) {
+        print("Image Get Response ${response.statusCode}");
+      }
+    }
+  }
+
+  checkPutPostImage(value) async {
+    final pref = await SharedPreferences.getInstance();
+    pref.setBool("checkimage", value);
   }
 
   // play() async {
@@ -1622,7 +1666,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               });
 
               if (_currentIndex == 0) {
-                // toggleRecording();
+                toggleRecording();
                 if (kDebugMode) {
                   print("TabbarState -- > $isListening");
                 }
@@ -1684,84 +1728,84 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   String ob = "";
   int indexForSpeech = 0;
 
-  // Future toggleRecording() async {
-  //   SpeechApi.toggleRecording(
-  //     onResult: (text) => setState(() => this.text = text),
-  //     onListening: (isListening) async {
-  //       setState(() => this.isListening = isListening);
-  //       if (text.contains("All") || text.contains("all")) {
-  //         responseGetData.replaceRange(
-  //             0, responseGetData.length, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  //
-  //         await dataUpdate(deviceIdForScroll);
-  //       }
-  //       for (int i = 0; i < namesDataList.length; i++) {
-  //         if (text.contains(namesDataList[i])) {
-  //           ob = namesDataList[i];
-  //           indexForSpeech = i;
-  //
-  //           if (text.contains("on")) {
-  //             if (responseGetData[indexForSpeech] == 0) {
-  //               setState(() {
-  //                 responseGetData[indexForSpeech] = 1;
-  //               });
-  //               await dataUpdate(deviceIdForScroll);
-  //
-  //               break;
-  //               // getStatus();
-  //             }
-  //           }
-  //           if (text.contains("off")) {
-  //             if (responseGetData[indexForSpeech] == 1) {
-  //               setState(() {
-  //                 responseGetData[indexForSpeech] = 0;
-  //               });
-  //               await dataUpdate(deviceIdForScroll);
-  //
-  //               break;
-  //               // getStatus();
-  //             }
-  //           }
-  //         } else {
-  //           if (kDebugMode) {
-  //             print("Not Present -> $text");
-  //           }
-  //         }
-  //       }
-  //
-  //       // for(int i=0;i<nameDataList.length;i++){
-  //       //   if(ob == nameDataList[i]){
-  //       //       index = i;
-  //       //       print("POPO $ob");
-  //       //       if(text.contains("on")){
-  //       //         if(responseGetData[index] == 0){
-  //       //           print("00po $index");
-  //       //           setState(() {
-  //       //             responseGetData[index] = 1;
-  //       //           });
-  //       //           await dataUpdateForPin19();
-  //       //           await getStatus();
-  //       //         }
-  //       //       }
-  //       //       if(text.contains("off")){
-  //       //         if(responseGetData[index] == 1){
-  //       //           print("00po $index");
-  //       //           setState(() {
-  //       //             responseGetData[index] = 0;
-  //       //           });
-  //       //           await dataUpdateForPin19();
-  //       //           await getStatus();
-  //       //         }
-  //       //       }
-  //       //
-  //       //       break;
-  //       //   }
-  //       //
-  //       // }
-  //     },
-  //   );
-  //   // check();
-  // }
+  Future toggleRecording() async {
+    SpeechApi.toggleRecording(
+      onResult: (text) => setState(() => this.text = text),
+      onListening: (isListening) async {
+        setState(() => this.isListening = isListening);
+        if (text.contains("All") || text.contains("all")) {
+          responseGetData.replaceRange(
+              0, responseGetData.length, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
+          await dataUpdate(deviceIdForScroll);
+        }
+        for (int i = 0; i < namesDataList.length; i++) {
+          if (text.contains(namesDataList[i])) {
+            ob = namesDataList[i];
+            indexForSpeech = i;
+
+            if (text.contains("on")) {
+              if (responseGetData[indexForSpeech] == 0) {
+                setState(() {
+                  responseGetData[indexForSpeech] = 1;
+                });
+                await dataUpdate(deviceIdForScroll);
+
+                break;
+                // getStatus();
+              }
+            }
+            if (text.contains("off")) {
+              if (responseGetData[indexForSpeech] == 1) {
+                setState(() {
+                  responseGetData[indexForSpeech] = 0;
+                });
+                await dataUpdate(deviceIdForScroll);
+
+                break;
+                // getStatus();
+              }
+            }
+          } else {
+            if (kDebugMode) {
+              print("Not Present -> $text");
+            }
+          }
+        }
+
+        // for(int i=0;i<nameDataList.length;i++){
+        //   if(ob == nameDataList[i]){
+        //       index = i;
+        //       print("POPO $ob");
+        //       if(text.contains("on")){
+        //         if(responseGetData[index] == 0){
+        //           print("00po $index");
+        //           setState(() {
+        //             responseGetData[index] = 1;
+        //           });
+        //           await dataUpdateForPin19();
+        //           await getStatus();
+        //         }
+        //       }
+        //       if(text.contains("off")){
+        //         if(responseGetData[index] == 1){
+        //           print("00po $index");
+        //           setState(() {
+        //             responseGetData[index] = 0;
+        //           });
+        //           await dataUpdateForPin19();
+        //           await getStatus();
+        //         }
+        //       }
+        //
+        //       break;
+        //   }
+        //
+        // }
+      },
+    );
+    // check();
+  }
 
   Future roomQueryFunc(flatId) async {
     List roomList = await AllDatabase.instance.getRoomById(flatId);
@@ -3144,6 +3188,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
     }
   }
+
+  Future getAllPinStatusData()async{
+    List allPinStatus = await AllDatabase.instance.queryDevicePinStatus();
+    print(" allPinStatus=>  ${allPinStatus}");
+    var token = await getToken();
+    for(int i=0;i<allPinStatus.length;i++){
+     var dId = allPinStatus[i]['d_id'];
+      var url = api + "getpostdevicePinStatus/?d_id=" + dId;
+     final response = await http.get(Uri.parse(url), headers: {
+       'Content-Type': 'application/json',
+       'Accept': 'application/json',
+       'Authorization': 'Token $token',
+     });
+     if(response.statusCode == 200){
+       var ans = jsonDecode(response.body);
+       DevicePinStatus pinStatus = DevicePinStatus.fromJson(ans);
+       AllDatabase.instance.updatePinStatusData(pinStatus!);
+       switchFuture = getPinStatusByDidLocal(deviceIdForScroll.toString());
+
+     }
+    }
+
+  }
+
 
 
   Future getPinNames(did) async {

@@ -408,6 +408,13 @@
             </list>
           </value>
         </entry>
+        <entry key="json_annotation">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.6.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="lint">
           <value>
             <list>
@@ -650,6 +657,20 @@
           <value>
             <list>
               <option value="$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.2/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="speech_to_text">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/speech_to_text-5.6.1/lib" />
+            </list>
+          </value>
+        </entry>
+        <entry key="speech_to_text_platform_interface">
+          <value>
+            <list>
+              <option value="$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/speech_to_text_platform_interface-2.0.1/lib" />
             </list>
           </value>
         </entry>
@@ -907,6 +928,7 @@
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/image_picker_platform_interface-2.6.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/js-0.6.4/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/json_annotation-4.6.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/lint-1.10.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/loading_gifs-0.3.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/matcher-0.12.11/lib" />
@@ -941,6 +963,8 @@
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/slide_to_confirm-1.1.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/slider_button-2.0.0/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/source_span-1.8.2/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/speech_to_text-5.6.1/lib" />
+      <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/speech_to_text_platform_interface-2.0.1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-2.0.3+1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite_common-2.2.1+1/lib" />
       <root url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/stack_trace-1.10.0/lib" />

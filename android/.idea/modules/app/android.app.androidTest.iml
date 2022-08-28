@@ -13,6 +13,17 @@
           <stringArguments>
             <stringArg name="classpath">
               <args>
+                <arg>$USER_HOME$/.gradle/caches/transforms-3/3a3157030a7f7ebb2d542b5e9b75c7e6/transformed/jetified-libs.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/shared_preferences_android/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/flutter_plugin_android_lifecycle/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/connectivity/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/sqflite/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/url_launcher_android/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/path_provider_android/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/vibration/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/image_picker_android/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/flutter_secure_storage/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
+                <arg>$MODULE_DIR$/../../../../build/flutter_native_splash/intermediates/compile_library_classes_jar/debug/classes.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/14e5b5a2449b751a4f22f00ab228ce63/transformed/jetified-armeabi_v7a_debug-1.0.0-e85ea0e79c6d894c120cda4ee8ee10fe6745e187.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/d84d6c74e22f919d6210cdc0863a3d8a/transformed/jetified-arm64_v8a_debug-1.0.0-e85ea0e79c6d894c120cda4ee8ee10fe6745e187.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/df3448057adab4ab2ec802e39d89669f/transformed/jetified-x86_64_debug-1.0.0-e85ea0e79c6d894c120cda4ee8ee10fe6745e187.jar</arg>
@@ -47,7 +58,7 @@
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/451f4264fab6e4db49bef5ace7f5bf99/transformed/jetified-kotlin-stdlib-common-1.7.20-Beta.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/2c29292daa493e13a4a4e84ae077f411/transformed/jetified-annotations-13.0.jar</arg>
                 <arg>$USER_HOME$/.gradle/caches/transforms-3/a3d7636b9bc5fd47a5cbdebfbfcc1e53/transformed/jetified-annotation-experimental-1.1.0-api.jar</arg>
-                <arg>$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-29/android.jar</arg>
+                <arg>$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-32/android.jar</arg>
                 <arg>$USER_HOME$/AppData/Local/Android/Sdk/build-tools/30.0.3/core-lambda-stubs.jar</arg>
               </args>
             </stringArg>
@@ -98,17 +109,19 @@
     <content url="file://$MODULE_DIR$/../../../../build/app/generated/res/resValues/androidTest/debug" />
     <content url="file://$MODULE_DIR$/../../../../build/app/generated/res/rs/androidTest/debug" />
     <content url="file://$MODULE_DIR$/../../../../build/app/generated/source/buildConfig/androidTest/debug" />
-    <orderEntry type="jdk" jdkName="Android API 29 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 32 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="android.shared_preferences_android.main" scope="TEST" />
+    <orderEntry type="module" module-name="android.speech_to_text.main" scope="TEST" />
     <orderEntry type="module" module-name="android.flutter_plugin_android_lifecycle.main" scope="TEST" />
     <orderEntry type="module" module-name="android.connectivity.main" scope="TEST" />
     <orderEntry type="module" module-name="android.sqflite.main" scope="TEST" />
-    <orderEntry type="module" module-name="android.image_picker.main" scope="TEST" />
     <orderEntry type="module" module-name="android.url_launcher_android.main" scope="TEST" />
     <orderEntry type="module" module-name="android.path_provider_android.main" scope="TEST" />
     <orderEntry type="module" module-name="android.vibration.main" scope="TEST" />
+    <orderEntry type="module" module-name="android.image_picker_android.main" scope="TEST" />
     <orderEntry type="module" module-name="android.flutter_secure_storage.main" scope="TEST" />
+    <orderEntry type="module" module-name="android.flutter_native_splash.main" scope="TEST" />
     <orderEntry type="module" module-name="android.app.main" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Gradle: io.flutter:flutter_embedding_debug:1.0.0-e85ea0e79c6d894c120cda4ee8ee10fe6745e187" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: androidx.lifecycle:lifecycle-common:2.2.0" level="project" />
