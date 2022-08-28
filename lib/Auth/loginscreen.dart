@@ -207,16 +207,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.white,
                                 fontFamily: 'OpenSans',
                               ),
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
                                   Icons.security,
                                   color: Colors.white,
                                 ),
-                                // suffixIcon: InkWell(
-
-                                // ) ,
+                                suffixIcon: InkWell(
+                                    onTap: togglePassword,
+                                    child: Icon(isHiddenPassword == true
+                                        ? Icons.visibility
+                                        : Icons.visibility_off)),
                                 hintText: 'confirm password',
                               ),
                             ),
@@ -234,6 +236,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
     );
+  }
+  void togglePassword() {
+    setState(() {
+      isHiddenPassword = !isHiddenPassword;
+    });
   }
 
   _launchURL() async {

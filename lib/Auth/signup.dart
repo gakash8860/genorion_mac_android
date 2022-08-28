@@ -18,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   SignupData data = SignupData();
   bool isVisible = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  static bool isHiddenPassword = true;
+   bool isHiddenPassword = true;
   bool onChangedHint = false;
   @override
   Widget build(BuildContext context) {
@@ -310,16 +310,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   });
                                 }
                               },
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
                                   Icons.security,
                                   color: Colors.white,
                                 ),
-                                // suffixIcon: InkWell(
-
-                                // ) ,
+                                suffixIcon: InkWell(
+                                    onTap: togglePassword,
+                                    child: Icon(isHiddenPassword == true
+                                        ? Icons.visibility
+                                        : Icons.visibility_off)),
                                 hintText: 'Enter password',
                               ),
                             ),
@@ -372,16 +374,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 color: Colors.white,
                                 fontFamily: 'OpenSans',
                               ),
-                              decoration: const InputDecoration(
+                              decoration:  InputDecoration(
                                 border: InputBorder.none,
                                 contentPadding: EdgeInsets.only(top: 14.0),
                                 prefixIcon: Icon(
                                   Icons.security,
                                   color: Colors.white,
                                 ),
-                                // suffixIcon: InkWell(
-
-                                // ) ,
+                                suffixIcon: InkWell(
+                                    onTap: togglePassword,
+                                    child: Icon(isHiddenPassword == true
+                                        ? Icons.visibility
+                                        : Icons.visibility_off)),
                                 hintText: 'confirm password',
                               ),
                             ),
@@ -409,6 +413,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     formKey.currentState!.save();
     checkDetails(data);
   }
+
+
 
   checkDetails(SignupData data) async {
     const url = api + 'regflu';
@@ -454,7 +460,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  togglePassword(BuildContext context) {
+  void togglePassword() {
     setState(() {
       isHiddenPassword = !isHiddenPassword;
     });

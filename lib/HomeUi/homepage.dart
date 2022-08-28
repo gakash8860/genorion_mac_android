@@ -1634,6 +1634,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   print("TabbarState -- > $tabbarState");
                 }
               }
+              if(_currentIndex == 2){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> const SettingPage()));
+              }
             },
           )),
   
