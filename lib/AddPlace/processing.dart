@@ -82,7 +82,7 @@ class _ProcessingDataState extends State<ProcessingData> {
       getUidVariable2 = int.parse(getUidVariable);
       return;
     }else{
-      throw new Exception('Something Went Wrong');
+      throw  Exception('Something Went Wrong');
     }
   }
 

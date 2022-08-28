@@ -209,8 +209,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               decoration:  InputDecoration(
                                 border: InputBorder.none,
-                                contentPadding: EdgeInsets.only(top: 14.0),
-                                prefixIcon: Icon(
+                                contentPadding: const EdgeInsets.only(top: 14.0),
+                                prefixIcon: const Icon(
                                   Icons.security,
                                   color: Colors.white,
                                 ),

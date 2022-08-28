@@ -26,17 +26,11 @@
       <sourceFolder url="file://$USER_HOME$/Downloads/flutter_windows_3.0.5-stable/flutter/.pub-cache/hosted/pub.dartlang.org/vibration-1.7.3/android/src/main/java" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../../../../build/vibration/generated/aidl_source_output_dir/debug/out" />
-    <content url="file://$MODULE_DIR$/../../../../build/vibration/generated/ap_generated_sources/debug/out">
-      <sourceFolder url="file://$MODULE_DIR$/../../../../build/vibration/generated/ap_generated_sources/debug/out" isTestSource="false" generated="true" />
-    </content>
+    <content url="file://$MODULE_DIR$/../../../../build/vibration/generated/ap_generated_sources/debug/out" />
     <content url="file://$MODULE_DIR$/../../../../build/vibration/generated/renderscript_source_output_dir/debug/out" />
-    <content url="file://$MODULE_DIR$/../../../../build/vibration/generated/res/resValues/debug">
-      <sourceFolder url="file://$MODULE_DIR$/../../../../build/vibration/generated/res/resValues/debug" type="java-resource" />
-    </content>
+    <content url="file://$MODULE_DIR$/../../../../build/vibration/generated/res/resValues/debug" />
     <content url="file://$MODULE_DIR$/../../../../build/vibration/generated/res/rs/debug" />
-    <content url="file://$MODULE_DIR$/../../../../build/vibration/generated/source/buildConfig/debug">
-      <sourceFolder url="file://$MODULE_DIR$/../../../../build/vibration/generated/source/buildConfig/debug" isTestSource="false" generated="true" />
-    </content>
+    <content url="file://$MODULE_DIR$/../../../../build/vibration/generated/source/buildConfig/debug" />
     <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: io.flutter:flutter_embedding_debug:1.0.0-e85ea0e79c6d894c120cda4ee8ee10fe6745e187" level="project" />

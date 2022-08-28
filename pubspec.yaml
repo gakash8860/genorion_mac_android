@@ -46,7 +46,6 @@ dependencies:
   circular_profile_avatar: ^2.0.5
   bottom_navy_bar: ^6.0.0
   contactus: ^1.2.0
-
   awesome_dialog: ^2.1.2
   connectivity: ^3.0.6
   another_flushbar: ^1.10.28
@@ -56,7 +55,7 @@ dependencies:
   pie_chart: ^5.1.0
   # joystick: ^1.1.0
   # control_pad: ^1.1.1+1 
-  speech_to_text: ^5.4.2
+#  speech_to_text: ^5.4.2
   flutter_switch: ^0.3.2
 #  audioplayers: ^0.20.1
 #  assets_audio_player: ^3.0.3+9

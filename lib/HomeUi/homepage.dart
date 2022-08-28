@@ -1622,7 +1622,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               });
 
               if (_currentIndex == 0) {
-                toggleRecording();
+                // toggleRecording();
                 if (kDebugMode) {
                   print("TabbarState -- > $isListening");
                 }
@@ -1684,84 +1684,84 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   String ob = "";
   int indexForSpeech = 0;
 
-  Future toggleRecording() async {
-    SpeechApi.toggleRecording(
-      onResult: (text) => setState(() => this.text = text),
-      onListening: (isListening) async {
-        setState(() => this.isListening = isListening);
-        if (text.contains("All") || text.contains("all")) {
-          responseGetData.replaceRange(
-              0, responseGetData.length, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-
-          await dataUpdate(deviceIdForScroll);
-        }
-        for (int i = 0; i < namesDataList.length; i++) {
-          if (text.contains(namesDataList[i])) {
-            ob = namesDataList[i];
-            indexForSpeech = i;
-
-            if (text.contains("on")) {
-              if (responseGetData[indexForSpeech] == 0) {
-                setState(() {
-                  responseGetData[indexForSpeech] = 1;
-                });
-                await dataUpdate(deviceIdForScroll);
-
-                break;
-                // getStatus();
-              }
-            }
-            if (text.contains("off")) {
-              if (responseGetData[indexForSpeech] == 1) {
-                setState(() {
-                  responseGetData[indexForSpeech] = 0;
-                });
-                await dataUpdate(deviceIdForScroll);
-
-                break;
-                // getStatus();
-              }
-            }
-          } else {
-            if (kDebugMode) {
-              print("Not Present -> $text");
-            }
-          }
-        }
-
-        // for(int i=0;i<nameDataList.length;i++){
-        //   if(ob == nameDataList[i]){
-        //       index = i;
-        //       print("POPO $ob");
-        //       if(text.contains("on")){
-        //         if(responseGetData[index] == 0){
-        //           print("00po $index");
-        //           setState(() {
-        //             responseGetData[index] = 1;
-        //           });
-        //           await dataUpdateForPin19();
-        //           await getStatus();
-        //         }
-        //       }
-        //       if(text.contains("off")){
-        //         if(responseGetData[index] == 1){
-        //           print("00po $index");
-        //           setState(() {
-        //             responseGetData[index] = 0;
-        //           });
-        //           await dataUpdateForPin19();
-        //           await getStatus();
-        //         }
-        //       }
-        //
-        //       break;
-        //   }
-        //
-        // }
-      },
-    );
-    // check();
-  }
+  // Future toggleRecording() async {
+  //   SpeechApi.toggleRecording(
+  //     onResult: (text) => setState(() => this.text = text),
+  //     onListening: (isListening) async {
+  //       setState(() => this.isListening = isListening);
+  //       if (text.contains("All") || text.contains("all")) {
+  //         responseGetData.replaceRange(
+  //             0, responseGetData.length, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  //
+  //         await dataUpdate(deviceIdForScroll);
+  //       }
+  //       for (int i = 0; i < namesDataList.length; i++) {
+  //         if (text.contains(namesDataList[i])) {
+  //           ob = namesDataList[i];
+  //           indexForSpeech = i;
+  //
+  //           if (text.contains("on")) {
+  //             if (responseGetData[indexForSpeech] == 0) {
+  //               setState(() {
+  //                 responseGetData[indexForSpeech] = 1;
+  //               });
+  //               await dataUpdate(deviceIdForScroll);
+  //
+  //               break;
+  //               // getStatus();
+  //             }
+  //           }
+  //           if (text.contains("off")) {
+  //             if (responseGetData[indexForSpeech] == 1) {
+  //               setState(() {
+  //                 responseGetData[indexForSpeech] = 0;
+  //               });
+  //               await dataUpdate(deviceIdForScroll);
+  //
+  //               break;
+  //               // getStatus();
+  //             }
+  //           }
+  //         } else {
+  //           if (kDebugMode) {
+  //             print("Not Present -> $text");
+  //           }
+  //         }
+  //       }
+  //
+  //       // for(int i=0;i<nameDataList.length;i++){
+  //       //   if(ob == nameDataList[i]){
+  //       //       index = i;
+  //       //       print("POPO $ob");
+  //       //       if(text.contains("on")){
+  //       //         if(responseGetData[index] == 0){
+  //       //           print("00po $index");
+  //       //           setState(() {
+  //       //             responseGetData[index] = 1;
+  //       //           });
+  //       //           await dataUpdateForPin19();
+  //       //           await getStatus();
+  //       //         }
+  //       //       }
+  //       //       if(text.contains("off")){
+  //       //         if(responseGetData[index] == 1){
+  //       //           print("00po $index");
+  //       //           setState(() {
+  //       //             responseGetData[index] = 0;
+  //       //           });
+  //       //           await dataUpdateForPin19();
+  //       //           await getStatus();
+  //       //         }
+  //       //       }
+  //       //
+  //       //       break;
+  //       //   }
+  //       //
+  //       // }
+  //     },
+  //   );
+  //   // check();
+  // }
 
   Future roomQueryFunc(flatId) async {
     List roomList = await AllDatabase.instance.getRoomById(flatId);
