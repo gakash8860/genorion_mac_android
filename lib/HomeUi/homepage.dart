@@ -228,7 +228,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     timer =  Timer.periodic(Duration(seconds: 3), (timer) {
       // You can also call here any function.
       setState(() {
-       getAllPinStatusData();
+       getAllPinStatusData(widget.dv[0].dId.toString());
       });
     });
 
@@ -1096,12 +1096,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                               Row(
                                                                 children: [
                                                                   GestureDetector(
-                                                                    onLongPress:
-                                                                        () {},
                                                                     child: Row(
                                                                       children: [
                                                                         const Text(
-                                                                          'Floor -> ',
+                                                                          'Floor  ',
                                                                           style:
                                                                               TextStyle(
                                                                             color:
@@ -1185,7 +1183,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                                             Row(
                                                                           children: [
                                                                             const Text(
-                                                                              'Flat -> ',
+                                                                              'Flat  ',
                                                                               style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
                                                                             ),
                                                                             Text(
@@ -3189,12 +3187,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
-  Future getAllPinStatusData()async{
-    List allPinStatus = await AllDatabase.instance.queryDevicePinStatus();
-    print(" allPinStatus=>  ${allPinStatus}");
+  Future getAllPinStatusData(String dId)async{
     var token = await getToken();
-    for(int i=0;i<allPinStatus.length;i++){
-     var dId = allPinStatus[i]['d_id'];
       var url = api + "getpostdevicePinStatus/?d_id=" + dId;
      final response = await http.get(Uri.parse(url), headers: {
        'Content-Type': 'application/json',
@@ -3204,13 +3198,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
      if(response.statusCode == 200){
        var ans = jsonDecode(response.body);
        DevicePinStatus pinStatus = DevicePinStatus.fromJson(ans);
-       AllDatabase.instance.updatePinStatusData(pinStatus!);
+       AllDatabase.instance.updatePinStatusData(pinStatus);
        switchFuture = getPinStatusByDidLocal(deviceIdForScroll.toString());
 
      }
     }
 
-  }
 
 
 
