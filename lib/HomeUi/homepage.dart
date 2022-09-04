@@ -36,6 +36,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../AddSubUser/showsub.dart';
 
+import '../Auth/loginscreen.dart';
 import '../BillPrediction/devicebill.dart';
 import '../BillPrediction/faltbill.dart';
 import '../BillPrediction/floorbill.dart';
@@ -896,8 +897,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             color: Colors.white,
                           )),
                       onTap: () {
-                        // timer!.cancel();
-
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -921,21 +920,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               builder: (context) => const SettingPage()));
                     },
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.help, color: Colors.white),
-                    title: const Text(
-                      'Help',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onTap: () {},
-                  ),
+
                   ListTile(
                     leading: const Icon(Icons.info, color: Colors.white),
                     title: const Text(
                       'About GenOrion',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Utility.launchURL('https://genorionofficial.herokuapp.com/reset_password/');
+                    },
                   ),
                   ListTile(
                     leading: const Icon(Icons.quick_contacts_dialer_sharp,
