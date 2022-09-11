@@ -35,8 +35,6 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'package:assets_audio_player/assets_audio_player.dart';
 
 import '../AddSubUser/showsub.dart';
-
-import '../Auth/loginscreen.dart';
 import '../BillPrediction/devicebill.dart';
 import '../BillPrediction/faltbill.dart';
 import '../BillPrediction/floorbill.dart';
@@ -928,7 +926,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       style: TextStyle(color: Colors.white),
                     ),
                     onTap: () {
-                      Utility.launchURL('https://genorionofficial.herokuapp.com/reset_password/');
+                      Utility.launchURL('https://genorion.com');
                     },
                   ),
                   ListTile(
@@ -1040,7 +1038,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                   height: MediaQuery.of(context)
                                                           .size
                                                           .height *
-                                                      0.41,
+                                                      0.39,
                                                   width: MediaQuery.of(context)
                                                       .size
                                                       .width,
@@ -5085,124 +5083,120 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
             ),
    
-            Column(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 1.56,
-                  padding: const EdgeInsets.only(bottom: 776),
-                  color: Colors.transparent,
-                  child: GridView.count(
-                    crossAxisSpacing: 8,
-                    childAspectRatio: 2 / 1.7,
-                    mainAxisSpacing: 4,
-                    crossAxisCount: 2,
-                    scrollDirection: Axis.vertical,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: List.generate(3, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                            alignment: const FractionalOffset(1.0, 0.0),
-                            // alignment: Alignment.bottomRight,
-                            height: 120,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 1, vertical: 10),
-                            margin: index % 2 == 0
-                                ? const EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5)
-                                : const EdgeInsets.fromLTRB(
-                                    7.5, 7.5, 15, 7.5),
-                            // margin: EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5),
-                            decoration: BoxDecoration(
-                                boxShadow: const <BoxShadow>[
-                                  BoxShadow(
-                                      blurRadius: 10,
-                                      offset: Offset(8, 10),
-                                      color: Colors.black)
-                                ],
-                                color: Colors.white,
-                                border: Border.all(
-                                    width: 1,
-                                    style: BorderStyle.solid,
-                                    color: const Color(0xffa3a3a3)),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Column(
+            Container(
+              height: MediaQuery.of(context).size.height * 1.4,
+              padding: const EdgeInsets.only(bottom: 776),
+              color: Colors.transparent,
+              child: GridView.count(
+                crossAxisSpacing: 8,
+                childAspectRatio: 2 / 1.7,
+                mainAxisSpacing: 4,
+                crossAxisCount: 2,
+                scrollDirection: Axis.vertical,
+                physics: const NeverScrollableScrollPhysics(),
+                children: List.generate(3, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: Container(
+                        alignment: const FractionalOffset(1.0, 0.0),
+                        // alignment: Alignment.bottomRight,
+                        height: 120,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 1, vertical: 10),
+                        margin: index % 2 == 0
+                            ? const EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5)
+                            : const EdgeInsets.fromLTRB(
+                                7.5, 7.5, 15, 7.5),
+                        // margin: EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5),
+                        decoration: BoxDecoration(
+                            boxShadow: const <BoxShadow>[
+                              BoxShadow(
+                                  blurRadius: 10,
+                                  offset: Offset(8, 10),
+                                  color: Colors.black)
+                            ],
+                            color: Colors.white,
+                            border: Border.all(
+                                width: 1,
+                                style: BorderStyle.solid,
+                                color: const Color(0xffa3a3a3)),
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Column(
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: FutureBuilder(
-                                        future: nameFuture,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.data != null) {
-                                            return TextButton(
-                                              child: AutoSizeText(
-                                                // '$index',
-                                                namesDataList[index + 9]
-                                                    .toString(),
-                                                overflow:
-                                                    TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                style: const TextStyle(
-                                                  fontSize: 10,
-                                                ),
-                                              ),
-                                              onPressed: () async {
-                                                int newIndex = index + 9;
-                                                _createAlertDialogForNameDeviceBox(
-                                                    context, newIndex, dId);
-                                              },
-                                            );
-                                          } else {
-                                            return Container();
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    FutureBuilder(
-                                        future: switchFuture,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.data != null) {
-                                            return SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  3.9,
-                                              child: Slider(
-                                                  value: double.parse(
-                                                      responseGetData[
-                                                              index + 9]
-                                                          .toString()),
-                                                  min: 0,
-                                                  max: 10,
-                                                  label:
-                                                      '${double.parse(responseGetData[index + 9].toString())}',
-                                                  onChanged:
-                                                      (onChanged) async {
-                                                    setState(() {
-                                                      responseGetData[
-                                                              index + 9] =
-                                                          onChanged.round();
-                                                    });
-                                                    await dataUpdate(dId);
-                                                  }),
-                                            );
-                                          } else {
-                                            return Container();
-                                          }
-                                        }),
-                                  ],
+                                Expanded(
+                                  child: FutureBuilder(
+                                    future: nameFuture,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.data != null) {
+                                        return TextButton(
+                                          child: AutoSizeText(
+                                            // '$index',
+                                            namesDataList[index + 9]
+                                                .toString(),
+                                            overflow:
+                                                TextOverflow.ellipsis,
+                                            maxLines: 2,
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            int newIndex = index + 9;
+                                            _createAlertDialogForNameDeviceBox(
+                                                context, newIndex, dId);
+                                          },
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
+                                    },
+                                  ),
                                 ),
-                                GestureDetector(
-                                    onTap: () {},
-                                    child:
-                                        Icon(changeIcon[index] ?? Icons.add))
+                                FutureBuilder(
+                                    future: switchFuture,
+                                    builder: (context, snapshot) {
+                                      if (snapshot.data != null) {
+                                        return SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              3.9,
+                                          child: Slider(
+                                              value: double.parse(
+                                                  responseGetData[
+                                                          index + 9]
+                                                      .toString()),
+                                              min: 0,
+                                              max: 10,
+                                              label:
+                                                  '${double.parse(responseGetData[index + 9].toString())}',
+                                              onChanged:
+                                                  (onChanged) async {
+                                                setState(() {
+                                                  responseGetData[
+                                                          index + 9] =
+                                                      onChanged.round();
+                                                });
+                                                await dataUpdate(dId);
+                                              }),
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
                               ],
-                            )),
-                      );
-                    }),
-                  ),
-                ),
-              ],
+                            ),
+                            GestureDetector(
+                                onTap: () {},
+                                child:
+                                    Icon(changeIcon[index] ?? Icons.add))
+                          ],
+                        )),
+                  );
+                }),
+              ),
             ),
       
             const Divider()
