@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const IMAGE_KEY = 'IMAGE_KEY';
 
@@ -33,5 +34,13 @@ class Utility {
       base64Decode(base64String),
       fit: BoxFit.fill,
     );
+  }
+  static launchURL(String url) async {
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

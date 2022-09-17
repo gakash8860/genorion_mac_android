@@ -10,6 +10,7 @@ import 'package:genorion_mac_android/HomeUi/homepage.dart';
 import 'package:genorion_mac_android/Models/flatmodel.dart';
 import 'package:genorion_mac_android/Models/pinname.dart';
 import 'package:genorion_mac_android/Models/pinschedule.dart';
+import 'package:genorion_mac_android/ProfilePage/utility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../LocalDatabase/alldb.dart';
@@ -243,21 +244,14 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  _launchURL() async {
-    const url = 'https://genorionofficial.herokuapp.com/reset_password/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+
 
   Widget _buildForgotPasswordBtn() {
     return Container(
       alignment: Alignment.centerRight,
       child: ElevatedButton(
         onPressed: () {
-          _launchURL();
+         Utility.launchURL('https://genorionofficial.herokuapp.com/reset_password/');
         },
         // padding: const EdgeInsets.only(right: 0.0),
         child: const Text(
