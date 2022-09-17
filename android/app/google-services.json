@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "238878740906",
+    "project_id": "genorionnotification",
+    "storage_bucket": "genorionnotification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238878740906:android:1f699700764d5a27a1dbd3",
+        "android_client_info": {
+          "package_name": "com.release.genorion_mac_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238878740906-rnqmjfrpsbrcedk831r4kh70cmrongs0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzxFahGZ93GlEWojxIa5QDyNZf8_QJS3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238878740906-rnqmjfrpsbrcedk831r4kh70cmrongs0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

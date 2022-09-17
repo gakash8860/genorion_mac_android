@@ -9,6 +9,7 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,7 +36,8 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'package:assets_audio_player/assets_audio_player.dart';
 
 import '../AddSubUser/showsub.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import '../BillPrediction/devicebill.dart';
 import '../BillPrediction/faltbill.dart';
 import '../BillPrediction/floorbill.dart';
@@ -224,8 +226,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
-
+    fcmTokenGet(widget.dv[0].dId);
 
     setState(() {
       _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
@@ -1875,6 +1876,65 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       throw Exception('Failed to create Device.');
     }
   }
+
+  void fcmTokenGet(dId) async {
+    var result = await Connectivity().checkConnectivity();
+    if (result == ConnectivityResult.none) {
+     return;
+    }
+
+   String ?token = await FirebaseMessaging.instance.getToken();
+    print("token -> $token");
+   await sendFirebaseToken(token!,dId);
+  }
+
+  Future<void> sendFirebaseToken(String fcmToken,String dId)async{
+    String? token = await getToken();
+    const url = api+'notification/';
+    var postData={
+      "user": getUidVariable2,
+      "fcm":fcmToken,
+      "d_id":dId
+    };
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Token $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(postData),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
+    } else {
+     await updateFirebaseToken(fcmToken,dId);
+      throw Exception('Failed to create Device.');
+    }
+  }
+
+  Future<void> updateFirebaseToken(String fcmToken,String dId)async{
+    String? token = await getToken();
+    const url = api+'notification/';
+    var postData={
+      "user": getUidVariable2,
+      "fcm":fcmToken,
+      "d_id":dId
+    };
+    final response = await http.put(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Token $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(postData),
+    );
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return;
+    } else {
+      throw Exception('Failed to create Device.');
+    }
+  }
+
 
   _createAlertDialogForAddDevice(BuildContext context) {
     return showDialog(

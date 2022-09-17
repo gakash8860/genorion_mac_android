@@ -55,6 +55,8 @@ dependencies:
   pie_chart: ^5.1.0
   # joystick: ^1.1.0
   # control_pad: ^1.1.1+1 
+  flutter_local_notifications: ^9.2.0
+  firebase_messaging: ^11.2.4
   speech_to_text: ^5.4.2
   flutter_switch: ^0.3.2
 #  audioplayers: ^0.20.1
@@ -63,6 +65,7 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   image_picker: ^0.8.4+8
   auto_size_text: ^3.0.0
+  firebase_core: ^1.22.0
   
 
 dev_dependencies:
