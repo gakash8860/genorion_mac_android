@@ -13,7 +13,6 @@ import 'package:image_picker_for_web/image_picker_for_web.dart';
 import 'package:shared_preferences_web/shared_preferences_web.dart';
 import 'package:speech_to_text/speech_to_text_web.dart';
 import 'package:url_launcher_web/url_launcher_web.dart';
-import 'package:vibration_web/vibration_web.dart';
 
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
@@ -26,6 +25,5 @@ void registerPlugins(Registrar registrar) {
   SharedPreferencesPlugin.registerWith(registrar);
   SpeechToTextPlugin.registerWith(registrar);
   UrlLauncherPlugin.registerWith(registrar);
-  VibrationWebPlugin.registerWith(registrar);
   registrar.registerMessageHandler();
 }
