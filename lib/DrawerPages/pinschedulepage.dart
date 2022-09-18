@@ -25,7 +25,7 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
   int? uid;
   List<AllPinScheduled> pinScheduled = [];
   List namesDataList = [];
-  Future<List<AllPinScheduled>>? future;
+  Future<List<AllPinScheduled>>? futurePinScheduled;
   final _on = "On";
   final off = "Off";
   ScrollController scrollController = ScrollController();
@@ -120,7 +120,7 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
       height: MediaQuery.of(context).size.height,
       color: Colors.transparent,
       child: FutureBuilder<List<AllPinScheduled>>(
-        future: future,
+        future: futurePinScheduled,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (pinScheduled.isEmpty) {
@@ -633,13 +633,15 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
         print("Get All Pins Scheduld ${response.body}");
       }
       List ans = jsonDecode(response.body);
-      await AllDatabase.instance.allScheduledwithoutDeviceId();
-
+     await AllDatabase.instance.deleteScheduledAll();
       for (int i = 0; i < ans.length; i++) {
         AllPinScheduled allPinScheduled = AllPinScheduled.fromJson(ans[i]);
         await AllDatabase.instance.insertAllDevicePinScheduled(allPinScheduled);
       }
-      future = getAllLocalScheduled();
+      futurePinScheduled = getAllLocalScheduled();
+    }else{
+      futurePinScheduled = getAllLocalScheduled();
+
     }
   }
 
@@ -650,14 +652,19 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
       pinScheduled = ans.map((ans) => AllPinScheduled.fromJson(ans)).toList();
       deviceIdScroll = pinScheduled[0].dId.toString();
     });
-
+    await getPinNameByLocal(deviceIdScroll);
     }
+    if(ans.isEmpty){
+      pinScheduled = List.empty();
+      return  pinScheduled;
+    }
+
 
     if (kDebugMode) {
       print("PinSSSSSS $ans");
       print("PinSSSSSS $deviceIdScroll");
     }
-    await getPinNameByLocal(deviceIdScroll);
+
     return pinScheduled;
   }
 
@@ -719,7 +726,7 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
       await AllDatabase.instance.pinScheduledDeleteById(id);
       namesDataList = [];
       pinScheduled = [];
-      future = getAllLocalScheduled();
+      futurePinScheduled = getAllLocalScheduled();
     }
   }
 

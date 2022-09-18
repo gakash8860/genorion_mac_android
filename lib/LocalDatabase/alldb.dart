@@ -840,10 +840,7 @@ class AllDatabase {
     await db?.delete(_devicePinSchedule);
   }
 
-  Future allScheduledwithoutDeviceId() async {
-    final db = await database;
-    await db?.delete(_allDevicePinSchedul);
-  }
+
 
   Future deleteScheduledById(id) async {
     final db = await database;

@@ -3439,6 +3439,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           pin11FinalName,
           pin12FinalName,
         ];
+        devicePin =
+            namesDataList.map((e) => DevicePinName(dId: dId, pin1Name: pin1FinalName, pin2Name: pin2FinalName, pin3Name: pin3FinalName, pin4Name: pin4FinalName, pin5Name: pin5FinalName, pin6Name: pin6FinalName, pin7Name: pin7FinalName, pin8Name: pin8FinalName, pin9Name: pin9FinalName, pin10Name: pin10FinalName, pin11Name: pin11FinalName, pin12Name: pin12FinalName)).toList();
       });
       for (int i = 0; i < namesDataList.length; i++) {
         if (pin1.contains('001') ||
@@ -3911,6 +3913,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {
       schedulePin = [];
       schedulePin = data.map((data) => ScheduledPin.fromJson(data)).toList();
+
     });
     if (kDebugMode) {
       print("Total Lenght -> ${schedulePin.length}");
@@ -5560,7 +5563,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               'Device Id $dId',
             ),
             content: Container(
-              color: Colors.red,
+              color: Colors.transparent,
               width: MediaQuery.of(context).size.width,
               child: FutureBuilder(
                   future: pinScheduledFuture,
@@ -5592,7 +5595,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     Column(
                                       children: [
                                         SizedBox(
-                                          height: 54,
+                                          height: 57,
                                           child: ListView.builder(
                                               itemCount: 1,
                                               itemBuilder: (context, index) {
@@ -5604,9 +5607,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                         1) {
                                                   return Row(
                                                     children: [
-                                                      Text(schedulePin[index]
-                                                                  .pin1Status ==
-                                                              0
+                                                     SizedBox(width: 17,),
+                                                      Text(schedulePin[index].pin1Status == 0
                                                           ? devicePin[index]
                                                                   .pin1Name +
                                                               " Off "
