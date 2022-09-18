@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -24,20 +26,24 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+ if(Platform.isAndroid){
+   WidgetsFlutterBinding.ensureInitialized();
+   await Firebase.initializeApp();
 
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
+   await flutterLocalNotificationsPlugin
+       .resolvePlatformSpecificImplementation<
+       AndroidFlutterLocalNotificationsPlugin>()
+       ?.createNotificationChannel(channel);
+
+   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+     alert: true,
+     badge: true,
+     sound: true,
+   );
+   runApp(MyApp());
+ }
   runApp(MyApp());
 }
 

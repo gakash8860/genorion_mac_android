@@ -1907,6 +1907,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return;
     } else {
+      print("RESSSSSEEEE ${response.statusCode}");
      await updateFirebaseToken(fcmToken,dId);
       throw Exception('Failed to create Device.');
     }
@@ -3931,7 +3932,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
    
     var url = api + 'getpostdevicePinStatus/?d_id=' + dId;
     Map data = {
-      'put': 'yes',
+      'put': 'yes'
+
+
+      ,
       "d_id": dId,
       'pin1Status': responseGetData[0],
       'pin2Status': responseGetData[1],
@@ -4035,7 +4039,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       });
     } else {}
   }
-
+  String hintText="";
   _createAlertDialogForNameDeviceBox(context, index, dId) {
     return showDialog(
         context: context,
@@ -4077,8 +4081,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 const Text('Enter the Name of Device'),
               ],
             ),
-            content: TextField(
+            content: TextFormField(
               controller: pinNameController,
+              decoration:  InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(top: 14.0),
+
+                hintText:  hintText,
+                // hintStyle: kHintTextStyle,
+              ),
             ),
             actions: <Widget>[
               Padding(
@@ -4122,6 +4133,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     String finaName =
                         pinNameController.text + "," + iconCode[index];
                     await updatePinName(index, finaName, dId);
+
                     Navigator.pop(context);
                     await getPinNames(dId);
                     await getPinNameByLocal(dId, index);
@@ -4998,6 +5010,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               ),
                                             ),
                                             onPressed: () async {
+                                              pinNameController.clear();
+                                              setState(() {
+                                                hintText = namesDataList[index].toString();
+                                              });
                                               _createAlertDialogForNameDeviceBox(
                                                   context, index, dId);
                                             },
@@ -5156,6 +5172,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               ),
                                               onPressed: () async {
                                                 int newIndex = index + 9;
+                                                pinNameController.clear();
+                                                setState(() {
+                                                  hintText = namesDataList[newIndex].toString();
+                                                });
                                                 _createAlertDialogForNameDeviceBox(
                                                     context, newIndex, dId);
                                               },
