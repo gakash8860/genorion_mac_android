@@ -9,7 +9,6 @@ import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,11 +31,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'package:audioplayers/audioplayers.dart';
-// import 'package:assets_audio_player/assets_audio_player.dart';
 
 import '../AddSubUser/showsub.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import '../BillPrediction/devicebill.dart';
 import '../BillPrediction/faltbill.dart';
@@ -120,7 +116,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Map? postDataPinName;
   List listOfAllFloor = [];
   List listOfAllFlat = [];
-  List listofAllRoomId = [];
   TextEditingController floorEditing = TextEditingController();
   TextEditingController flatEditing = TextEditingController();
   var rIdForName;
@@ -230,8 +225,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     setState(() {
       _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
-
+      deviceIdForScroll = widget.dv[0].dId.toString();
       tabbarState = widget.rm![0].rId;
+    });
+
+    timer =  Timer.periodic(Duration(seconds: 3), (timer) {
+      // You can also call here any function.
+      setState(() {
+        updatePinStatusDataInSeconds(deviceIdForScroll);
+      });
     });
 
     tabC = TabController(length: widget.rm!.length, vsync: this);
@@ -3929,7 +3931,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<void> dataUpdate(dId) async {
     String? token = await getToken();
-   
     var url = api + 'getpostdevicePinStatus/?d_id=' + dId;
     Map data = {
       'put': 'yes'
@@ -4533,6 +4534,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         content: Text('Something went wrong'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+  }
+  Future updatePinStatusDataInSeconds(String dId)async{
+    var token = await getToken();
+    var url = api + "getpostdevicePinStatus/?d_id=" + dId;
+    final response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Token $token',
+    });
+    if(response.statusCode == 200){
+      var ans = jsonDecode(response.body);
+      DevicePinStatus pinStatus = DevicePinStatus.fromJson(ans);
+      await AllDatabase.instance.updatePinStatusData(pinStatus);
+      switchFuture = getPinStatusByDidLocal(dId);
+
     }
   }
 
