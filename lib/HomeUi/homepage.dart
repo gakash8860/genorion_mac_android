@@ -73,14 +73,13 @@ class HomePage extends StatefulWidget {
   List<DeviceType> dv = [];
   dynamic roomResponse;
 
-  HomePage(
-      {Key? key,
-      required this.fl,
-      required this.flat,
-      required this.pt,
-      required this.rm,
-      required this.dv,
-      this.roomResponse})
+  HomePage({Key? key,
+    required this.fl,
+    required this.flat,
+    required this.pt,
+    required this.rm,
+    required this.dv,
+    this.roomResponse})
       : super(key: key);
 
   @override
@@ -173,6 +172,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<RoomType> rm = [];
   List<DeviceType> dv = [];
   String name = "";
+
   // AudioPlayer audioPlayer = AudioPlayer();
   var email;
   List<bool> loading = List.filled(9, false);
@@ -208,20 +208,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-  
     super.dispose();
     // timer!.cancel();
     scrollController.dispose();
     fetchPlace.call();
     refreshImages();
-
   }
- 
+
 
   @override
   void initState() {
     super.initState();
-    fcmTokenGet(widget.dv[0].dId);
+    // fcmTokenGet(widget.dv[0].dId);
 
     setState(() {
       _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
@@ -229,7 +227,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       tabbarState = widget.rm![0].rId;
     });
 
-    timer =  Timer.periodic(Duration(seconds: 3), (timer) {
+    timer = Timer.periodic(Duration(seconds: 3), (timer) {
       // You can also call here any function.
       setState(() {
         updatePinStatusDataInSeconds(deviceIdForScroll);
@@ -272,7 +270,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       switchFuture = getPinStatusByDidLocal(widget.dv[0].dId);
       updatePinNamesGet(widget.dv[0].dId);
       nameFuture = getPinNameByLocal(widget.dv[0].dId, 0);
-
+      fcmTokenGet(widget.dv[0].dId);
     }
   }
 
@@ -298,7 +296,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return;
     }
     print("Image Not Empty $data");
-    if(!mounted){
+    if (!mounted) {
       return;
     }
     setState(() {
@@ -327,7 +325,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   Future<void> fetchPlace() async {
-    startTime = DateTime.now().microsecondsSinceEpoch;
+    startTime = DateTime
+        .now()
+        .microsecondsSinceEpoch;
 
     String? token = await getToken();
     const url = api + 'addyourplace/';
@@ -579,7 +579,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (allDevicePinNameList.length == allPinName.length) {
       for (int i = 0; i < allDevicePinNameList.length; i++) {
         var devicePinNamesQuery =
-            DevicePinName.fromJson(allDevicePinNameList[i]);
+        DevicePinName.fromJson(allDevicePinNameList[i]);
         await AllDatabase.instance.updateDevicePinNames(devicePinNamesQuery);
       }
       await getAllSensorData();
@@ -587,7 +587,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       await AllDatabase.instance.deleteDevicePinNameModelAll();
       for (int i = 0; i < allDevicePinNameList.length; i++) {
         var devicePinNamesQuery =
-            DevicePinName.fromJson(allDevicePinNameList[i]);
+        DevicePinName.fromJson(allDevicePinNameList[i]);
         await AllDatabase.instance.insertDevicePinNames(devicePinNamesQuery);
       }
       await getAllSensorData();
@@ -597,7 +597,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Future getAllSensorData() async {
     String? token = await getToken();
     // List allSensor = await AllDatabase.instance.querySensor();
-    List allSensor =[];
+    List allSensor = [];
     for (int i = 0; i < allDeviceList.length; i++) {
       var did = allDeviceList[i]['d_id'];
       String url = api + "tensensorsdata/?d_id=" + did;
@@ -616,7 +616,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       }
     }
     if (allSensorListMainUser.length == allSensor.length) {
-      endTime = DateTime.now().microsecondsSinceEpoch;
+      endTime = DateTime
+          .now()
+          .microsecondsSinceEpoch;
       int ans = endTime - startTime;
       if (kDebugMode) {
         print("update  $ans");
@@ -634,7 +636,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         // await AllDatabase.instance.insertSensorData(sensorQuery);
       }
       await getAllPinScheduled();
-      endTime = DateTime.now().microsecondsSinceEpoch;
+      endTime = DateTime
+          .now()
+          .microsecondsSinceEpoch;
       int ans = endTime - startTime;
       if (kDebugMode) {
         print(ans);
@@ -693,6 +697,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   bool remoteBool = false;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -704,7 +709,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           backgroundColor: const Color(0xff121421),
           drawer: Drawer(
             child: Container(
-              height: MediaQuery.of(context).size.height,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height,
               color: const Color(0xff121421),
               child: ListView(
                 children: [
@@ -739,7 +747,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const ProfilePage()));
+                                      const ProfilePage()));
                             },
                             cacheImage: true,
                           ),
@@ -757,7 +765,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                
+
                   ListTile(
                     leading: const Icon(
                       Icons.home_work_rounded,
@@ -776,7 +784,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               builder: (context) => const AddPlace()));
                     },
                   ),
-              
+
                   ListTile(
                     leading: const Icon(
                       Icons.supervised_user_circle,
@@ -818,7 +826,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ListOfTempAccessPage(
+                                builder: (context) =>
+                                    ListOfTempAccessPage(
                                       mobileNumber: number,
                                     )),
                           );
@@ -828,7 +837,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ),
                   ListTile(
                       leading:
-                          const Icon(Icons.perm_identity, color: Colors.white),
+                      const Icon(Icons.perm_identity, color: Colors.white),
                       title: const Text(
                         'Add Members',
                         style: TextStyle(
@@ -840,7 +849,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       }),
                   ListTile(
                       leading:
-                          const Icon(Icons.power_rounded, color: Colors.white),
+                      const Icon(Icons.power_rounded, color: Colors.white),
                       title: const Text('Bill Prediction',
                           style: TextStyle(
                             color: Colors.white,
@@ -861,7 +870,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const ScheduledPinPage()));
+                                const ScheduledPinPage()));
                       }),
                   ListTile(
                     leading: const Icon(Icons.settings, color: Colors.white),
@@ -880,21 +889,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               builder: (context) => const SettingPage()));
                     },
                   ),
-                  ListTile(
-                    leading: const Icon(Icons.help, color: Colors.white),
-                    title: const Text(
-                      'Help',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    onTap: () {},
-                  ),
+
                   ListTile(
                     leading: const Icon(Icons.info, color: Colors.white),
                     title: const Text(
                       'About GenOrion',
                       style: TextStyle(color: Colors.white),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Utility.launchURL('https://genorion.com/about.html');
+                    },
                   ),
                   ListTile(
                     leading: const Icon(Icons.quick_contacts_dialer_sharp,
@@ -934,668 +938,752 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: remoteBool
                   ? remoteUi()
                   : ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 28,
+                      right: 18,
+                      top: 6,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 28,
-                            right: 18,
-                            top: 6,
+                        InkWell(
+                          child: const Icon(
+                            Icons.menu_rounded,
+                            color: Colors.white,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                child: const Icon(
-                                  Icons.menu_rounded,
-                                  color: Colors.white,
-                                ),
-                                onTap: () =>
-                                    scaffoldKey.currentState!.openDrawer(),
-                              ),
-                              Row(
-                                children: [
-                                  InkWell(
-                                    child: Text(widget.pt!.pType.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 28,
-                                            fontWeight: FontWeight.bold)),
-                                    onTap: () {
-                                      setState(() {
-                                        placeBool = !placeBool;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(360),
-                                onTap: () {},
-                                child: const SizedBox(
-                                  height: 35,
-                                  width: 35,
-                                  child: Center(
-                                      // child: Icon(
-                                      //   Icons.notifications,
-                                      //   color: Colors.white,
-                                      // ),
-                                      ),
-                                ),
-                              ),
-                            ],
+                          onTap: () =>
+                              scaffoldKey.currentState!.openDrawer(),
+                        ),
+                        Row(
+                          children: [
+                            InkWell(
+                              child: Text(widget.pt!.pType.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold)),
+                              onTap: () {
+                                setState(() {
+                                  placeBool = !placeBool;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(360),
+                          onTap: () {},
+                          child: const SizedBox(
+                            height: 35,
+                            width: 35,
+                            child: Center(
+                              // child: Icon(
+                              //   Icons.notifications,
+                              //   color: Colors.white,
+                              // ),
+                            ),
                           ),
                         ),
-                        placeBool
-                            ? changePlace()
-                            : changeFloorBool
-                                ? changeFloor()
-                        :changeFlatBool? changeFlat()
-                                : SizedBox(
-                                    height: MediaQuery.of(context).size.height /
-                                        0.5,
-                                    child: DefaultTabController(
-                                      length: widget.rm!.length,
-                                      child: CustomScrollView(
-                                        controller: scrollController,
-                                        slivers: [
-                                          SliverToBoxAdapter(
-                                            child: Column(
-                                              children: <Widget>[
-                                                Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.41,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    gradient: LinearGradient(
-                                                        begin:
-                                                            Alignment.topCenter,
-                                                        end: Alignment
-                                                            .bottomCenter,
-                                                        colors: [
-                                                          Color(0xff669df4),
-                                                          Color(0xff4e80f3)
-                                                        ]),
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(30),
-                                                      topRight:
-                                                          Radius.circular(30),
-                                                      bottomLeft:
-                                                          Radius.circular(30),
-                                                      bottomRight:
-                                                          Radius.circular(30),
-                                                    ),
-                                                  ),
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                    top: 40,
-                                                    bottom: 10,
-                                                    left: 28,
-                                                    right: 30,
-                                                  ),
-                                                  // alignment: Alignment.topLeft,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: <Widget>[
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: <Widget>[
-                                                          Column(
-                                                            children: <Widget>[
-                                                              Row(
-                                                                children: [
-                                                                  GestureDetector(
-                                                                    onLongPress:
-                                                                        () {},
-                                                                    child: Row(
-                                                                      children: [
-                                                                        const Text(
-                                                                          'Floor -> ',
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize:
-                                                                                22,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            // fontStyle: FontStyle
-                                                                            //     .italic
-                                                                          ),
-                                                                        ),
-                                                                        Text(
-                                                                          widget
-                                                                              .fl!
-                                                                              .fName,
-                                                                          style: const TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontSize: 22,
-                                                                              fontStyle: FontStyle.italic),
-                                                                        ),
-                                                                        const Icon(
-                                                                            Icons.arrow_drop_down),
-                                                                        const SizedBox(
-                                                                          width:
-                                                                              10,
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                    onTap: () {
-                                                                      setState(
-                                                                          () {
-                                                                        changeFloorBool =
-                                                                            !changeFloorBool;
-                                                                        floorVal = null;
-                                                                        floorVal = floorQueryFunc(widget
-                                                                            .pt!
-                                                                            .pId);
-                                                                      });
-                                                                    },
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    width: 10,
-                                                                  ),
-                                                                  GestureDetector(
-                                                                    child:
-                                                                        const Icon(
-                                                                      Icons
-                                                                          .settings,
-                                                                      size: 18,
-                                                                    ),
-                                                                    onTap:
-                                                                        () async {
-                                                                      listOfAllFloor = await AllDatabase
-                                                                          .instance
-                                                                          .getFloorById(widget
-                                                                              .pt!
-                                                                              .pId);
-                                                                      _createAlertDialogForDeleteFloorAndAddFloor(
-                                                                          context);
-                                                                    },
-                                                                  )
-                                                                ],
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 12,
-                                                              ),
-                                                              Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: <
-                                                                    Widget>[
-                                                                  Row(
-                                                                    children: <
-                                                                        Widget>[
-                                                                      GestureDetector(
-                                                                        onLongPress:
-                                                                            () {},
-                                                                        child:
-                                                                            Row(
-                                                                          children: [
-                                                                            const Text(
-                                                                              'Flat -> ',
-                                                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
-                                                                            ),
-                                                                            Text(
-                                                                              widget.flat!.fltName,
-                                                                              style: const TextStyle(
-                                                                                  color: Colors.white,
-                                                                                  // fontWeight: FontWeight.bold,
-                                                                                  fontStyle: FontStyle.italic,
-                                                                                  fontSize: 22),
-                                                                            ),
-                                                                            const Icon(Icons.arrow_drop_down),
-                                                                            const SizedBox(
-                                                                              width: 10,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        onTap:
-                                                                            () {
-                                                                          setState(
-                                                                              () {
-                                                                            flatVal =
-                                                                                flatQueryFunc(widget.fl!.fId);
-                                                                          });
-                                                                          _creatDialogChangeFlat();
-                                                                        },
-                                                                      ),
-                                                                      const SizedBox(
-                                                                          width:
-                                                                              28),
-                                                                      GestureDetector(
-                                                                        onTap:
-                                                                            () async {
-                                                                          listOfAllFlat = await AllDatabase
-                                                                              .instance
-                                                                              .getFlatByFId(widget.fl!.fId);
-                                                                          _createAlertDialogForDeleteFlatAndAddFlat(
-                                                                              context);
-                                                                        },
-                                                                        child:
-                                                                            const Icon(
-                                                                          Icons
-                                                                              .settings,
-                                                                          size:
-                                                                              18,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 45,
-                                                      ),
-                                                      SingleChildScrollView(
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        child: Row(
-                                                          // mainAxisAlignment: MainAxisAlignment.start,
-                                                          children: <Widget>[
-                                                            FutureBuilder(
-                                                              future:
-                                                              switchFuture,
-                                                              builder: (context,
-                                                                  snapshot) {
-                                                                if (snapshot
-                                                                    .hasData) {
-                                                                  return Column(
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Row(
-                                                                        children: <
-                                                                            Widget>[
-                                                                          const SizedBox(
-                                                                            width:
-                                                                                8,
-                                                                          ),
-                                                                          Column(
-                                                                              children: <
-                                                                              Widget>[
-                                                                            const Icon(
-                                                                              FontAwesomeIcons.fire,
-                                                                              color: Colors.yellow,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 25,
-                                                                            ),
-                                                                            Row(
-                                                                              children: <Widget>[
-                                                                                Text(sensorData[0].toString(), style: const TextStyle(fontSize: 14, color: Colors.white70)),
-                                                                              ],
-                                                                            ),
-                                                                          ]),
-                                                                          const SizedBox(
-                                                                            width:
-                                                                                35,
-                                                                          ),
-                                                                          Column(children: <
-                                                                              Widget>[
-                                                                            const Icon(
-                                                                              FontAwesomeIcons.temperatureLow,
-                                                                              color: Colors.orange,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 30,
-                                                                            ),
-                                                                            Row(
-                                                                              children: <Widget>[
-                                                                                Text(sensorData[1].toString(), style: const TextStyle(fontSize: 14, color: Colors.white70)),
-                                                                              ],
-                                                                            ),
-                                                                          ]),
-                                                                          const SizedBox(
-                                                                            width:
-                                                                                45,
-                                                                          ),
-                                                                          Column(children: <
-                                                                              Widget>[
-                                                                            const Icon(
-                                                                              FontAwesomeIcons.wind,
-                                                                              color: Colors.white,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 30,
-                                                                            ),
-                                                                            Row(
-                                                                              children: <Widget>[
-                                                                                Text(sensorData[2].toString(), style: const TextStyle(fontSize: 14, color: Colors.white70)),
-                                                                              ],
-                                                                            ),
-                                                                          ]),
-                                                                          const SizedBox(
-                                                                            width:
-                                                                                42,
-                                                                          ),
-                                                                          Column(children: <
-                                                                              Widget>[
-                                                                            const Icon(
-                                                                              FontAwesomeIcons.cloud,
-                                                                              color: Colors.orange,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 30,
-                                                                            ),
-                                                                            Row(
-                                                                              children: <Widget>[
-                                                                                Text(
-                                                                                  sensorData[3].toString(),
-                                                                                  style: const TextStyle(color: Colors.white70),
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                          ]),
-                                                                          const SizedBox(
-                                                                            width:
-                                                                            42,
-                                                                          ),
-                                                                          Column(children: <
-                                                                              Widget>[
-                                                                            const Icon(
-                                                                              FontAwesomeIcons.cloud,
-                                                                              color: Colors.orange,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 30,
-                                                                            ),
-                                                                            Row(
-                                                                              children: <Widget>[
-                                                                                Text(
-                                                                                  sensorData[4].toString(),
-                                                                                  style: const TextStyle(color: Colors.white70),
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                          ]),
-                                                                          const SizedBox(
-                                                                            width:
-                                                                            42,
-                                                                          ),
-                                                                          Column(children: <
-                                                                              Widget>[
-                                                                            const Icon(
-                                                                              FontAwesomeIcons.warehouse,
-                                                                              color: Colors.brown,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 30,
-                                                                            ),
-                                                                            Row(
-                                                                              children: <Widget>[
-                                                                                Text(
-                                                                                  sensorData[5].toString(),
-                                                                                  style: const TextStyle(color: Colors.white70),
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                          ]),
-                                                                          const SizedBox(
-                                                                            width:
-                                                                            42,
-                                                                          ),
-                                                                          Column(children: <
-                                                                              Widget>[
-                                                                            const Icon(
-                                                                              FontAwesomeIcons.warehouse,
-                                                                              color: Colors.brown,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 30,
-                                                                            ),
-                                                                            Row(
-                                                                              children: <Widget>[
-                                                                                Text(
-                                                                                  sensorData[6].toString(),
-                                                                                  style: const TextStyle(color: Colors.white70),
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                          ]),
-                                                                          const SizedBox(
-                                                                            width:
-                                                                            42,
-                                                                          ),
-                                                                          Column(children: <
-                                                                              Widget>[
-                                                                            const Icon(
-                                                                              FontAwesomeIcons.warehouse,
-                                                                              color: Colors.brown,
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              height: 30,
-                                                                            ),
-                                                                            Row(
-                                                                              children: <Widget>[
-                                                                                Text(
-                                                                                  sensorData[7].toString(),
-                                                                                  style: const TextStyle(color: Colors.white70),
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                          ]),
-                                                                        ],
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        height:
-                                                                            12,
-                                                                      ),
-                                                                      Text(
-                                                                        sensorData[10]
-                                                                            .toString(),
-                                                                        style: const TextStyle(
-                                                                            color:
-                                                                                Colors.white70),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                } else {
-                                                                  return const Center(
-                                                                    child: Text(
-                                                                        'Loading...'),
-                                                                  );
-                                                                }
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                          //Room Tabs
-                                          SliverAppBar(
-                                            automaticallyImplyLeading: false,
-                                            floating: true,
-                                            pinned: true,
-                                            backgroundColor: Colors.white,
-                                            title: Container(
-                                              alignment: Alignment.bottomLeft,
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                      ],
+                    ),
+                  ),
+                  placeBool
+                      ? changePlace()
+                      : changeFloorBool
+                      ? changeFloor()
+                      : changeFlatBool ? changeFlat()
+                      : SizedBox(
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height /
+                        0.5,
+                    child: DefaultTabController(
+                      length: widget.rm!.length,
+                      child: CustomScrollView(
+                        controller: scrollController,
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  height: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .height *
+                                      0.41,
+                                  width: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width,
+                                  decoration:
+                                  const BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin:
+                                        Alignment.topCenter,
+                                        end: Alignment
+                                            .bottomCenter,
+                                        colors: [
+                                          Color(0xff669df4),
+                                          Color(0xff4e80f3)
+                                        ]),
+                                    borderRadius:
+                                    BorderRadius.only(
+                                      topLeft:
+                                      Radius.circular(30),
+                                      topRight:
+                                      Radius.circular(30),
+                                      bottomLeft:
+                                      Radius.circular(30),
+                                      bottomRight:
+                                      Radius.circular(30),
+                                    ),
+                                  ),
+                                  padding:
+                                  const EdgeInsets.only(
+                                    top: 40,
+                                    bottom: 10,
+                                    left: 28,
+                                    right: 30,
+                                  ),
+                                  // alignment: Alignment.topLeft,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment
+                                        .start,
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .spaceBetween,
+                                        children: <Widget>[
+                                          Column(
+                                            children: <Widget>[
+                                              Row(
                                                 children: [
-                                                  SingleChildScrollView(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
+                                                  GestureDetector(
+                                                    onLongPress:
+                                                        () {},
                                                     child: Row(
                                                       children: [
-                                                        Column(
-                                                          children: <Widget>[
-                                                            Column(
-                                                              children: [
-                                                                InkWell(
-                                                                    onTap:
-                                                                        () async {
-                                                                      _createAlertDialogForAddRoom();
-                                                                    },
-                                                                    child: Row(
-                                                                      children: const [
-                                                                        Icon(
-                                                                          Icons
-                                                                              .add,
-                                                                          color:
-                                                                              Colors.black,
-                                                                        ),
-                                                                      ],
-                                                                    )),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        GestureDetector(
-                                                          onLongPress: () {
-                                                            _createAlertDialogForAddRoomDeleteDevices(
-                                                                context,
-                                                                tabbarState,
-                                                                deleteRoomIndex);
-                                                          },
-                                                          child: TabBar(
-                                                            indicatorColor:
-                                                                Colors
-                                                                    .blueAccent,
-                                                            controller: tabC,
-                                                            labelColor: Colors
-                                                                .blueAccent,
-                                                            indicatorWeight:
-                                                                2.0,
-                                                            isScrollable: true,
-                                                            tabs: widget.rm!
-                                                                .map<Widget>(
-                                                                    (RoomType
-                                                                        rm) {
-                                                              return Tab(
-                                                                text: rm.rName,
-                                                              );
-                                                            }).toList(),
-                                                            onTap:
-                                                                (index) async {
-                                                              setState(() {
-                                                                tabbarState =
-                                                                    widget
-                                                                        .rm![
-                                                                            index]
-                                                                        .rId;
-                                                              });
-                                                              if (widget
-                                                                      .roomResponse !=
-                                                                  null) {
-                                                                setState(() {
-                                                                  tabbarState =
-                                                                      widget
-                                                                          .rm![
-                                                                              index]
-                                                                          .rId;
-                                                                });
-                                                              }
-                                                              setState(() {
-                                                                tabbarState =
-                                                                    widget
-                                                                        .rm![
-                                                                            index]
-                                                                        .rId;
-                                                                deleteRoomIndex =
-                                                                    index;
-                                                              });
-                                                              List deviceList =
-                                                                  await AllDatabase
-                                                                      .instance
-                                                                      .getDeviceById(widget
-                                                                          .rm![
-                                                                              index]
-                                                                          .rId);
-                                                              int deviceIndex =
-                                                                  0;
-                                                              setState(() {
-                                                                widget.dv = List.generate(
-                                                                    deviceList
-                                                                        .length,
-                                                                    (index) => DeviceType(
-                                                                        id: deviceList[index]
-                                                                            [
-                                                                            'id'],
-                                                                        dateInstalled:
-                                                                            DateTime.parse(deviceList[index][
-                                                                                'date_installed']),
-                                                                        user: deviceList[index]
-                                                                            [
-                                                                            'user'],
-                                                                        rId: deviceList[index]['r_id']
-                                                                            .toString(),
-                                                                        dId: deviceList[index]
-                                                                            ['d_id']));
-                                                              });
-                                                              if (widget.dv
-                                                                  .isNotEmpty) {
-                                                                switchFuture =
-                                                                    getPinStatusByDidLocal(
-                                                                        widget
-                                                                            .dv[0]
-                                                                            .dId.toString(),
-                                                                        );
-
-                                                                nameFuture =
-                                                                    getPinNameByLocal(
-                                                                        widget
-                                                                            .dv[0]
-                                                                            .dId,
-                                                                        index);
-                                                              } else {
-                                                                return;
-                                                              }
-                                                            },
+                                                        const Text(
+                                                          'Floor -> ',
+                                                          style:
+                                                          TextStyle(
+                                                            color:
+                                                            Colors.white,
+                                                            fontSize:
+                                                            22,
+                                                            fontWeight:
+                                                            FontWeight.bold,
+                                                            // fontStyle: FontStyle
+                                                            //     .italic
                                                           ),
+                                                        ),
+                                                        Text(
+                                                          widget
+                                                              .fl!
+                                                              .fName,
+                                                          style: const TextStyle(
+                                                              color: Colors
+                                                                  .white,
+                                                              fontSize: 22,
+                                                              fontStyle: FontStyle
+                                                                  .italic),
+                                                        ),
+                                                        const Icon(
+                                                            Icons
+                                                                .arrow_drop_down),
+                                                        const SizedBox(
+                                                          width:
+                                                          10,
                                                         ),
                                                       ],
                                                     ),
+                                                    onTap: () {
+                                                      setState(
+                                                              () {
+                                                            changeFloorBool =
+                                                            !changeFloorBool;
+                                                            floorVal = null;
+                                                            floorVal =
+                                                                floorQueryFunc(
+                                                                    widget
+                                                                        .pt!
+                                                                        .pId);
+                                                          });
+                                                    },
                                                   ),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  GestureDetector(
+                                                    child:
+                                                    const Icon(
+                                                      Icons
+                                                          .settings,
+                                                      size: 18,
+                                                    ),
+                                                    onTap:
+                                                        () async {
+                                                      listOfAllFloor =
+                                                      await AllDatabase
+                                                          .instance
+                                                          .getFloorById(widget
+                                                          .pt!
+                                                          .pId);
+                                                      _createAlertDialogForDeleteFloorAndAddFloor(
+                                                          context);
+                                                    },
+                                                  )
                                                 ],
                                               ),
-                                            ),
+                                              const SizedBox(
+                                                height: 12,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
+                                                children: <
+                                                    Widget>[
+                                                  Row(
+                                                    children: <
+                                                        Widget>[
+                                                      GestureDetector(
+                                                        onLongPress:
+                                                            () {},
+                                                        child:
+                                                        Row(
+                                                          children: [
+                                                            const Text(
+                                                              'Flat -> ',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight: FontWeight
+                                                                      .bold,
+                                                                  fontSize: 22),
+                                                            ),
+                                                            Text(
+                                                              widget.flat!
+                                                                  .fltName,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  // fontWeight: FontWeight.bold,
+                                                                  fontStyle: FontStyle
+                                                                      .italic,
+                                                                  fontSize: 22),
+                                                            ),
+                                                            const Icon(Icons
+                                                                .arrow_drop_down),
+                                                            const SizedBox(
+                                                              width: 10,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        onTap:
+                                                            () {
+                                                          setState(
+                                                                  () {
+                                                                flatVal =
+                                                                    flatQueryFunc(
+                                                                        widget
+                                                                            .fl!
+                                                                            .fId);
+                                                              });
+                                                          _creatDialogChangeFlat();
+                                                        },
+                                                      ),
+                                                      const SizedBox(
+                                                          width:
+                                                          28),
+                                                      GestureDetector(
+                                                        onTap:
+                                                            () async {
+                                                          listOfAllFlat =
+                                                          await AllDatabase
+                                                              .instance
+                                                              .getFlatByFId(
+                                                              widget.fl!.fId);
+                                                          _createAlertDialogForDeleteFlatAndAddFlat(
+                                                              context);
+                                                        },
+                                                        child:
+                                                        const Icon(
+                                                          Icons
+                                                              .settings,
+                                                          size:
+                                                          18,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ],
                                           ),
-
-                                          SliverList(
-                                            delegate:
-                                                SliverChildBuilderDelegate(
-                                                    (context, index) {
-                                              if (index < widget.dv.length) {
-                                                if (widget.dv.isEmpty) {
-                                                  return Container();
-                                                }
-    // return Container();
-                                                return deviceContainer(
-                                                    widget.dv[index].dId,
-                                                    index);
-                                              } else {
-                                                return null;
-                                              }
-                                            }),
-                                          )
                                         ],
                                       ),
+                                      const SizedBox(
+                                        height: 45,
+                                      ),
+                                      SingleChildScrollView(
+                                        scrollDirection:
+                                        Axis.horizontal,
+                                        child: Row(
+                                          // mainAxisAlignment: MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            FutureBuilder(
+                                              future:
+                                              switchFuture,
+                                              builder: (context,
+                                                  snapshot) {
+                                                if (snapshot
+                                                    .hasData) {
+                                                  return Column(
+                                                    children: <
+                                                        Widget>[
+                                                      Row(
+                                                        children: <
+                                                            Widget>[
+                                                          const SizedBox(
+                                                            width:
+                                                            8,
+                                                          ),
+                                                          Column(
+                                                              children: <
+                                                                  Widget>[
+                                                                const Icon(
+                                                                  FontAwesomeIcons
+                                                                      .fire,
+                                                                  color: Colors
+                                                                      .yellow,
+                                                                ),
+                                                                const SizedBox(
+                                                                  height: 25,
+                                                                ),
+                                                                Row(
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Text(
+                                                                        sensorData[0]
+                                                                            .toString(),
+                                                                        style: const TextStyle(
+                                                                            fontSize: 14,
+                                                                            color: Colors
+                                                                                .white70)),
+                                                                  ],
+                                                                ),
+                                                              ]),
+                                                          const SizedBox(
+                                                            width:
+                                                            35,
+                                                          ),
+                                                          Column(children: <
+                                                              Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons
+                                                                  .temperatureLow,
+                                                              color: Colors
+                                                                  .orange,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                    sensorData[1]
+                                                                        .toString(),
+                                                                    style: const TextStyle(
+                                                                        fontSize: 14,
+                                                                        color: Colors
+                                                                            .white70)),
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width:
+                                                            45,
+                                                          ),
+                                                          Column(children: <
+                                                              Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons
+                                                                  .wind,
+                                                              color: Colors
+                                                                  .white,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                    sensorData[2]
+                                                                        .toString(),
+                                                                    style: const TextStyle(
+                                                                        fontSize: 14,
+                                                                        color: Colors
+                                                                            .white70)),
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width:
+                                                            42,
+                                                          ),
+                                                          Column(children: <
+                                                              Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons
+                                                                  .cloud,
+                                                              color: Colors
+                                                                  .orange,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  sensorData[3]
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width:
+                                                            42,
+                                                          ),
+                                                          Column(children: <
+                                                              Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons
+                                                                  .cloud,
+                                                              color: Colors
+                                                                  .orange,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  sensorData[4]
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width:
+                                                            42,
+                                                          ),
+                                                          Column(children: <
+                                                              Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons
+                                                                  .warehouse,
+                                                              color: Colors
+                                                                  .brown,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  sensorData[5]
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width:
+                                                            42,
+                                                          ),
+                                                          Column(children: <
+                                                              Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons
+                                                                  .warehouse,
+                                                              color: Colors
+                                                                  .brown,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  sensorData[6]
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width:
+                                                            42,
+                                                          ),
+                                                          Column(children: <
+                                                              Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons
+                                                                  .warehouse,
+                                                              color: Colors
+                                                                  .brown,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text(
+                                                                  sensorData[7]
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height:
+                                                        12,
+                                                      ),
+                                                      Text(
+                                                        sensorData[10]
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            color:
+                                                            Colors.white70),
+                                                      ),
+                                                    ],
+                                                  );
+                                                } else {
+                                                  return const Center(
+                                                    child: Text(
+                                                        'Loading...'),
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          //Room Tabs
+                          SliverAppBar(
+                            automaticallyImplyLeading: false,
+                            floating: true,
+                            pinned: true,
+                            backgroundColor: Colors.white,
+                            title: Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  SingleChildScrollView(
+                                    scrollDirection:
+                                    Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          children: <Widget>[
+                                            Column(
+                                              children: [
+                                                InkWell(
+                                                    onTap:
+                                                        () async {
+                                                      _createAlertDialogForAddRoom();
+                                                    },
+                                                    child: Row(
+                                                      children: const [
+                                                        Icon(
+                                                          Icons
+                                                              .add,
+                                                          color:
+                                                          Colors.black,
+                                                        ),
+                                                      ],
+                                                    )),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        GestureDetector(
+                                          onLongPress: () {
+                                            _createAlertDialogForAddRoomDeleteDevices(
+                                                context,
+                                                tabbarState,
+                                                deleteRoomIndex);
+                                          },
+                                          child: TabBar(
+                                            indicatorColor:
+                                            Colors
+                                                .blueAccent,
+                                            controller: tabC,
+                                            labelColor: Colors
+                                                .blueAccent,
+                                            indicatorWeight:
+                                            2.0,
+                                            isScrollable: true,
+                                            tabs: widget.rm!
+                                                .map<Widget>(
+                                                    (RoomType
+                                                rm) {
+                                                  return Tab(
+                                                    text: rm.rName,
+                                                  );
+                                                }).toList(),
+                                            onTap:
+                                                (index) async {
+                                              setState(() {
+                                                tabbarState =
+                                                    widget
+                                                        .rm![
+                                                    index]
+                                                        .rId;
+                                              });
+                                              if (widget
+                                                  .roomResponse !=
+                                                  null) {
+                                                setState(() {
+                                                  tabbarState =
+                                                      widget
+                                                          .rm![
+                                                      index]
+                                                          .rId;
+                                                });
+                                              }
+                                              setState(() {
+                                                tabbarState =
+                                                    widget
+                                                        .rm![
+                                                    index]
+                                                        .rId;
+                                                deleteRoomIndex =
+                                                    index;
+                                              });
+                                              List deviceList =
+                                              await AllDatabase
+                                                  .instance
+                                                  .getDeviceById(widget
+                                                  .rm![
+                                              index]
+                                                  .rId);
+                                              int deviceIndex =
+                                              0;
+                                              setState(() {
+                                                widget.dv = List.generate(
+                                                    deviceList
+                                                        .length,
+                                                        (index) =>
+                                                        DeviceType(
+                                                            id: deviceList[index]
+                                                            [
+                                                            'id'],
+                                                            dateInstalled:
+                                                            DateTime.parse(
+                                                                deviceList[index][
+                                                                'date_installed']),
+                                                            user: deviceList[index]
+                                                            [
+                                                            'user'],
+                                                            rId: deviceList[index]['r_id']
+                                                                .toString(),
+                                                            dId: deviceList[index]
+                                                            ['d_id']));
+                                              });
+                                              if (widget.dv
+                                                  .isNotEmpty) {
+                                                switchFuture =
+                                                    getPinStatusByDidLocal(
+                                                      widget
+                                                          .dv[0]
+                                                          .dId.toString(),
+                                                    );
+
+                                                nameFuture =
+                                                    getPinNameByLocal(
+                                                        widget
+                                                            .dv[0]
+                                                            .dId,
+                                                        index);
+                                              } else {
+                                                return;
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  )
-                      ],
-                    )),
-       
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          SliverList(
+                            delegate:
+                            SliverChildBuilderDelegate(
+                                    (context, index) {
+                                  if (index < widget.dv.length) {
+                                    if (widget.dv.isEmpty) {
+                                      return Container();
+                                    }
+                                    // return Container();
+                                    return deviceContainer(
+                                        widget.dv[index].dId,
+                                        index);
+                                  } else {
+                                    return null;
+                                  }
+                                }),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )),
+
           bottomNavigationBar: BottomNavyBar(
             backgroundColor: Colors.white38,
             selectedIndex: _currentIndex,
@@ -1637,12 +1725,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   print("TabbarState -- > $tabbarState");
                 }
               }
-              if(_currentIndex == 2){
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> const SettingPage()));
+              if (_currentIndex == 2) {
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => const SettingPage()));
               }
             },
           )),
-  
+
     );
   }
 
@@ -1771,7 +1860,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {
       widget.rm = List.generate(
           roomList.length,
-          (index) => RoomType(
+              (index) =>
+              RoomType(
                 rId: roomList[index]['r_id'].toString(),
                 fltId: roomList[index]['flt_id'].toString(),
                 rName: roomList[index]['r_name'].toString(),
@@ -1882,21 +1972,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void fcmTokenGet(dId) async {
     var result = await Connectivity().checkConnectivity();
     if (result == ConnectivityResult.none) {
-     return;
+      return;
     }
 
-   String ?token = await FirebaseMessaging.instance.getToken();
+    String ?token = await FirebaseMessaging.instance.getToken();
     print("token -> $token");
-   await sendFirebaseToken(token!,dId);
+    await sendFirebaseToken(token!, dId);
   }
 
-  Future<void> sendFirebaseToken(String fcmToken,String dId)async{
+  Future<void> sendFirebaseToken(String fcmToken, String dId) async {
     String? token = await getToken();
-    const url = api+'notification/';
-    var postData={
+    const url = api + 'notification/';
+    var postData = {
       "user": getUidVariable2,
-      "fcm":fcmToken,
-      "d_id":dId
+      "fcm": fcmToken,
+      "d_id": dId
     };
     final response = await http.post(
       Uri.parse(url),
@@ -1910,18 +2000,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return;
     } else {
       print("RESSSSSEEEE ${response.statusCode}");
-     await updateFirebaseToken(fcmToken,dId);
+      await updateFirebaseToken(fcmToken, dId);
       throw Exception('Failed to create Device.');
     }
   }
 
-  Future<void> updateFirebaseToken(String fcmToken,String dId)async{
+  Future<void> updateFirebaseToken(String fcmToken, String dId) async {
     String? token = await getToken();
-    const url = api+'notification/';
-    var postData={
+    const url = api + 'notification/';
+    var postData = {
       "user": getUidVariable2,
-      "fcm":fcmToken,
-      "d_id":dId
+      "fcm": fcmToken,
+      "d_id": dId
     };
     final response = await http.put(
       Uri.parse(url),
@@ -1995,15 +2085,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {
       widget.dv = List.generate(
           deviceList.length,
-          (index) => DeviceType(
-              id: deviceList[index]['id'],
-              dateInstalled:
+              (index) =>
+              DeviceType(
+                  id: deviceList[index]['id'],
+                  dateInstalled:
                   DateTime.parse(deviceList[index]['date_installed']),
-              user: deviceList[index]['user'],
-              rId: deviceList[index]['r_id'].toString(),
-              dId: deviceList[index]['d_id']));
+                  user: deviceList[index]['user'],
+                  rId: deviceList[index]['r_id'].toString(),
+                  dId: deviceList[index]['d_id']));
     });
-    
   }
 
   Future<List<PlaceType>> placeQueryFunc() async {
@@ -2063,7 +2153,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 )
               ],
             ),
-     
+
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: FutureBuilder<List<PlaceType>>(
@@ -2079,7 +2169,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           width: double.infinity,
                           height: 50.0,
                           child: Container(
-                            width: MediaQuery.of(context).size.width * 2,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 2,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: const [
@@ -2097,12 +2190,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2138,7 +2231,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     }
                   }),
             ),
-         
+
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: FutureBuilder<List<FloorType>>(
@@ -2154,7 +2247,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           width: double.infinity,
                           height: 50.0,
                           child: Container(
-                            width: MediaQuery.of(context).size.width * 2,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 2,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: const [
@@ -2172,12 +2268,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2213,7 +2309,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     }
                   }),
             ),
-      
+
             Padding(
               padding: const EdgeInsets.all(18.0),
               child: FutureBuilder<List<FlatType>>(
@@ -2229,7 +2325,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           width: double.infinity,
                           height: 50.0,
                           child: Container(
-                            width: MediaQuery.of(context).size.width * 2,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 2,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: const [
@@ -2247,12 +2346,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2306,7 +2405,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         List<RoomType> rm = [];
 
                         List data =
-                            await AllDatabase.instance.getRoomById(flt!.fltId);
+                        await AllDatabase.instance.getRoomById(flt!.fltId);
                         setState(() {
                           rm = data
                               .map((data) => RoomType.fromJson(data))
@@ -2317,12 +2416,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomePage(
-                                    fl: fl,
-                                    flat: flt,
-                                    pt: pt,
-                                    rm: rm,
-                                    dv: const [])));
+                                builder: (context) =>
+                                    HomePage(
+                                        fl: fl,
+                                        flat: flt,
+                                        pt: pt,
+                                        rm: rm,
+                                        dv: const [])));
                       },
                     ),
                   )),
@@ -2457,7 +2557,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           width: double.infinity,
                           height: 50.0,
                           child: Container(
-                            width: MediaQuery.of(context).size.width * 2,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 2,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: const [
@@ -2475,12 +2578,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2531,7 +2634,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           width: double.infinity,
                           height: 50.0,
                           child: Container(
-                            width: MediaQuery.of(context).size.width * 2,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width * 2,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: const [
@@ -2549,12 +2655,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2608,7 +2714,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         List<RoomType> rm = [];
 
                         List data =
-                            await AllDatabase.instance.getRoomById(flt!.fltId);
+                        await AllDatabase.instance.getRoomById(flt!.fltId);
                         setState(() {
                           rm = data
                               .map((data) => RoomType.fromJson(data))
@@ -2619,12 +2725,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomePage(
-                                    fl: fl,
-                                    flat: flt,
-                                    pt: widget.pt,
-                                    rm: rm,
-                                    dv: const [])));
+                                builder: (context) =>
+                                    HomePage(
+                                        fl: fl,
+                                        flat: flt,
+                                        pt: widget.pt,
+                                        rm: rm,
+                                        dv: const [])));
                       },
                     ),
                   )),
@@ -2635,162 +2742,167 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget changeFlat(){
+  Widget changeFlat() {
     return Container(
         margin: const EdgeInsets.only(bottom: 45),
-   child:SingleChildScrollView(
-    child:Column(
-      children:[
-           const SizedBox(
-              height: 15,
-            ),
-              Row(
-              children: [
-                const SizedBox(
-                  width: 15,
-                ),
-                InkWell(
-                  child: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
+        child: SingleChildScrollView(
+            child: Column(
+                children: [
+                  const SizedBox(
+                    height: 15,
                   ),
-                  onTap: () {
-                    setState(() {
-                      changeFlatBool = !changeFlatBool;
-                    });
-                  },
-                )
-              ],
-            ),
-            Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: FutureBuilder<List<FlatType>>(
-                          future: flatVal,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              if (snapshot.data!.isEmpty) {
-                                return const Center(
-                                    child: Text("No Devices on this place"));
-                              }
-                              return Container(
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  height: 50.0,
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 2,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              color: Colors.black,
-                                              blurRadius: 30,
-                                              offset: Offset(20, 20))
-                                        ],
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 0.5,
-                                        )),
-                                    child: DropdownButtonFormField<FlatType>(
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        contentPadding:
-                                            const EdgeInsets.all(15),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.black),
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                        ),
-                                      ),
-                                      dropdownColor: Colors.white70,
-                                      icon: const Icon(Icons.arrow_drop_down),
-                                      iconSize: 28,
-                                      hint: const Text('Select Flat'),
-                                      isExpanded: true,
-                                      style: const TextStyle(
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      InkWell(
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        ),
+                        onTap: () {
+                          setState(() {
+                            changeFlatBool = !changeFlatBool;
+                          });
+                        },
+                      )
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: FutureBuilder<List<FlatType>>(
+                        future: flatVal,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            if (snapshot.data!.isEmpty) {
+                              return const Center(
+                                  child: Text("No Devices on this place"));
+                            }
+                            return Container(
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 50.0,
+                                child: Container(
+                                  width:
+                                  MediaQuery
+                                      .of(context)
+                                      .size
+                                      .width * 2,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: const [
+                                        BoxShadow(
+                                            color: Colors.black,
+                                            blurRadius: 30,
+                                            offset: Offset(20, 20))
+                                      ],
+                                      border: Border.all(
                                         color: Colors.black,
-                                        fontWeight: FontWeight.bold,
+                                        width: 0.5,
+                                      )),
+                                  child: DropdownButtonFormField<FlatType>(
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      contentPadding:
+                                      const EdgeInsets.all(15),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.white),
+                                        borderRadius:
+                                        BorderRadius.circular(10),
                                       ),
-                                      items: snapshot.data!.map((selectedflat) {
-                                        return DropdownMenuItem<FlatType>(
-                                          value: selectedflat,
-                                          child: Text(selectedflat.fltName),
-                                        );
-                                      }).toList(),
-                                      onChanged: (selectFlat) async {
-                                        setState(() {
-                                          flt = selectFlat;
-                                        });
-
-                                        List roomList = await AllDatabase
-                                            .instance
-                                            .getRoomById(flt!.fltId);
-
-                                        setState(() {
-                                          rm = List.generate(
-                                              roomList.length,
-                                              (index) => RoomType(
-                                                    rId: roomList[index]['r_id']
-                                                        .toString(),
-                                                    fltId: roomList[index]
-                                                            ['flt_id']
-                                                        .toString(),
-                                                    rName: roomList[index]
-                                                            ['r_name']
-                                                        .toString(),
-                                                    user: roomList[index]
-                                                        ['user'],
-                                                  ));
-                                        });
-
-                                        List device = await AllDatabase.instance
-                                            .getDeviceById(rm[0].rId);
-                                        dv = device
-                                            .map((e) => DeviceType.fromJson(e))
-                                            .toList();
-                                      },
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.black),
+                                        borderRadius:
+                                        BorderRadius.circular(50),
+                                      ),
                                     ),
+                                    dropdownColor: Colors.white70,
+                                    icon: const Icon(Icons.arrow_drop_down),
+                                    iconSize: 28,
+                                    hint: const Text('Select Flat'),
+                                    isExpanded: true,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    items: snapshot.data!.map((selectedflat) {
+                                      return DropdownMenuItem<FlatType>(
+                                        value: selectedflat,
+                                        child: Text(selectedflat.fltName),
+                                      );
+                                    }).toList(),
+                                    onChanged: (selectFlat) async {
+                                      setState(() {
+                                        flt = selectFlat;
+                                      });
+
+                                      List roomList = await AllDatabase
+                                          .instance
+                                          .getRoomById(flt!.fltId);
+
+                                      setState(() {
+                                        rm = List.generate(
+                                            roomList.length,
+                                                (index) =>
+                                                RoomType(
+                                                  rId: roomList[index]['r_id']
+                                                      .toString(),
+                                                  fltId: roomList[index]
+                                                  ['flt_id']
+                                                      .toString(),
+                                                  rName: roomList[index]
+                                                  ['r_name']
+                                                      .toString(),
+                                                  user: roomList[index]
+                                                  ['user'],
+                                                ));
+                                      });
+
+                                      List device = await AllDatabase.instance
+                                          .getDeviceById(rm[0].rId);
+                                      dv = device
+                                          .map((e) => DeviceType.fromJson(e))
+                                          .toList();
+                                    },
                                   ),
                                 ),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                              );
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                          }),
-            ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: MaterialButton(
-            elevation: 5.0,
-            child: const Text('Submit'),
-            onPressed: () async {
-              // timer!.cancel();
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 10),
+                            );
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      elevation: 5.0,
+                      child: const Text('Submit'),
+                      onPressed: () async {
+                        // timer!.cancel();
 
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePage(
-                          fl: widget.fl,
-                          flat: flt,
-                          pt: widget.pt,
-                          rm: rm,
-                          dv: dv)));
-            },
-          ),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    HomePage(
+                                        fl: widget.fl,
+                                        flat: flt,
+                                        pt: widget.pt,
+                                        rm: rm,
+                                        dv: dv)));
+                      },
+                    ),
+                  )
+                ]
+            )
         )
-      ]
-    )
-   )
     );
   }
 
@@ -2992,7 +3104,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   height: 50.0,
                                   child: Container(
                                     width:
-                                        MediaQuery.of(context).size.width * 2,
+                                    MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width * 2,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         boxShadow: const [
@@ -3009,18 +3124,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         contentPadding:
-                                            const EdgeInsets.all(15),
+                                        const EdgeInsets.all(15),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
                                               color: Colors.white),
                                           borderRadius:
-                                              BorderRadius.circular(10),
+                                          BorderRadius.circular(10),
                                         ),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: const BorderSide(
                                               color: Colors.black),
                                           borderRadius:
-                                              BorderRadius.circular(50),
+                                          BorderRadius.circular(50),
                                         ),
                                       ),
                                       dropdownColor: Colors.white70,
@@ -3050,17 +3165,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         setState(() {
                                           rm = List.generate(
                                               roomList.length,
-                                              (index) => RoomType(
+                                                  (index) =>
+                                                  RoomType(
                                                     rId: roomList[index]['r_id']
                                                         .toString(),
                                                     fltId: roomList[index]
-                                                            ['flt_id']
+                                                    ['flt_id']
                                                         .toString(),
                                                     rName: roomList[index]
-                                                            ['r_name']
+                                                    ['r_name']
                                                         .toString(),
                                                     user: roomList[index]
-                                                        ['user'],
+                                                    ['user'],
                                                   ));
                                         });
 
@@ -3098,12 +3214,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HomePage(
-                                fl: widget.fl,
-                                flat: flt,
-                                pt: widget.pt,
-                                rm: rm,
-                                dv: dv)));
+                            builder: (context) =>
+                                HomePage(
+                                    fl: widget.fl,
+                                    flat: flt,
+                                    pt: widget.pt,
+                                    rm: rm,
+                                    dv: dv)));
                   },
                 ),
               )
@@ -3143,9 +3260,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
 
         int ms =
-            // ((DateTime.now().millisecondsSinceEpoch) / 1000).round() + 19700;
-            ((DateTime.now().millisecondsSinceEpoch) / 1000).round() -
-                100; // -100 for checking a difference for 100 seconds in current time
+        // ((DateTime.now().millisecondsSinceEpoch) / 1000).round() + 19700;
+        ((DateTime
+            .now()
+            .millisecondsSinceEpoch) / 1000).round() -
+            100; // -100 for checking a difference for 100 seconds in current time
         if (kDebugMode) {
           print('CheckMs $ms');
         }
@@ -3181,9 +3300,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
 
         int ms =
-            // ((DateTime.now().millisecondsSinceEpoch) / 1000).round() + 19700;
-            ((DateTime.now().millisecondsSinceEpoch) / 1000).round() -
-                100; // -100 for checking a difference for 100 seconds in current time
+        // ((DateTime.now().millisecondsSinceEpoch) / 1000).round() + 19700;
+        ((DateTime
+            .now()
+            .millisecondsSinceEpoch) / 1000).round() -
+            100; // -100 for checking a difference for 100 seconds in current time
         if (kDebugMode) {
           print('CheckMs $ms');
         }
@@ -3296,7 +3417,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Future<bool> getPinStatusByDidLocal(did) async {
     print("DID $did");
-    List data = await AllDatabase.instance.getPinStatusByDeviceId(did.toString());
+    List data = await AllDatabase.instance.getPinStatusByDeviceId(
+        did.toString());
     if (kDebugMode) {
       print("All Status $data");
     }
@@ -3316,7 +3438,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         data[0]['pin12Status'],
 
       ];
-      sensorData=[
+      sensorData = [
         data[0]['sensor1'],
         data[0]['sensor2'],
         data[0]['sensor3'],
@@ -3331,7 +3453,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ];
     });
     if (kDebugMode) {
-      print("objectAndSensor $responseGetData  => ${sensorData[1]  } => ${sensorData[7]}  ");
+      print(
+          "objectAndSensor $responseGetData  => ${sensorData[1] } => ${sensorData[7]}  ");
     }
     if (data.isNotEmpty) {
       return true;
@@ -3443,7 +3566,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           pin12FinalName,
         ];
         devicePin =
-            namesDataList.map((e) => DevicePinName(dId: dId, pin1Name: pin1FinalName, pin2Name: pin2FinalName, pin3Name: pin3FinalName, pin4Name: pin4FinalName, pin5Name: pin5FinalName, pin6Name: pin6FinalName, pin7Name: pin7FinalName, pin8Name: pin8FinalName, pin9Name: pin9FinalName, pin10Name: pin10FinalName, pin11Name: pin11FinalName, pin12Name: pin12FinalName)).toList();
+            namesDataList.map((e) =>
+                DevicePinName(dId: dId,
+                    pin1Name: pin1FinalName,
+                    pin2Name: pin2FinalName,
+                    pin3Name: pin3FinalName,
+                    pin4Name: pin4FinalName,
+                    pin5Name: pin5FinalName,
+                    pin6Name: pin6FinalName,
+                    pin7Name: pin7FinalName,
+                    pin8Name: pin8FinalName,
+                    pin9Name: pin9FinalName,
+                    pin10Name: pin10FinalName,
+                    pin11Name: pin11FinalName,
+                    pin12Name: pin12FinalName)).toList();
       });
       for (int i = 0; i < namesDataList.length; i++) {
         if (pin1.contains('001') ||
@@ -3916,7 +4052,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {
       schedulePin = [];
       schedulePin = data.map((data) => ScheduledPin.fromJson(data)).toList();
-
     });
     if (kDebugMode) {
       print("Total Lenght -> ${schedulePin.length}");
@@ -3953,7 +4088,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     };
 
     final response =
-        await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
+    await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Token $token',
     });
@@ -4040,7 +4175,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       });
     } else {}
   }
-  String hintText="";
+
+  String hintText = "";
+
   _createAlertDialogForNameDeviceBox(context, index, dId) {
     return showDialog(
         context: context,
@@ -4084,11 +4221,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
             content: TextFormField(
               controller: pinNameController,
-              decoration:  InputDecoration(
+              decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(top: 14.0),
 
-                hintText:  hintText,
+                hintText: hintText,
                 // hintStyle: kHintTextStyle,
               ),
             ),
@@ -4386,120 +4523,120 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return submitClicked
         ? const Center(child: CircularProgressIndicator())
         : showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('Enter the Name of Floor'),
-                content: SizedBox(
-                  height: 320,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        autofocus: true,
-                        controller: floorEditing,
-                        textInputAction: TextInputAction.next,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        style: const TextStyle(
-                            fontSize: 18, color: Colors.black54),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.place),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Enter Floor Name',
-                          contentPadding: const EdgeInsets.all(15),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        autofocus: true,
-                        controller: flatEditing,
-                        textInputAction: TextInputAction.next,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        style: const TextStyle(
-                            fontSize: 18, color: Colors.black54),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.place),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Enter Flat Name',
-                          contentPadding: const EdgeInsets.all(15),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        autofocus: true,
-                        controller: roomEditingWithFloor,
-                        textInputAction: TextInputAction.next,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        style: const TextStyle(
-                            fontSize: 18, color: Colors.black54),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.place),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Enter Room Name',
-                          contentPadding: const EdgeInsets.all(15),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: MaterialButton(
-                          elevation: 5.0,
-                          child: const Text('Submit'),
-                          onPressed: () async {
-                            setState(() {
-                              submitClicked = true;
-                            });
-                            await addFloor(floorEditing.text);
-                            await addFlat2(flatEditing.text);
-                            Navigator.of(context).pop();
-                            await getAllCurrentFloor();
-                            await getAllFlatByAddedFloor();
-                            await getAllRoomByAddedFlat();
-                            setState(() {
-                              submitClicked = true;
-                            });
-                          },
-                        ),
-                      )
-                    ],
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Enter the Name of Floor'),
+            content: SizedBox(
+              height: 320,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 15,
                   ),
-                ),
-              );
-            });
+                  TextFormField(
+                    autofocus: true,
+                    controller: floorEditing,
+                    textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: const TextStyle(
+                        fontSize: 18, color: Colors.black54),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.place),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Enter Floor Name',
+                      contentPadding: const EdgeInsets.all(15),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    autofocus: true,
+                    controller: flatEditing,
+                    textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: const TextStyle(
+                        fontSize: 18, color: Colors.black54),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.place),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Enter Flat Name',
+                      contentPadding: const EdgeInsets.all(15),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    autofocus: true,
+                    controller: roomEditingWithFloor,
+                    textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: const TextStyle(
+                        fontSize: 18, color: Colors.black54),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.place),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Enter Room Name',
+                      contentPadding: const EdgeInsets.all(15),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      elevation: 5.0,
+                      child: const Text('Submit'),
+                      onPressed: () async {
+                        setState(() {
+                          submitClicked = true;
+                        });
+                        await addFloor(floorEditing.text);
+                        await addFlat2(flatEditing.text);
+                        Navigator.of(context).pop();
+                        await getAllCurrentFloor();
+                        await getAllFlatByAddedFloor();
+                        await getAllRoomByAddedFlat();
+                        setState(() {
+                          submitClicked = true;
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   allFloor() async {
@@ -4536,7 +4673,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
-  Future updatePinStatusDataInSeconds(String dId)async{
+
+  Future updatePinStatusDataInSeconds(String dId) async {
     var token = await getToken();
     var url = api + "getpostdevicePinStatus/?d_id=" + dId;
     final response = await http.get(Uri.parse(url), headers: {
@@ -4544,12 +4682,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       'Accept': 'application/json',
       'Authorization': 'Token $token',
     });
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       var ans = jsonDecode(response.body);
       DevicePinStatus pinStatus = DevicePinStatus.fromJson(ans);
       await AllDatabase.instance.updatePinStatusData(pinStatus);
       switchFuture = getPinStatusByDidLocal(dId);
-
     }
   }
 
@@ -4686,7 +4823,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   } else {
                                     setState(() {
                                       deleteFloorId = listOfAllFloor[index]
-                                              ['f_id']
+                                      ['f_id']
                                           .toString();
                                     });
                                     await deleteFloor(deleteFloorId);
@@ -4799,10 +4936,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   Widget deviceContainer(dId, index) {
     deviceIdForScroll = dId;
-
     return Container(
       color: Colors.transparent,
-      height: MediaQuery.of(context).size.height * 2.9,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height * 2.9,
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -4836,7 +4975,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         if (kDebugMode) {
                           print("hit");
                         }
-                    switchFuture = getPinStatusByDidLocal(dId.toString());
+                        switchFuture = getPinStatusByDidLocal(dId.toString());
                       },
                     ),
                   ),
@@ -4896,10 +5035,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ],
               ),
             ),
-           
+
             Container(
               color: Colors.transparent,
-              height: MediaQuery.of(context).size.height * 1.1,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 1.4,
               child: GridView.count(
                 crossAxisSpacing: 8,
                 childAspectRatio: 2 / 1.8,
@@ -4922,67 +5064,68 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           builder: (context) {
                             return StatefulBuilder(
                                 builder: (context, setModalState) {
-                              return Container(
-                                  padding: const EdgeInsets.all(32),
-                                  child: Column(children: [
-                                    SizedBox(
-                                      width: 145,
-                                      child: GestureDetector(
-                                          child: Text(
-                                            cutDate.toString(),
-                                          ),
-                                          onTap: () {
-                                            pickDate();
-                                          }),
-                                    ),
+                                  return Container(
+                                      padding: const EdgeInsets.all(32),
+                                      child: Column(children: [
+                                        SizedBox(
+                                          width: 145,
+                                          child: GestureDetector(
+                                              child: Text(
+                                                cutDate.toString(),
+                                              ),
+                                              onTap: () {
+                                                pickDate();
+                                              }),
+                                        ),
 
-                                    // ignore: deprecated_member_use
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        await pickTime(index);
-                                        setState(() {
-                                          _alarmTimeString = cutTime;
-                                        });
-                                      },
-                                      child: Text(
-                                        _alarmTimeString!,
-                                        style: const TextStyle(
-                                          fontSize: 32,
-                                        ),
-                                      ),
-                                    ),
-                                    const ListTile(
-                                      title: Text(
-                                        'What Do You Want ??',
-                                      ),
-                                      trailing: Icon(Icons.timer),
-                                    ),
-                                    Center(
-                                      child: ListTile(
-                                        title: ToggleSwitch(
-                                          minWidth: 100,
-                                          initialLabelIndex: 0,
-                                          labels: const ['Off', 'On'],
-                                          onToggle: (index) {
-                                            checkSwitch = index!;
+                                        // ignore: deprecated_member_use
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            await pickTime(index);
+                                            setState(() {
+                                              _alarmTimeString = cutTime;
+                                            });
                                           },
-                                          totalSwitches: 2,
+                                          child: Text(
+                                            _alarmTimeString!,
+                                            style: const TextStyle(
+                                              fontSize: 32,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    FloatingActionButton.extended(
-                                      onPressed: () async {
-                                        await schedulingDevicePin(dId, index);
-                                        Navigator.pop(context);
-                                      },
-                                      icon: const Icon(Icons.alarm),
-                                      label: const Text('Save'),
-                                    ),
-                                  ]));
-                            });
+                                        const ListTile(
+                                          title: Text(
+                                            'What Do You Want ??',
+                                          ),
+                                          trailing: Icon(Icons.timer),
+                                        ),
+                                        Center(
+                                          child: ListTile(
+                                            title: ToggleSwitch(
+                                              minWidth: 100,
+                                              initialLabelIndex: 0,
+                                              labels: const ['Off', 'On'],
+                                              onToggle: (index) {
+                                                checkSwitch = index!;
+                                              },
+                                              totalSwitches: 2,
+                                            ),
+                                          ),
+                                        ),
+                                        FloatingActionButton.extended(
+                                          onPressed: () async {
+                                            await schedulingDevicePin(
+                                                dId, index);
+                                            Navigator.pop(context);
+                                          },
+                                          icon: const Icon(Icons.alarm),
+                                          label: const Text('Save'),
+                                        ),
+                                      ]));
+                                });
                           });
                     },
-                 
+
                     child: Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Container(
@@ -5019,7 +5162,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         if (snapshot.data != null) {
                                           return TextButton(
                                             child: AutoSizeText(
-                                              '${namesDataList[index].toString()} ',
+                                              '${namesDataList[index]
+                                                  .toString()} ',
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 2,
                                               style: const TextStyle(
@@ -5029,7 +5173,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                             onPressed: () async {
                                               pinNameController.clear();
                                               setState(() {
-                                                hintText = namesDataList[index].toString();
+                                                hintText = namesDataList[index]
+                                                    .toString();
                                               });
                                               _createAlertDialogForNameDeviceBox(
                                                   context, index, dId);
@@ -5052,64 +5197,65 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               return loading[index]
                                                   ? loadingContainer()
                                                   : FlutterSwitch(
-                                                      activeText: "On",
-                                                      inactiveText: "Off",
-                                                      value: responseGetData[
-                                                                  index] ==
-                                                              0
-                                                          ? false
-                                                          : true,
-                                                      onToggle: (value) async {
-                                                        setState(() {
-                                                          loading[index] = true;
-                                                        });
+                                                  activeText: "On",
+                                                  inactiveText: "Off",
+                                                  value: responseGetData[
+                                                  index] ==
+                                                      0
+                                                      ? false
+                                                      : true,
+                                                  onToggle: (value) async {
+                                                    setState(() {
+                                                      loading[index] = true;
+                                                    });
 
-                                                        // if Internet is not available then _checkInternetConnectivity = true
-                                                        var result =
-                                                            await Connectivity()
-                                                                .checkConnectivity();
-                                                        if (result ==
-                                                            ConnectivityResult
-                                                                .none) {
-                                                          messageSms(
-                                                              context, dId);
-                                                        }
+                                                    // if Internet is not available then _checkInternetConnectivity = true
+                                                    var result =
+                                                    await Connectivity()
+                                                        .checkConnectivity();
+                                                    if (result ==
+                                                        ConnectivityResult
+                                                            .none) {
+                                                      messageSms(
+                                                          context, dId);
+                                                    }
 
-                                                        if (responseGetData[
-                                                                index] ==
-                                                            0) {
-                                                          setState(() {
-                                                            responseGetData[
-                                                                index] = 1;
-                                                          });
-                                                          await dataUpdate(dId);
-
-                                                          await getPinStatusData(
-                                                              dId);
-                                                          await getPinStatusByDidLocal(
-                                                              dId.toString());
-                                                          setState(() {
-                                                            loading[index] =
-                                                                false;
-                                                          });
-                                                        } else {
-                                                          setState(() {
-                                                            responseGetData[
-                                                                index] = 0;
-                                                          });
-                                                          await dataUpdate(dId).then((value) =>
-                                                              getPinStatusData(
-                                                                      dId)
-                                                                  .then((value) =>
-                                                                      getPinStatusByDidLocal(
-                                                                          dId
-                                                                          )));
-                                                          setState(() {
-                                                            loading[index] =
-                                                                false;
-                                                          });
-                                                        }
+                                                    if (responseGetData[
+                                                    index] ==
+                                                        0) {
+                                                      setState(() {
+                                                        responseGetData[
+                                                        index] = 1;
                                                       });
+                                                      await dataUpdate(dId);
+
+                                                      await getPinStatusData(
+                                                          dId);
+                                                      await getPinStatusByDidLocal(
+                                                          dId.toString());
+                                                      setState(() {
+                                                        loading[index] =
+                                                        false;
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        responseGetData[
+                                                        index] = 0;
+                                                      });
+                                                      await dataUpdate(dId)
+                                                          .then((value) =>
+                                                          getPinStatusData(
+                                                              dId)
+                                                              .then((value) =>
+                                                              getPinStatusByDidLocal(
+                                                                  dId
+                                                              )));
+                                                      setState(() {
+                                                        loading[index] =
+                                                        false;
+                                                      });
+                                                    }
+                                                  });
                                             } else {
                                               return Container();
                                             }
@@ -5125,11 +5271,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 }),
               ),
             ),
-   
+
             Column(
               children: [
                 Container(
-                  height: MediaQuery.of(context).size.height * 1.56,
+                  height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 1.72,
                   padding: const EdgeInsets.only(bottom: 776),
                   color: Colors.transparent,
                   child: GridView.count(
@@ -5151,7 +5300,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             margin: index % 2 == 0
                                 ? const EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5)
                                 : const EdgeInsets.fromLTRB(
-                                    7.5, 7.5, 15, 7.5),
+                                7.5, 7.5, 15, 7.5),
                             // margin: EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5),
                             decoration: BoxDecoration(
                                 boxShadow: const <BoxShadow>[
@@ -5181,7 +5330,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                 namesDataList[index + 9]
                                                     .toString(),
                                                 overflow:
-                                                    TextOverflow.ellipsis,
+                                                TextOverflow.ellipsis,
                                                 maxLines: 2,
                                                 style: const TextStyle(
                                                   fontSize: 10,
@@ -5191,7 +5340,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                 int newIndex = index + 9;
                                                 pinNameController.clear();
                                                 setState(() {
-                                                  hintText = namesDataList[newIndex].toString();
+                                                  hintText =
+                                                      namesDataList[newIndex]
+                                                          .toString();
                                                 });
                                                 _createAlertDialogForNameDeviceBox(
                                                     context, newIndex, dId);
@@ -5208,24 +5359,27 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                         builder: (context, snapshot) {
                                           if (snapshot.data != null) {
                                             return SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
+                                              width: MediaQuery
+                                                  .of(context)
+                                                  .size
+                                                  .width /
                                                   3.9,
                                               child: Slider(
                                                   value: double.parse(
                                                       responseGetData[
-                                                              index + 9]
+                                                      index + 9]
                                                           .toString()),
                                                   min: 0,
                                                   max: 10,
                                                   label:
-                                                      '${double.parse(responseGetData[index + 9].toString())}',
+                                                  '${double.parse(
+                                                      responseGetData[index + 9]
+                                                          .toString())}',
                                                   onChanged:
                                                       (onChanged) async {
                                                     setState(() {
                                                       responseGetData[
-                                                              index + 9] =
+                                                      index + 9] =
                                                           onChanged.round();
                                                     });
                                                     await dataUpdate(dId);
@@ -5240,7 +5394,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 GestureDetector(
                                     onTap: () {},
                                     child:
-                                        Icon(changeIcon[index] ?? Icons.add))
+                                    Icon(changeIcon[index] ?? Icons.add))
                               ],
                             )),
                       );
@@ -5249,7 +5403,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ],
             ),
-      
+
             const Divider()
           ],
         ),
@@ -5271,7 +5425,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ShowSSid(
+                        builder: (context) =>
+                            ShowSSid(
                               deviceId: dId,
                             )));
               },
@@ -5280,7 +5435,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 style: TextStyle(color: Colors.blue),
               ),
             ),
-           
+
             SimpleDialogOption(
               onPressed: () {
                 // timer!.cancel();
@@ -5288,7 +5443,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EmergencyNumber(
+                        builder: (context) =>
+                            EmergencyNumber(
                               deviceId: dId,
                             )));
               },
@@ -5316,28 +5472,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // dialog implementation
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Alert"),
-        content: const Text("Are your sure to delete this devices"),
-        actions: <Widget>[
-          // ignore: deprecated_member_use
-          ElevatedButton(
-              child: const Text("Yes"),
-              onPressed: () async {
-                await deleteDevice(rId, dId);
-                await getDevice(rId);
-                await deviceQueryFunc(tabbarState);
+      builder: (context) =>
+          AlertDialog(
+            title: const Text("Alert"),
+            content: const Text("Are your sure to delete this devices"),
+            actions: <Widget>[
+              // ignore: deprecated_member_use
+              ElevatedButton(
+                  child: const Text("Yes"),
+                  onPressed: () async {
+                    await deleteDevice(rId, dId);
+                    await getDevice(rId);
+                    await deviceQueryFunc(tabbarState);
 
-                Navigator.pop(context);
-              }),
-          // ignore: deprecated_member_use
-          ElevatedButton(
-              child: const Text("No"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-        ],
-      ),
+                    Navigator.pop(context);
+                  }),
+              // ignore: deprecated_member_use
+              ElevatedButton(
+                  child: const Text("No"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          ),
     );
   }
 
@@ -5580,7 +5737,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       };
     }
     final response =
-        await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
+    await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
       'Authorization': 'Token $token',
       'Content-Type': 'application/json; charset=UTF-8',
     });
@@ -5601,7 +5758,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
             content: Container(
               color: Colors.transparent,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               child: FutureBuilder(
                   future: pinScheduledFuture,
                   builder: (context, snapshot) {
@@ -5637,230 +5797,231 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               itemCount: 1,
                                               itemBuilder: (context, index) {
                                                 if (schedulePin[index]
-                                                            .pin1Status ==
-                                                        0 ||
+                                                    .pin1Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin1Status ==
+                                                        .pin1Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
-                                                     SizedBox(width: 17,),
-                                                      Text(schedulePin[index].pin1Status == 0
+                                                      SizedBox(width: 17,),
+                                                      Text(schedulePin[index]
+                                                          .pin1Status == 0
                                                           ? devicePin[index]
-                                                                  .pin1Name +
-                                                              " Off "
+                                                          .pin1Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin1Name +
-                                                              " On ")
+                                                          .pin1Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin2Status ==
-                                                        0 ||
+                                                    .pin2Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin2Status ==
+                                                        .pin2Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin2Status ==
-                                                              0
+                                                          .pin2Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin2Name +
-                                                              " Off "
+                                                          .pin2Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin2Name +
-                                                              " On ")
+                                                          .pin2Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin3Status ==
-                                                        0 ||
+                                                    .pin3Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin3Status ==
+                                                        .pin3Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin3Status ==
-                                                              0
+                                                          .pin3Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin3Name +
-                                                              " Off "
+                                                          .pin3Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin3Name +
-                                                              " On ")
+                                                          .pin3Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin4Status ==
-                                                        0 ||
+                                                    .pin4Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin4Status ==
+                                                        .pin4Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin4Status ==
-                                                              0
+                                                          .pin4Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin4Name +
-                                                              " Off "
+                                                          .pin4Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin4Name +
-                                                              " On ")
+                                                          .pin4Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin5Status ==
-                                                        0 ||
+                                                    .pin5Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin5Status ==
+                                                        .pin5Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin5Status ==
-                                                              0
+                                                          .pin5Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin5Name +
-                                                              " Off "
+                                                          .pin5Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin5Name +
-                                                              " On ")
+                                                          .pin5Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin6Status ==
-                                                        0 ||
+                                                    .pin6Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin6Status ==
+                                                        .pin6Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin6Status ==
-                                                              0
+                                                          .pin6Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin6Name +
-                                                              " Off "
+                                                          .pin6Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin6Name +
-                                                              " On ")
+                                                          .pin6Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin7Status ==
-                                                        0 ||
+                                                    .pin7Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin7Status ==
+                                                        .pin7Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin7Status ==
-                                                              0
+                                                          .pin7Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin7Name +
-                                                              " Off "
+                                                          .pin7Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin7Name +
-                                                              " On ")
+                                                          .pin7Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin8Status ==
-                                                        0 ||
+                                                    .pin8Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin8Status ==
+                                                        .pin8Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin8Status ==
-                                                              0
+                                                          .pin8Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin8Name +
-                                                              " Off "
+                                                          .pin8Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin8Name +
-                                                              " On ")
+                                                          .pin8Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin9Status ==
-                                                        0 ||
+                                                    .pin9Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin9Status ==
+                                                        .pin9Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin9Status ==
-                                                              0
+                                                          .pin9Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin9Name +
-                                                              " Off "
+                                                          .pin9Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin9Name +
-                                                              " On ")
+                                                          .pin9Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin10Status ==
-                                                        0 ||
+                                                    .pin10Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin10Status ==
+                                                        .pin10Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin10Status ==
-                                                              0
+                                                          .pin10Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin10Name +
-                                                              " Off "
+                                                          .pin10Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin10Name +
-                                                              " On ")
+                                                          .pin10Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin11Status ==
-                                                        0 ||
+                                                    .pin11Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin11Status ==
+                                                        .pin11Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin11Status ==
-                                                              0
+                                                          .pin11Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin11Name +
-                                                              " Off "
+                                                          .pin11Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin11Name +
-                                                              " On ")
+                                                          .pin11Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin12Status ==
-                                                        0 ||
+                                                    .pin12Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin12Status ==
+                                                        .pin12Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin12Status ==
-                                                              0
+                                                          .pin12Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin12Name +
-                                                              " Off "
+                                                          .pin12Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin12Name +
-                                                              " On ")
+                                                          .pin12Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 }
@@ -5887,42 +6048,44 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   _showDialog(String dId) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Alert"),
-        content: const Text("Would to like to turn off all the appliances ?"),
-        actions: <Widget>[
-          // ignore: deprecated_member_use
-          ElevatedButton(
-              child: const Text("Yes"),
-              onPressed: () async {
-                var result = await Connectivity().checkConnectivity();
-                if (result == ConnectivityResult.wifi) {
-                  responseGetData.replaceRange(0, responseGetData.length,
-                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                  await dataUpdate(dId);
+      builder: (context) =>
+          AlertDialog(
+            title: const Text("Alert"),
+            content: const Text(
+                "Would to like to turn off all the appliances ?"),
+            actions: <Widget>[
+              // ignore: deprecated_member_use
+              ElevatedButton(
+                  child: const Text("Yes"),
+                  onPressed: () async {
+                    var result = await Connectivity().checkConnectivity();
+                    if (result == ConnectivityResult.wifi) {
+                      responseGetData.replaceRange(0, responseGetData.length,
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                      await dataUpdate(dId);
 
-                  await getPinStatusData(dId);
-                  await getPinStatusByDidLocal(dId.toString());
-                } else if (result == ConnectivityResult.mobile) {
-                  responseGetData.replaceRange(0, responseGetData.length,
-                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                  await dataUpdate(dId);
-                  await getPinStatusData(dId);
-                  await getPinStatusByDidLocal(dId.toString());
-                } else {
-                  // messageSms(context, dId);
-                }
+                      await getPinStatusData(dId);
+                      await getPinStatusByDidLocal(dId.toString());
+                    } else if (result == ConnectivityResult.mobile) {
+                      responseGetData.replaceRange(0, responseGetData.length,
+                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                      await dataUpdate(dId);
+                      await getPinStatusData(dId);
+                      await getPinStatusByDidLocal(dId.toString());
+                    } else {
+                      // messageSms(context, dId);
+                    }
 
-                Navigator.of(context).pop();
-              }),
-          // ignore: deprecated_member_use
-          ElevatedButton(
-              child: const Text("No"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-        ],
-      ),
+                    Navigator.of(context).pop();
+                  }),
+              // ignore: deprecated_member_use
+              ElevatedButton(
+                  child: const Text("No"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          ),
     );
   }
 
@@ -6032,29 +6195,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // dialog implementation
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Alert"),
-        content: const Text("Are your sure to delete room with all devices"),
-        actions: <Widget>[
-          // ignore: deprecated_member_use
-          ElevatedButton(
-              child: const Text("Yes"),
-              onPressed: () async {
-                await deleteRoomWithAllDevice(rId);
-                Navigator.pop(context);
-                // await getRoomAfterDeletingRoom();
-                await roomQueryFunc(widget.flat!.fltId);
+      builder: (context) =>
+          AlertDialog(
+            title: const Text("Alert"),
+            content: const Text(
+                "Are your sure to delete room with all devices"),
+            actions: <Widget>[
+              // ignore: deprecated_member_use
+              ElevatedButton(
+                  child: const Text("Yes"),
+                  onPressed: () async {
+                    await deleteRoomWithAllDevice(rId);
+                    Navigator.pop(context);
+                    // await getRoomAfterDeletingRoom();
+                    await roomQueryFunc(widget.flat!.fltId);
 
-                // await getAllDevice();
-              }),
-          // ignore: deprecated_member_use
-          ElevatedButton(
-              child: const Text("No"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-        ],
-      ),
+                    // await getAllDevice();
+                  }),
+              // ignore: deprecated_member_use
+              ElevatedButton(
+                  child: const Text("No"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
+            ],
+          ),
     );
   }
 
@@ -6115,26 +6280,29 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         // timer!.cancel();
 
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const GettingStartedScreen()));
+            MaterialPageRoute(
+                builder: (context) => const GettingStartedScreen()));
       },
-    )..show();
+    )
+      ..show();
   }
 
   exitScreen() {
     // dialog implementation
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        content: const Text("Are you sure to want exit ??"),
-        actions: <Widget>[
-          ElevatedButton(onPressed: () {}, child: const Text("Yes")),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text("No")),
-        ],
-      ),
+      builder: (context) =>
+          AlertDialog(
+            content: const Text("Are you sure to want exit ??"),
+            actions: <Widget>[
+              ElevatedButton(onPressed: () {}, child: const Text("Yes")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("No")),
+            ],
+          ),
     );
   }
 
@@ -6151,7 +6319,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       btnOkOnPress: () async {
         exit(0);
       },
-    )..show();
+    )
+      ..show();
   }
 
   oops() {
@@ -6164,7 +6333,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       btnCancelOnPress: () {
         Navigator.of(context).pop();
       },
-    )..show();
+    )
+      ..show();
   }
 
   noInternet() {
@@ -6177,7 +6347,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       btnCancelOnPress: () {
         return null;
       },
-    )..show();
+    )
+      ..show();
   }
 
   loadingContainer() {
@@ -6201,7 +6372,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               style: TextStyle(fontSize: 20),
             ),
             content: SizedBox(
-              height: MediaQuery.of(context).size.height / 4.9,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 4.9,
               child: Column(
                 children: [
                   TextButton(
@@ -6307,7 +6481,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           return AlertDialog(
             title: const Text('Enter the Name of Flat'),
             content: SizedBox(
-              height: MediaQuery.of(context).size.height / 3.5,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 3.5,
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 // crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -6396,7 +6573,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       "f_id": widget.fl!.fId,
     };
     final response =
-        await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
+    await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
       'Authorization': 'Token $token',
       'Content-Type': 'application/json; charset=UTF-8',
     });
@@ -6472,7 +6649,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   } else {
                                     setState(() {
                                       deletedFlatId = listOfAllFlat[index]
-                                              ['flt_id']
+                                      ['flt_id']
                                           .toString();
                                     });
                                     await deleteFlat(deletedFlatId);
@@ -6567,7 +6744,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const ShowAndAddSubUser()));
+                                  const ShowAndAddSubUser()));
                         },
                       ),
                     ],
@@ -6616,8 +6793,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     if (response.statusCode == 200) {
       List<dynamic> ans = jsonDecode(response.body);
-      List<dynamic> getSubDataLocal = await AllDatabase.instance.getAllSUbAccess();
-      if(ans.length != getSubDataLocal.length ){
+      List<dynamic> getSubDataLocal = await AllDatabase.instance
+          .getAllSUbAccess();
+      if (ans.length != getSubDataLocal.length) {
         print("Not ");
         await AllDatabase.instance.deleteSubAccess();
 
@@ -6627,16 +6805,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           print("insert $allgetSubUsers ");
 
           await AllDatabase.instance.insertSubAccess(query);
-          List<dynamic> getSubDataLocal1 = await AllDatabase.instance.getAllSUbAccess();
+          List<dynamic> getSubDataLocal1 = await AllDatabase.instance
+              .getAllSUbAccess();
           print("insert   ${getSubDataLocal1}");
           await getPlaceNameSubAccess();
         }
-      }else{
+      } else {
         print("Else");
 
         await getPlaceNameSubAccess();
       }
-
     } else {
       if (kDebugMode) {
         print(response.statusCode);
@@ -6660,15 +6838,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       if (response.statusCode == 200) {
         List ans = jsonDecode(response.body);
 
-        for(int i=0;i<ans.length;i++){
+        for (int i = 0; i < ans.length; i++) {
           listAllPlaceData.add(ans[i]);
         }
 
 
-
         print("ans $listAllPlaceData");
-
-
       } else {
         if (kDebugMode) {
           print(response.body);
@@ -6678,31 +6853,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     List<dynamic> ans = await AllDatabase.instance.getAllPlacesSubAccess();
     print("allData $ans");
 
-    if(listAllPlaceData.length != ans.length){
+    if (listAllPlaceData.length != ans.length) {
       await AllDatabase.instance.deleteAllPlacesSubAccess();
       for (int i = 0; i < listAllPlaceData.length; i++) {
-         var place = SubAccessPlace.fromJson(listAllPlaceData[i]);
+        var place = SubAccessPlace.fromJson(listAllPlaceData[i]);
         await AllDatabase.instance.insertAllPlacesSubAccess(place);
       }
       List<dynamic> ans1 = await AllDatabase.instance.getAllPlacesSubAccess();
       print("allData $ans1");
 
       await getAllFloorSubAccess();
-    }else{
+    } else {
       await getAllFloorSubAccess();
-
     }
-
-
-
-
-
   }
 
   Future getAllFloorSubAccess() async {
     String? token = await getToken();
-    List<dynamic> allPlacegetSubUsers = await AllDatabase.instance.getAllPlacesSubAccess();
-    var allFloorgetSubUsers = List.empty(growable:true);
+    List<dynamic> allPlacegetSubUsers = await AllDatabase.instance
+        .getAllPlacesSubAccess();
+    var allFloorgetSubUsers = List.empty(growable: true);
     for (int i = 0; i < allPlacegetSubUsers.length; i++) {
       var placeId = allPlacegetSubUsers[i]['p_id'].toString();
       final url = api + 'getallfloorsbyonlyplaceidp_id/?p_id=' + placeId;
@@ -6719,32 +6889,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         if (kDebugMode) {
           print("AllFloorSubAccess $allFloorgetSubUsers");
         }
-
       } else {
         if (kDebugMode) {
           print(response.statusCode);
           print(response.body);
         }
       }
-      List<dynamic> allFloorLocal = await AllDatabase.instance.getAllFloorSubAccess();
-      if(allFloorLocal.length != allFloorgetSubUsers.length){
+      List<dynamic> allFloorLocal = await AllDatabase.instance
+          .getAllFloorSubAccess();
+      if (allFloorLocal.length != allFloorgetSubUsers.length) {
         await AllDatabase.instance.deleteAllFloorSubAccess();
-        for(int i=0;i<allFloorgetSubUsers.length;i++){
+        for (int i = 0; i < allFloorgetSubUsers.length; i++) {
           var subAccessFloor = SubAccessFloor.fromJson(allFloorgetSubUsers[i]);
           await AllDatabase.instance.insertAllFloorsSubAccess(subAccessFloor);
         }
         await getAllFlatSubAccess();
-      }else{
+      } else {
         await getAllFlatSubAccess();
       }
-
     }
   }
 
   Future getAllFlatSubAccess() async {
     String? token = await getToken();
-    List<dynamic> allFloorgetSubUsers = await AllDatabase.instance.getAllFloorSubAccess();
-    var allFlatgetSubUsers = List.empty(growable:true);
+    List<dynamic> allFloorgetSubUsers = await AllDatabase.instance
+        .getAllFloorSubAccess();
+    var allFlatgetSubUsers = List.empty(growable: true);
     for (int i = 0; i < allFloorgetSubUsers.length; i++) {
       var fId = allFloorgetSubUsers[i]['f_id'].toString();
       var url = api + 'getallflatbyonlyflooridf_id/?f_id=' + fId;
@@ -6757,9 +6927,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         List<dynamic> ans = jsonDecode(response.body);
         for (int i = 0; i < ans.length; i++) {
           allFlatgetSubUsers.add(ans[i]);
-
         }
-
       } else {
         if (kDebugMode) {
           print(response.statusCode);
@@ -6767,25 +6935,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
       }
     }
-    List<dynamic> allFlatLocal = await AllDatabase.instance.getAllFlatSubAccess();
-    if(allFlatLocal.length != allFlatgetSubUsers.length){
+    List<dynamic> allFlatLocal = await AllDatabase.instance
+        .getAllFlatSubAccess();
+    if (allFlatLocal.length != allFlatgetSubUsers.length) {
       await AllDatabase.instance.deleteAllFlatSubAccess();
 
-      for(int i=0;i<allFlatgetSubUsers.length;i++){
+      for (int i = 0; i < allFlatgetSubUsers.length; i++) {
         var subAccessFlat = SubAccessFlat.fromJson(allFlatgetSubUsers[i]);
         await AllDatabase.instance.insertAllFlatSubAccess(subAccessFlat);
       }
       await getAllRoomSubAccess();
-    }else{
-
+    } else {
       await getAllRoomSubAccess();
     }
   }
 
   Future getAllRoomSubAccess() async {
     String? token = await getToken();
-    List<dynamic> allFlatgetSubUsers = await AllDatabase.instance.getAllFlatSubAccess();
-    var allRoomgetSubUsers = List.empty(growable:true);
+    List<dynamic> allFlatgetSubUsers = await AllDatabase.instance
+        .getAllFlatSubAccess();
+    var allRoomgetSubUsers = List.empty(growable: true);
     for (int i = 0; i < allFlatgetSubUsers.length; i++) {
       var flatId = allFlatgetSubUsers[i]['flt_id'].toString();
       var url = api + 'getallroomsbyonlyflooridf_id/?flt_id=' + flatId;
@@ -6797,10 +6966,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       if (response.statusCode == 200) {
         List ans = jsonDecode(response.body);
 
-        for(int i=0;i<ans.length;i++){
+        for (int i = 0; i < ans.length; i++) {
           allRoomgetSubUsers.add(ans[i]);
         }
-
       } else {
         if (kDebugMode) {
           print(response.statusCode);
@@ -6808,34 +6976,28 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
       }
     }
-      List<dynamic> allRoomLocal = await AllDatabase.instance.getAllRoomSubAccess();
+    List<dynamic> allRoomLocal = await AllDatabase.instance
+        .getAllRoomSubAccess();
 
-    if(allRoomLocal.length != allRoomgetSubUsers.length){
+    if (allRoomLocal.length != allRoomgetSubUsers.length) {
       await AllDatabase.instance.deleteAllRoomSubAccess();
       for (int i = 0; i < allRoomgetSubUsers.length; i++) {
-
         var subAccessRoom = SubAccessRoom.fromJson(allRoomgetSubUsers[i]);
         await AllDatabase.instance.insertAllRoomSubAccess(subAccessRoom);
       }
 
       await getAllDeviceSubAccess();
-    }else{
-
+    } else {
       await getAllDeviceSubAccess();
     }
-
-
-
-
-
-
   }
 
   Future getAllDeviceSubAccess() async {
     String? token = await getToken();
-    List<dynamic> allRoomgetSubUsers = await AllDatabase.instance.getAllRoomSubAccess();
-    var allDeviceData = List.empty(growable:true);
-    var allDevicegetSubUsers = List.empty(growable:true);
+    List<dynamic> allRoomgetSubUsers = await AllDatabase.instance
+        .getAllRoomSubAccess();
+    var allDeviceData = List.empty(growable: true);
+    var allDevicegetSubUsers = List.empty(growable: true);
     for (int i = 0; i < allRoomgetSubUsers.length; i++) {
       var rId = allRoomgetSubUsers[i]['r_id'].toString();
       var url = api + 'getalldevicesbyonlyroomidr_id/?r_id=' + rId;
@@ -6849,7 +7011,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           print("getLdevice ${response.body}");
         }
         List<dynamic> ans = jsonDecode(response.body);
-        for(int i=0;i<ans.length;i++){
+        for (int i = 0; i < ans.length; i++) {
           allDevicegetSubUsers.add(ans[i]);
         }
       } else {
@@ -6859,25 +7021,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
       }
     }
-      List getAllDeviceSubAccessList = await AllDatabase.instance.getAllDeviceSubAccess();
-    if(getAllDeviceSubAccessList.length != allDevicegetSubUsers.length){
+    List getAllDeviceSubAccessList = await AllDatabase.instance
+        .getAllDeviceSubAccess();
+    if (getAllDeviceSubAccessList.length != allDevicegetSubUsers.length) {
       await AllDatabase.instance.deleteAllDeviceSubAccess();
       for (int i = 0; i < allDevicegetSubUsers.length; i++) {
-
         var subAccessDevice = SubAccessDevice.fromJson(allDevicegetSubUsers[i]);
         await AllDatabase.instance.insertAllDeviceSubAccess(subAccessDevice);
       }
     }
-    List getAllDeviceSubAccessList1 = await AllDatabase.instance.getAllDeviceSubAccess();
+    List getAllDeviceSubAccessList1 = await AllDatabase.instance
+        .getAllDeviceSubAccess();
     print("OUT OF IF $getAllDeviceSubAccessList1");
 
     await getAllPinStatusSubAcess();
   }
 
   Future getAllPinStatusSubAcess() async {
-
     String? token = await getToken();
-    List allDevicegetSubUsers = await AllDatabase.instance.getAllDeviceSubAccess();
+    List allDevicegetSubUsers = await AllDatabase.instance
+        .getAllDeviceSubAccess();
     var allDevicePinStatusList = List.empty(growable: true);
     for (int i = 0; i < allDevicegetSubUsers.length; i++) {
       var dId = allDevicegetSubUsers[i]['d_id'];
@@ -6900,24 +7063,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
       }
     }
-    List<dynamic> pinStatusLocal = await AllDatabase.instance.subAccessGetAllPinStatus();
-    if(allDevicePinStatusList.length != pinStatusLocal.length){
+    List<dynamic> pinStatusLocal = await AllDatabase.instance
+        .subAccessGetAllPinStatus();
+    if (allDevicePinStatusList.length != pinStatusLocal.length) {
       await AllDatabase.instance.deleteAllDevicePinStatusSubAccess();
 
       for (int i = 0; i < allDevicePinStatusList.length; i++) {
-        var devicePinStatus = DevicePinStatus.fromJson(allDevicePinStatusList[i]);
+        var devicePinStatus = DevicePinStatus.fromJson(
+            allDevicePinStatusList[i]);
         await AllDatabase.instance
             .insertAllDevicePinStatusSubAccess(devicePinStatus);
       }
       await getAllPinNameSubAccess();
     }
     await getAllPinNameSubAccess();
-
   }
 
   Future getAllPinNameSubAccess() async {
     String? token = await getToken();
-    List allDevicegetSubUsers = await AllDatabase.instance.getAllDeviceSubAccess();
+    List allDevicegetSubUsers = await AllDatabase.instance
+        .getAllDeviceSubAccess();
     var allDevicePinNameList = List.empty(growable: true);
     for (int i = 0; i < allDevicegetSubUsers.length; i++) {
       var did = allDevicegetSubUsers[i]['d_id'];
@@ -6928,24 +7093,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         'Authorization': 'Token $token',
       });
       if (response.statusCode == 200) {
-
         var ans = jsonDecode(response.body);
 
         allDevicePinNameList.add(ans);
         print("allDevicePinNameList $allDevicePinNameList");
-
       } else {
         if (kDebugMode) {
           print(response.statusCode);
         }
       }
     }
-    List <dynamic> getAllPinName = await AllDatabase.instance.getAllPinNameSubAccess();
+    List <dynamic> getAllPinName = await AllDatabase.instance
+        .getAllPinNameSubAccess();
     print("getAllPinName $getAllPinName");
-    if(allDevicePinNameList.length != getAllPinName.length){
+    if (allDevicePinNameList.length != getAllPinName.length) {
       await AllDatabase.instance.deleteAllDevicePinNameSubAccess();
       for (int i = 0; i < allDevicePinNameList.length; i++) {
-        var devicePinNamesQuery = DevicePinName.fromJson(allDevicePinNameList[i]);
+        var devicePinNamesQuery = DevicePinName.fromJson(
+            allDevicePinNameList[i]);
         await AllDatabase.instance
             .insertAllDevicePinNameSubAccess(devicePinNamesQuery);
       }
@@ -6969,78 +7134,80 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     // dialog implementation
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        content: const Text("Enter your Mobile Number"),
-        actions: <Widget>[
-          // ignore: deprecated_member_use
-          Form(
-            key: formKey,
-            child: TextFormField(
-              autofocus: true,
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.next,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              controller: phoneController,
-              // onSaved: (String value) {
-              //   phone = value;
-              // },
-              style: const TextStyle(fontSize: 18, color: Colors.black54),
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.phone_android),
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'Enter your Contact',
-                errorStyle: const TextStyle(),
-                focusedErrorBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.red),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.red),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                contentPadding: const EdgeInsets.all(15),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(50),
+      builder: (context) =>
+          AlertDialog(
+            content: const Text("Enter your Mobile Number"),
+            actions: <Widget>[
+              // ignore: deprecated_member_use
+              Form(
+                key: formKey,
+                child: TextFormField(
+                  autofocus: true,
+                  keyboardType: TextInputType.phone,
+                  textInputAction: TextInputAction.next,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: phoneController,
+                  // onSaved: (String value) {
+                  //   phone = value;
+                  // },
+                  style: const TextStyle(fontSize: 18, color: Colors.black54),
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.phone_android),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: 'Enter your Contact',
+                    errorStyle: const TextStyle(),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.red),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.red),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    contentPadding: const EdgeInsets.all(15),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.white),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          // ignore: deprecated_member_use
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
               // ignore: deprecated_member_use
-              ElevatedButton(
-                  child: const Text("Submit"),
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      var mobile = phoneController.text;
-                      _setTempNumber(mobile);
-                      // timer!.cancel();
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // ignore: deprecated_member_use
+                  ElevatedButton(
+                      child: const Text("Submit"),
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          var mobile = phoneController.text;
+                          _setTempNumber(mobile);
+                          // timer!.cancel();
 
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ListOfTempAccessPage(
-                                    mobileNumber: mobile,
-                                  )));
-                    }
-                  }),
-              ElevatedButton(
-                  child: const Text("Cancel"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  }),
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ListOfTempAccessPage(
+                                        mobileNumber: mobile,
+                                      )));
+                        }
+                      }),
+                  ElevatedButton(
+                      child: const Text("Cancel"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      }),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
     );
   }
 
