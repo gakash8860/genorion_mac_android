@@ -79,7 +79,6 @@ class _MyAppState extends State<MyApp> {
               android: AndroidNotificationDetails(
                 channel.id,
                 channel.name,
-
                 color: Colors.blue,
                 playSound: true,
                 icon: '@mipmap/ic_launcher',
