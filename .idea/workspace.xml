@@ -13,32 +13,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Scenes">
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Scenes/scenehome.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Scenes/scenehome.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/favicon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/icons/Icon-192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/icons/Icon-512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/icons/Icon-maskable-192.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/icons/Icon-maskable-512.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/splash/img/dark-1x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/splash/img/dark-2x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/splash/img/dark-3x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/splash/img/dark-4x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/splash/img/light-1x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/splash/img/light-2x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/splash/img/light-3x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/splash/img/light-4x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/splash/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/android/build.gradle">
+          <activation />
+        </task>
+        <projects_view />
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -383,7 +374,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664383123747</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="add scene func">
+      <created>1664384784462</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1664384784462</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -409,7 +407,8 @@
     <MESSAGE value="Scheduled Pin" />
     <MESSAGE value="Hint Text" />
     <MESSAGE value="Scenes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Scenes" />
+    <MESSAGE value="add scene func" />
+    <option name="LAST_COMMIT_MESSAGE" value="add scene func" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

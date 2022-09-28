@@ -1077,7 +1077,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                                             Row(
                                                                           children: [
                                                                             const Text(
-                                                                              'Floor -> ',
+                                                                              'Floor ',
                                                                               style: TextStyle(
                                                                                 color: Colors.white,
                                                                                 fontSize: 22,
@@ -1151,7 +1151,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                                                 Row(
                                                                               children: [
                                                                                 const Text(
-                                                                                  'Flat -> ',
+                                                                                  'Flat ',
                                                                                   style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
                                                                                 ),
                                                                                 Text(
