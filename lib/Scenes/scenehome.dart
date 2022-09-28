@@ -11,9 +11,18 @@ class SceneHome extends StatefulWidget {
 
 class _SceneHomeState extends State<SceneHome> {
   TextEditingController sceneNameController = TextEditingController();
+
+
+  @override
+  void dispose() {
+
+    super.dispose();
+    sceneNameController.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff121421),
       appBar: AppBar(
         title: Text("Scenes"),
 
@@ -40,7 +49,7 @@ class _SceneHomeState extends State<SceneHome> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('Enter the Name of Room'),
+            title: const Text('Enter the Name of Scene'),
             content: TextFormField(
               autofocus: true,
               controller: sceneNameController,
@@ -78,6 +87,9 @@ class _SceneHomeState extends State<SceneHome> {
             ],
           );
         });
+  }
+  Future<void> addScene()async{
+
   }
 
 }
