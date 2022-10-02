@@ -1,5 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-
+import 'package:genorion_mac_android/ProfilePage/utility.dart';
+import 'package:genorion_mac_android/Scenes/scenedetails.dart';
+import 'package:http/http.dart' as http;
+import '../Models/scenemodel.dart';
+import '../main.dart';
 
 
 class SceneHome extends StatefulWidget {
@@ -11,14 +16,23 @@ class SceneHome extends StatefulWidget {
 
 class _SceneHomeState extends State<SceneHome> {
   TextEditingController sceneNameController = TextEditingController();
+  Future? sceneFuture;
+  List<SceneModel> scenesList = [];
 
 
   @override
-  void dispose() {
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sceneFuture = getScene();
+  }
 
+  @override
+  void dispose() {
     super.dispose();
     sceneNameController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +43,51 @@ class _SceneHomeState extends State<SceneHome> {
       ),
 
       body: Container(
+        color: Colors.transparent,
+        width: MediaQuery
+            .of(context)
+            .size
+            .width,
+        child: FutureBuilder(
+            future: sceneFuture,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                    itemCount: scenesList.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Card(
+                          semanticContainer: true,
+                          shadowColor: Colors.grey,
+                          child: Column(
+                            children: [
+                              ListTile(
+                                  title: Text(
+                                    scenesList[index].sceneType.toString(),
+                                    style: const TextStyle(fontSize: 12),
+                                  ),
 
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SceneDetails(
+                                                    sceneName: scenesList[index]
+                                                        .sceneType.toString(),
+                                                  sceneId: scenesList[index].sceneId,
+                                                )));
+                                  }),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            }),
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
@@ -40,8 +98,6 @@ class _SceneHomeState extends State<SceneHome> {
       ),
     );
   }
-
-
 
 
   _createAlertDialogForScene() {
@@ -57,7 +113,7 @@ class _SceneHomeState extends State<SceneHome> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               style: const TextStyle(fontSize: 18, color: Colors.black54),
               decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.place),
+                prefixIcon: const Icon(Icons.heat_pump_sharp),
                 filled: true,
                 fillColor: Colors.white,
                 hintText: 'Enter Scene Name',
@@ -79,7 +135,7 @@ class _SceneHomeState extends State<SceneHome> {
                   elevation: 5.0,
                   child: const Text('Submit'),
                   onPressed: () async {
-
+                    await addScene(sceneNameController.text);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -88,8 +144,54 @@ class _SceneHomeState extends State<SceneHome> {
           );
         });
   }
-  Future<void> addScene()async{
 
+
+  Future<void> addScene(String sceneName) async {
+    String? token = await Utility.getToken();
+    int userId = await Utility.getUidShared();
+    print("TOKEEE $token");
+    print("WREQWEDFSE ${userId}");
+    var url = api + 'scenedetail/';
+    Map data = {
+      "user": userId,
+      "scene_type": sceneName
+    };
+
+    final response =
+    await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Token $token',
+    });
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print("response.body ${response.body}");
+      sceneFuture = getScene();
+    } else {
+      print(response.statusCode);
+    }
+  }
+
+  Future<bool> getScene() async {
+    String? token = await Utility.getToken();
+    int userId = await Utility.getUidShared();
+    print("TOKEEE $token");
+    print("WREQWEDFSE ${userId}");
+    var url = api + 'scenedetail/?user=' + userId.toString();
+    final response =
+    await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Token $token',
+    });
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print("Scene Details : ${response.body}");
+      List data = jsonDecode(response.body);
+      setState(() {
+        scenesList = data.map((data) => SceneModel.fromJson(data)).toList();
+      });
+      return true;
+    } else {
+      print(response.statusCode);
+    }
+    return false;
   }
 
 }

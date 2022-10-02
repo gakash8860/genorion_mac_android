@@ -224,16 +224,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     setState(() {
       _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
-      deviceIdForScroll = widget.dv[0].dId.toString();
+
       tabbarState = widget.rm![0].rId;
     });
 
-    timer = Timer.periodic(Duration(seconds: 3), (timer) {
-      // You can also call here any function.
-      setState(() {
-        updatePinStatusDataInSeconds(deviceIdForScroll);
-      });
-    });
+
 
     tabC = TabController(length: widget.rm!.length, vsync: this);
     refreshImages();
@@ -267,11 +262,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     getUidShared();
     placeVal = placeQueryFunc();
     if (widget.dv.isNotEmpty) {
+      deviceIdForScroll = widget.dv[0].dId.toString();
       getPinStatusData(widget.dv[0].dId.toString());
       switchFuture = getPinStatusByDidLocal(widget.dv[0].dId);
       updatePinNamesGet(widget.dv[0].dId);
       nameFuture = getPinNameByLocal(widget.dv[0].dId, 0);
       fcmTokenGet(widget.dv[0].dId);
+      timer = Timer.periodic(Duration(seconds: 3), (timer) {
+        // You can also call here any function.
+        setState(() {
+          updatePinStatusDataInSeconds(deviceIdForScroll);
+        });
+      });
     }
   }
 
@@ -994,7 +996,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         ),
                         placeBool
                             ? changePlace()
-                            : changeFloorBool
+                              : changeFloorBool
                                 ? changeFloor()
                                 : changeFlatBool
                                     ? changeFlat()
@@ -1637,6 +1639,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     setState(() {
       getUidVariable2 = a!;
     });
+    return getUidVariable2;
   }
 
   Future<void> getrooms(String fltid) async {
@@ -1886,7 +1889,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     } else {
       print("RESSSSSEEEE ${response.statusCode}");
       await updateFirebaseToken(fcmToken, dId);
-      throw Exception('Failed to create Device.');
+      return;
     }
   }
 
@@ -1905,7 +1908,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return;
     } else {
-      throw Exception('Failed to create Device.');
+      return;
     }
   }
 

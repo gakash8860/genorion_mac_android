@@ -4,12 +4,16 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const IMAGE_KEY = 'IMAGE_KEY';
 
 class Utility {
+
+
+
   static Future<bool> saveImage(String value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     return preferences.setString(IMAGE_KEY, value);
@@ -42,5 +46,18 @@ class Utility {
     } else {
       throw 'Could not launch $url';
     }
+  }
+
+  static Future<String?> getToken() async {
+    final storage = const FlutterSecureStorage();
+    final token = await storage.read(key: "token");
+
+    return token;
+  }
+ static Future<int> getUidShared() async {
+     final prefs = await SharedPreferences.getInstance();
+    final id = prefs.getInt("uid");
+    int userId = id!;
+    return userId;
   }
 }
