@@ -1,13 +1,9 @@
 import 'dart:convert';
-import 'dart:ffi';
-
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:genorion_mac_android/Models/devicemodel.dart';
-import 'package:genorion_mac_android/Models/pinname.dart';
 import 'package:http/http.dart' as http;
 import 'package:toggle_switch/toggle_switch.dart';
-
 import '../LocalDatabase/alldb.dart';
 import '../Models/flatmodel.dart';
 import '../Models/floormodel.dart';
@@ -56,9 +52,9 @@ class _SceneDetailsState extends State<SceneDetails> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     placeVal = placeQueryFunc();
+    getScene();
   }
 
   @override
@@ -80,7 +76,7 @@ class _SceneDetailsState extends State<SceneDetails> {
         child: Icon(Icons.add),
         onPressed: () {
           setState(() {
-            placeBool = !placeBool;
+            placeBool = true;
             placeremove = true;
           });
         },
@@ -821,45 +817,48 @@ class _SceneDetailsState extends State<SceneDetails> {
   }
 
   Widget selectTime(){
-    return Container(
-        padding: const EdgeInsets.all(32),
-        child: Column(children: [
-          const ListTile(
-            title: Text(
-              'What Do You Want ??',
+    return Card(
+      child: Container(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+              children: [
+            const ListTile(
+              title: Text(
+                'What Do You Want ??',
+              ),
+              trailing: Icon(Icons.timer),
             ),
-            trailing: Icon(Icons.timer),
-          ),
-          Center(
-            child: ListTile(
-              title: slider?Slider(
-                  value: 10,
-                  min: 0,
-                  max: 10,
-                  onChanged: (onChanged) async {
-                    setState(() {
-                      sliderValue = onChanged.round();
-                    });
-                  }): ToggleSwitch(
-                minWidth: 100,
-                initialLabelIndex: 0,
-                labels: const ['Off', 'On'],
-                onToggle: (index) {
-                  sliderValue = index!;
-                },
-                totalSwitches: 2,
+            Center(
+              child: ListTile(
+                title: slider?Slider(
+                    value: 10,
+                    min: 0,
+                    max: 10,
+                    onChanged: (onChanged) async {
+                      setState(() {
+                        sliderValue = onChanged.round();
+                      });
+                    }): ToggleSwitch(
+                  minWidth: 100,
+                  initialLabelIndex: 0,
+                  labels: const ['Off', 'On'],
+                  onToggle: (index) {
+                    sliderValue = index!;
+                  },
+                  totalSwitches: 2,
+                ),
               ),
             ),
-          ),
-          FloatingActionButton.extended(
-            onPressed: () async {
-             await addSceneDetails();
+            FloatingActionButton.extended(
+              onPressed: () async {
+               await addSceneDetails();
 
-            },
-            icon: const Icon(Icons.alarm),
-            label: const Text('Save'),
-          ),
-        ]));
+              },
+              icon: const Icon(Icons.alarm),
+              label: const Text('Save'),
+            ),
+          ])),
+    );
   }
 
 
@@ -882,6 +881,11 @@ class _SceneDetailsState extends State<SceneDetails> {
     });
     if (response.statusCode == 201 || response.statusCode == 200) {
       print("response.body ${response.body}");
+      setState(() {
+        placeBool = false;
+        showOnOffOption = false;
+      });
+      successFull();
 
     } else {
       print(response.statusCode);
@@ -889,6 +893,42 @@ class _SceneDetailsState extends State<SceneDetails> {
     }
   }
 
+  Future<bool> getScene() async {
+    String? token = await Utility.getToken();
+    int userId = await Utility.getUidShared();
+    print("TOKEEE $token");
+    print("WREQWEDFSE ${userId}");
+    var url = api + 'scenedevice/?scenedevices_id=' + widget.sceneId;
+    final response =
+    await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Token $token',
+    });
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print("Scene Details : ${response.body}");
+      List data = jsonDecode(response.body);
+      setState(() {
+        // scenesList = data.map((data) => SceneModel.fromJson(data)).toList();
+      });
+      return true;
+    } else {
+      print(response.statusCode);
+    }
+    return false;
+  }
+
+
+
+  successFull() {
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.SUCCES,
+      animType: AnimType.BOTTOMSLIDE,
+      title: 'Success',
+      desc: 'Data has been successfully saved..',
+
+    )..show();
+  }
 
 
 
