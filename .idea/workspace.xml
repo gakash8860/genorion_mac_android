@@ -12,14 +12,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="add scene func">
-      <change afterPath="$PROJECT_DIR$/lib/Models/scenemodel.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/Scenes/scenedetails.dart" afterDir="false" />
+    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="add scene Details">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/ProfilePage/utility.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ProfilePage/utility.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Scenes/scenehome.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Scenes/scenehome.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Scenes/scenedetails.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Scenes/scenedetails.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -393,7 +390,14 @@
       <option name="project" value="LOCAL" />
       <updated>1664387598947</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="add scene Details">
+      <created>1664707232664</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1664707232665</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -420,17 +424,8 @@
     <MESSAGE value="Hint Text" />
     <MESSAGE value="Scenes" />
     <MESSAGE value="add scene func" />
-    <option name="LAST_COMMIT_MESSAGE" value="add scene func" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
-          <url>file://$PROJECT_DIR$/lib/AddPlace/addplace.dart</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="add scene Details" />
+    <option name="LAST_COMMIT_MESSAGE" value="add scene Details" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:genorion_mac_android/Models/devicemodel.dart';
 import 'package:genorion_mac_android/Models/pinname.dart';
 import 'package:http/http.dart' as http;
+import 'package:toggle_switch/toggle_switch.dart';
 
 import '../LocalDatabase/alldb.dart';
 import '../Models/flatmodel.dart';
@@ -43,9 +44,15 @@ class _SceneDetailsState extends State<SceneDetails> {
   PlaceType? pt;
   FloorType? fl;
   FlatType? flt;
+  String selectedDeviceId="";
+  String selectedPinName="";
   List <String>pinName = [];
   List <String>namesDataList = [];
   bool placeremove = false;
+  bool slider = false;
+  int sliderValue = 0;
+
+  bool showOnOffOption = false ;
 
   @override
   void initState() {
@@ -60,7 +67,15 @@ class _SceneDetailsState extends State<SceneDetails> {
       appBar: AppBar(
         title: Text(widget.sceneName.toString()),
       ),
-      body: placeBool ? changePlace() : Container(),
+      body: Container(
+        child: Column(
+          children: [
+            placeBool ? changePlace() : Container(),
+            showOnOffOption?selectTime():Container()
+          ],
+        ),
+      ),
+
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
@@ -123,31 +138,6 @@ class _SceneDetailsState extends State<SceneDetails> {
     return deviceType;
   }
 
-  // Future<List<String>> devicePinQueryFunc(id) async {
-  //   List data = await AllDatabase.instance.getPinNamesByDeviceId(id);
-  //   List<DevicePinName> deviceType = [];
-  //   setState(() {
-  //     deviceType = data.map((data) => DevicePinName.fromJson(data)).toList();
-  //     pinName = [
-  //       deviceType[0].pin1Name,
-  //       deviceType[0].pin2Name,
-  //       deviceType[0].pin3Name,
-  //       deviceType[0].pin4Name,
-  //       deviceType[0].pin5Name,
-  //       deviceType[0].pin6Name,
-  //       deviceType[0].pin7Name,
-  //       deviceType[0].pin8Name,
-  //       deviceType[0].pin9Name,
-  //       deviceType[0].pin10Name,
-  //
-  //     ];
-  //
-  //   });
-  //   print("pinName[0] ${pinName[0]}");
-  //
-  //
-  //   return pinName;
-  // }
 
 
 
@@ -695,6 +685,7 @@ class _SceneDetailsState extends State<SceneDetails> {
                                                       setState(() {
                                                         deviceBool = false;
                                                         pinBoolBool = true;
+                                                        selectedDeviceId = selectDevice!.dId.toString();
                                                         devicePinNameVal =
                                                             devicePinQueryFunc(
                                                                 selectDevice!
@@ -784,7 +775,7 @@ class _SceneDetailsState extends State<SceneDetails> {
                                   Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text(
-                                  'Select Device'),
+                                  'Select Device Pin Name'),
                               isExpanded: true,
                               style: const TextStyle(
                                 color: Colors.black,
@@ -801,6 +792,9 @@ class _SceneDetailsState extends State<SceneDetails> {
                                 setState(() {
                                   deviceBool = false;
                                   pinBoolBool = true;
+                                  selectedPinName = selectDevice!;
+
+                                  showOnOffOption = true;
 
                                 });
                               },
@@ -826,19 +820,59 @@ class _SceneDetailsState extends State<SceneDetails> {
     );
   }
 
+  Widget selectTime(){
+    return Container(
+        padding: const EdgeInsets.all(32),
+        child: Column(children: [
+          const ListTile(
+            title: Text(
+              'What Do You Want ??',
+            ),
+            trailing: Icon(Icons.timer),
+          ),
+          Center(
+            child: ListTile(
+              title: slider?Slider(
+                  value: 10,
+                  min: 0,
+                  max: 10,
+                  onChanged: (onChanged) async {
+                    setState(() {
+                      sliderValue = onChanged.round();
+                    });
+                  }): ToggleSwitch(
+                minWidth: 100,
+                initialLabelIndex: 0,
+                labels: const ['Off', 'On'],
+                onToggle: (index) {
+                  sliderValue = index!;
+                },
+                totalSwitches: 2,
+              ),
+            ),
+          ),
+          FloatingActionButton.extended(
+            onPressed: () async {
+             await addSceneDetails();
+
+            },
+            icon: const Icon(Icons.alarm),
+            label: const Text('Save'),
+          ),
+        ]));
+  }
 
 
-  Future<void> addSceneDetails(String sceneName) async {
+  Future<void> addSceneDetails() async {
     String? token = await Utility.getToken();
     int userId = await Utility.getUidShared();
-    print("TOKEEE $token");
-    print("WREQWEDFSE ${userId}");
-    var url = api + 'scenedetail/';
+    var url = api + 'scenedevice/';
     Map data = {
       "scene_id": widget.sceneId,
-      "d_id": "fsdaf",
-      "scene_device_type": "ddsaf",
-      "status": 2
+      "d_id": selectedDeviceId.toString(),
+      "scene_device_type": selectedPinName.toString(),
+      "status": sliderValue,
+      "user":userId
     };
 
     final response =
@@ -851,6 +885,7 @@ class _SceneDetailsState extends State<SceneDetails> {
 
     } else {
       print(response.statusCode);
+      print(response.body);
     }
   }
 
