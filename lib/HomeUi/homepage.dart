@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:connectivity/connectivity.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:cool_dropdown/cool_dropdown.dart';
 import 'package:flutter/foundation.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
@@ -221,7 +222,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     // fcmTokenGet(widget.dv[0].dId);
-
+    listPlace();
     setState(() {
       _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
 
@@ -995,7 +996,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ),
                         ),
                         placeBool
-                            ? changePlace()
+                            ? cool()
                               : changeFloorBool
                                 ? changeFloor()
                                 : changeFlatBool
@@ -2007,6 +2008,101 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return flatType;
   }
+  var dropdownItemList = List.empty(growable:true);
+    void listPlace()async{
+
+      List data = await AllDatabase.instance.queryPlace();
+      setState(() {
+        placeType = data.map((data) => PlaceType.fromJson(data)).toList();
+      });
+      for(int i=0; i<data.length;i++){
+        var as ={'label': '${placeType[i].pType}', 'value': '${placeType[i].pId}'};
+        dropdownItemList.add(as);
+      }
+    }
+  var dropdownItemListFloor = List.empty(growable:true);
+
+  Future<List<FloorType>> listFloor(id)async{
+
+    List data = await AllDatabase.instance.getFloorById(id);
+    List<FloorType> flatType = [];
+    setState(() {
+      flatType = data.map((data) => FloorType.fromJson(data)).toList();
+    });
+    for(int i=0; i<data.length;i++){
+      var as ={'label': '${flatType[i].fName}', 'value': '${flatType[i].fId}'};
+      dropdownItemListFloor.add(as);
+    }
+    return flatType;
+  }
+
+
+  Widget cool(){
+    return Container(
+        child:SingleChildScrollView(
+          child:Column(
+          children:[
+            const SizedBox(
+              height: 15,
+            ),
+            InkWell(
+              child: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onTap: () {
+                setState(() {
+                  placeBool = !placeBool;
+                });
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: FutureBuilder<List<PlaceType>>(
+                  future: placeVal,
+                builder:(context,snapshot){
+                    if(snapshot.hasData){
+                      if (snapshot.data!.isEmpty) {
+                        return const Center(
+                            child: Text("No Devices on this place"));
+                      }
+                      return CoolDropdown(
+                        dropdownList: dropdownItemList,
+                        onChange: (value) {
+                          print("VVAVVAV ${value['value']}");
+                          floorVal = listFloor(value['value']);
+                        },);
+                    }
+                    return const Center(child: CircularProgressIndicator());
+                }
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: FutureBuilder<List<FloorType>>(
+                  future: floorVal,
+                builder:(context,snapshot){
+                    if(snapshot.hasData){
+                      if (snapshot.data!.isEmpty) {
+                        return const Center(
+                            child: Text("No Devices on this place"));
+                      }
+                      return CoolDropdown(
+                        dropdownList: dropdownItemListFloor,
+                        onChange: (value) {
+                          print("VVAVVAV ${value['value']}");
+
+                        },);
+                    }
+                    return const Center(child: CircularProgressIndicator());
+                }
+              ),
+            ),
+          ]
+          )
+        )
+    );
+  }
 
   Widget changePlace() {
     return Container(
@@ -2032,7 +2128,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       placeBool = !placeBool;
                     });
                   },
-                )
+                ),
+
               ],
             ),
             Padding(

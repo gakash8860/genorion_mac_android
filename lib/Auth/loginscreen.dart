@@ -718,9 +718,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 user: roomList[index]['user'],
               ));
     });
-    if (kDebugMode) {
-      print("popo $rm");
-    }
+
     List deviceList = await AllDatabase.instance.getDeviceById(rm.first.rId);
 
     if (deviceList.isNotEmpty) {
