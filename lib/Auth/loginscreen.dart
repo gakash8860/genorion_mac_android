@@ -251,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
       alignment: Alignment.centerRight,
       child: ElevatedButton(
         onPressed: () {
-         Utility.launchURL('https://genorionofficial.herokuapp.com/reset_password/');
+         Utility.launchURL('https://genorion1.herokuapp.com/reset_password/');
         },
         // padding: const EdgeInsets.only(right: 0.0),
         child: const Text(
