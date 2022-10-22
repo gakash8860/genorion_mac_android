@@ -3,6 +3,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
@@ -31,19 +33,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:web_socket_channel/web_socket_channel.dart';
 import '../AddSubUser/showsub.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import '../BillPrediction/devicebill.dart';
 import '../BillPrediction/faltbill.dart';
 import '../BillPrediction/floorbill.dart';
 import '../BillPrediction/placebill.dart';
-
 import '../DrawerPages/pinschedulepage.dart';
 import '../EmergencyNumber/emergencynumber.dart';
 import '../LocalDatabase/alldb.dart';
 import '../Models/devicemodel.dart';
-
+import 'package:web_socket_channel/status.dart' as status;
 import '../Models/ip.dart';
 import '../Models/pinschedule.dart';
 import '../Models/sensor.dart';
@@ -174,7 +175,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<RoomType> rm = [];
   List<DeviceType> dv = [];
   String name = "";
-
+  String websocket = "ws://10.0.2.2:8000/ws/notification/";
+  IOWebSocketChannel ?_channel;
+  Stream? broadcastStream;
   // AudioPlayer audioPlayer = AudioPlayer();
   var email;
   List<bool> loading = List.filled(9, false);
@@ -220,6 +223,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    connectFunc();
     // fcmTokenGet(widget.dv[0].dId);
 
     setState(() {
@@ -238,44 +242,92 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     // fetchPlace();
 
-    scrollController.addListener(() async {
-      if (kDebugMode) {
-        print('scrolling $deviceIdForScroll');
-      }
-
-      if (scrollController.position.isScrollingNotifier.value) {
-        if (kDebugMode) {
-          print("Stop !!!!");
-        }
-
-        getAllFuncForScroll();
-      }
-
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        if (kDebugMode) {
-          print('scrollingeeeeeee');
-        }
-      }
-    });
+    // scrollController.addListener(() async {
+    //   if (kDebugMode) {
+    //     print('scrolling $deviceIdForScroll');
+    //   }
+    //
+    //   if (scrollController.position.isScrollingNotifier.value) {
+    //     if (kDebugMode) {
+    //       print("Stop !!!!");
+    //     }
+    //
+    //     getAllFuncForScroll();
+    //   }
+    //
+    //   if (scrollController.position.pixels ==
+    //       scrollController.position.maxScrollExtent) {
+    //     if (kDebugMode) {
+    //       print('scrollingeeeeeee');
+    //     }
+    //   }
+    // });
 
     getUidShared();
     placeVal = placeQueryFunc();
     if (widget.dv.isNotEmpty) {
       deviceIdForScroll = widget.dv[0].dId.toString();
       getPinStatusData(widget.dv[0].dId.toString());
-      switchFuture = getPinStatusByDidLocal(widget.dv[0].dId);
+      // switchFuture = getPinStatusByDidLocal(widget.dv[0].dId);
       updatePinNamesGet(widget.dv[0].dId);
       nameFuture = getPinNameByLocal(widget.dv[0].dId, 0);
       // fcmTokenGet(widget.dv[0].dId);
-      timer = Timer.periodic(Duration(seconds: 3), (timer) {
-        // You can also call here any function.
-        setState(() {
-          updatePinStatusDataInSeconds(deviceIdForScroll);
-        });
-      });
+      // timer = Timer.periodic(Duration(seconds: 3), (timer) {
+      //   // You can also call here any function.
+      //   setState(() {
+      //     updatePinStatusDataInSeconds(deviceIdForScroll);
+      //   });
+      // });
     }
   }
+
+
+
+
+
+  void connectFunc() {
+
+      _channel = IOWebSocketChannel.connect(Uri.parse(websocket));
+    broadcastStream = _channel!.stream.asBroadcastStream();
+    print("eepeepe   ${_channel!.sink.done.toString()}");
+      broadcastStream!.listen((event) {
+        var data = jsonDecode(event);
+      // _channel.sink.close(event.goingAway);
+      print("event listner ${event}");
+      print("LISTENING $data");
+  setState(() {
+    responseGetData = [
+      data['pin1Status'],
+      data['pin2Status'],
+      data['pin3Status'],
+      data['pin4Status'],
+      data['pin5Status'],
+      data['pin6Status'],
+      data['pin7Status'],
+      data['pin8Status'],
+      data['pin9Status'],
+      data['pin10Status'],
+      data['pin11Status'],
+      data['pin12Status'],
+      data['sensor1'],
+      data['sensor2'],
+      data['sensor3'],
+      data['sensor4'],
+      data['sensor5'],
+      data['sensor6'],
+      data['sensor7'],
+      data['sensor8'],
+      data['sensor9'],
+      data['sensor10'],
+    ];
+  });
+print("List data $responseGetData");
+    }, onError: (error) {
+      print("error $error");
+    });
+  }
+
+
 
   void periodicFun() {
     if (isAllFunctionRunningBackground) {
@@ -3248,7 +3300,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
-  Future<bool> getPinStatusByDidLocal(did) async {
+
+
+  Future<void> getPinStatusByDidLocal(did) async {
     print("DID $did");
     List data =
         await AllDatabase.instance.getPinStatusByDeviceId(did.toString());
@@ -3299,9 +3353,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           "objectAndSensor $responseGetData  => ${sensorData[1]} => ${sensorData[7]}  ");
     }
     if (data.isNotEmpty) {
-      return true;
+      // return true;
     }
-    return false;
+    // return false;
   }
 
   Future<bool> getPinNameByLocal(dId, index) async {
@@ -4907,64 +4961,64 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           builder: (context) {
                             return StatefulBuilder(
                                 builder: (context, setModalState) {
-                              return Container(
-                                  padding: const EdgeInsets.all(32),
-                                  child: Column(children: [
-                                    SizedBox(
-                                      width: 145,
-                                      child: GestureDetector(
-                                          child: Text(
-                                            cutDate.toString(),
-                                          ),
-                                          onTap: () {
-                                            pickDate();
-                                          }),
-                                    ),
+                                  return Container(
+                                      padding: const EdgeInsets.all(32),
+                                      child: Column(children: [
+                                        SizedBox(
+                                          width: 145,
+                                          child: GestureDetector(
+                                              child: Text(
+                                                cutDate.toString(),
+                                              ),
+                                              onTap: () {
+                                                pickDate();
+                                              }),
+                                        ),
 
-                                    // ignore: deprecated_member_use
-                                    ElevatedButton(
-                                      onPressed: () async {
-                                        await pickTime(index);
-                                        setState(() {
-                                          _alarmTimeString = cutTime;
-                                        });
-                                      },
-                                      child: Text(
-                                        _alarmTimeString!,
-                                        style: const TextStyle(
-                                          fontSize: 32,
-                                        ),
-                                      ),
-                                    ),
-                                    const ListTile(
-                                      title: Text(
-                                        'What Do You Want ??',
-                                      ),
-                                      trailing: Icon(Icons.timer),
-                                    ),
-                                    Center(
-                                      child: ListTile(
-                                        title: ToggleSwitch(
-                                          minWidth: 100,
-                                          initialLabelIndex: 0,
-                                          labels: const ['Off', 'On'],
-                                          onToggle: (index) {
-                                            checkSwitch = index!;
+                                        // ignore: deprecated_member_use
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            await pickTime(index);
+                                            setState(() {
+                                              _alarmTimeString = cutTime;
+                                            });
                                           },
-                                          totalSwitches: 2,
+                                          child: Text(
+                                            _alarmTimeString!,
+                                            style: const TextStyle(
+                                              fontSize: 32,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                    FloatingActionButton.extended(
-                                      onPressed: () async {
-                                        await schedulingDevicePin(dId, index);
-                                        Navigator.pop(context);
-                                      },
-                                      icon: const Icon(Icons.alarm),
-                                      label: const Text('Save'),
-                                    ),
-                                  ]));
-                            });
+                                        const ListTile(
+                                          title: Text(
+                                            'What Do You Want ??',
+                                          ),
+                                          trailing: Icon(Icons.timer),
+                                        ),
+                                        Center(
+                                          child: ListTile(
+                                            title: ToggleSwitch(
+                                              minWidth: 100,
+                                              initialLabelIndex: 0,
+                                              labels: const ['Off', 'On'],
+                                              onToggle: (index) {
+                                                checkSwitch = index!;
+                                              },
+                                              totalSwitches: 2,
+                                            ),
+                                          ),
+                                        ),
+                                        FloatingActionButton.extended(
+                                          onPressed: () async {
+                                            await schedulingDevicePin(dId, index);
+                                            Navigator.pop(context);
+                                          },
+                                          icon: const Icon(Icons.alarm),
+                                          label: const Text('Save'),
+                                        ),
+                                      ]));
+                                });
                           });
                     },
                     child: Padding(
@@ -4996,107 +5050,78 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             children: [
                               Row(
                                 children: [
-                                  Expanded(
-                                    child: FutureBuilder(
-                                      future: nameFuture,
-                                      builder: (context, snapshot) {
-                                        if (snapshot.data != null) {
-                                          return TextButton(
-                                            child: AutoSizeText(
-                                              '${namesDataList[index].toString()} ',
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 2,
-                                              style: const TextStyle(
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                            onPressed: () async {
-                                              pinNameController.clear();
-                                              setState(() {
-                                                hintText = namesDataList[index]
-                                                    .toString();
-                                              });
-                                              _createAlertDialogForNameDeviceBox(
-                                                  context, index, dId);
-                                            },
-                                          );
-                                        } else {
-                                          return Container();
-                                        }
-                                      },
-                                    ),
-                                  ),
+
                                   Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 4.5,
                                       ),
-                                      child: FutureBuilder(
-                                          future: switchFuture,
+                                      child: StreamBuilder(
+                                          stream: broadcastStream,
                                           builder: (context, snapshot) {
-                                            if (snapshot.data != null) {
+                                            var data = snapshot.data;
+                                              print("CCCCCCCSnapShot $data  ${snapshot.data}");
                                               return loading[index]
                                                   ? loadingContainer()
                                                   : FlutterSwitch(
-                                                      activeText: "On",
-                                                      inactiveText: "Off",
-                                                      value: responseGetData[
-                                                                  index] ==
-                                                              0
-                                                          ? false
-                                                          : true,
-                                                      onToggle: (value) async {
-                                                        setState(() {
-                                                          loading[index] = true;
-                                                        });
+                                                  activeText: "On",
+                                                  inactiveText: "Off",
+                                                  value: responseGetData[index] ==
+                                                      1
+                                                      ? true
+                                                      : false,
+                                                  onToggle: (value) async {
 
-                                                        // if Internet is not available then _checkInternetConnectivity = true
-                                                        var result =
-                                                            await Connectivity()
-                                                                .checkConnectivity();
-                                                        if (result ==
-                                                            ConnectivityResult
-                                                                .none) {
-                                                          messageSms(
-                                                              context, dId);
-                                                        }
 
-                                                        if (responseGetData[
-                                                                index] ==
-                                                            0) {
-                                                          setState(() {
-                                                            responseGetData[
-                                                                index] = 1;
-                                                          });
-                                                          await dataUpdate(dId);
-
-                                                          await getPinStatusData(
-                                                              dId);
-                                                          await getPinStatusByDidLocal(
-                                                              dId.toString());
-                                                          setState(() {
-                                                            loading[index] =
-                                                                false;
-                                                          });
-                                                        } else {
-                                                          setState(() {
-                                                            responseGetData[
-                                                                index] = 0;
-                                                          });
-                                                          await dataUpdate(dId).then((value) =>
-                                                              getPinStatusData(
-                                                                      dId)
-                                                                  .then((value) =>
-                                                                      getPinStatusByDidLocal(
-                                                                          dId)));
-                                                          setState(() {
-                                                            loading[index] =
-                                                                false;
-                                                          });
-                                                        }
+                                                    // if Internet is not available then _checkInternetConnectivity = true
+                                                    var result =
+                                                    await Connectivity()
+                                                        .checkConnectivity();
+                                                    if (result ==
+                                                        ConnectivityResult
+                                                            .none) {
+                                                      messageSms(
+                                                          context, dId);
+                                                    }
+                                                    setState(() {
+                                                      loading[index] = true;
+                                                    });
+                                                    if (responseGetData[
+                                                    index] ==
+                                                        0) {
+                                                      setState(() {
+                                                        responseGetData[
+                                                        index] = 1;
                                                       });
-                                            } else {
-                                              return Container();
-                                            }
+
+                                                      await dataUpdateWebSocket(responseGetData,dId);
+                                                      // await dataUpdate(dId);
+
+                                                      await getPinStatusData(
+                                                          dId);
+                                                      // await getPinStatusByDidLocal(
+                                                      //     dId.toString());
+                                                      setState(() {
+                                                        loading[index] =
+                                                        false;
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        responseGetData[
+                                                        index] = 0;
+                                                      });
+                                                      await dataUpdate(dId).then((value) =>
+                                                          getPinStatusData(
+                                                              dId)
+                                                              .then((value) =>
+                                                              getPinStatusByDidLocal(
+                                                                  dId)));
+                                                      setState(() {
+                                                        loading[index] =
+                                                        false;
+                                                      });
+                                                    }
+                                                  });
+
                                           })),
                                 ],
                               ),
@@ -5192,8 +5217,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           if (snapshot.data != null) {
                                             return SizedBox(
                                               width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
+                                                  .size
+                                                  .width /
                                                   3.9,
                                               child: Slider(
                                                   value: double.parse(
@@ -5202,11 +5227,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                   min: 0,
                                                   max: 10,
                                                   label:
-                                                      '${double.parse(responseGetData[index + 9].toString())}',
+                                                  '${double.parse(responseGetData[index + 9].toString())}',
                                                   onChanged: (onChanged) async {
                                                     setState(() {
                                                       responseGetData[
-                                                              index + 9] =
+                                                      index + 9] =
                                                           onChanged.round();
                                                     });
                                                     await dataUpdate(dId);
@@ -5234,6 +5259,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         ),
       ),
     );
+
   }
 
   _createAlertDialogForSSIDAndEmergencyNumber(context, String dId) async {
@@ -6933,7 +6959,37 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final pref = await SharedPreferences.getInstance();
     pref.setString('mobileNumber', mobile);
   }
+  dataUpdateWebSocket(responseGetData,dId) async{
+    var data  ={
+      "d_id": dId.toString(),
+      'pin1Status': responseGetData[0].toString(),
+      'pin2Status': responseGetData[1].toString(),
+      'pin3Status': responseGetData[2].toString(),
+      'pin4Status': responseGetData[3].toString(),
+      'pin5Status': responseGetData[4].toString(),
+      'pin6Status': responseGetData[5].toString(),
+      'pin7Status': responseGetData[6].toString(),
+      'pin8Status': responseGetData[7].toString(),
+      'pin9Status': responseGetData[8].toString(),
+      'pin10Status': responseGetData[9].toString(),
+      'pin11Status': responseGetData[10].toString(),
+      'pin12Status': responseGetData[11].toString(),
+      'sensor1': responseGetData[12].toString(),
+      'sensor2': responseGetData[13].toString(),
+      'sensor3': responseGetData[14].toString(),
+      'sensor4': responseGetData[15].toString(),
+      'sensor5': responseGetData[16].toString(),
+      'sensor6': responseGetData[17].toString(),
+      'sensor7': responseGetData[18].toString(),
+      'sensor8': responseGetData[19].toString(),
+      'sensor9': responseGetData[20].toString(),
+      'sensor10': responseGetData[21].toString(),
+    };
+    print("BBBB $data");
+    _channel!.sink.add(jsonEncode(data));
 
+    print("AAAAAAAFter $data");
+  }
   _showDialogForTempAccessPge() {
     // dialog implementation
     showDialog(
@@ -7012,4 +7068,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
     );
   }
+
+
 }
