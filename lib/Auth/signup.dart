@@ -457,6 +457,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         // Navigator.push(context, MaterialPageRoute(builder: (context)=>WrongPassword()));
         throw ("Internal Server Error");
       }
+      print(response.statusCode);
     }
   }
 

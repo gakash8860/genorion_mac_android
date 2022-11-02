@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
@@ -33,7 +32,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import '../AddSubUser/showsub.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import '../BillPrediction/devicebill.dart';
@@ -106,7 +104,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool placeBool = false;
   List<PlaceType> placeType = [];
   List<DevicePinStatus> devicePinStatus = [];
-  List responseGetData = [];
+  var responseGetData = List.empty(growable:true);
   Future? switchFuture;
   Future? nameFuture;
   Future? pinScheduledFuture;
@@ -266,9 +264,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     getUidShared();
     placeVal = placeQueryFunc();
     if (widget.dv.isNotEmpty) {
+
       deviceIdForScroll = widget.dv[0].dId.toString();
       getPinStatusData(widget.dv[0].dId.toString());
-      // switchFuture = getPinStatusByDidLocal(widget.dv[0].dId);
+      switchFuture = getPinStatusByDidLocal(widget.dv[0].dId);
       updatePinNamesGet(widget.dv[0].dId);
       nameFuture = getPinNameByLocal(widget.dv[0].dId, 0);
       // fcmTokenGet(widget.dv[0].dId);
@@ -280,11 +279,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       // });
     }
   }
-
-
-
-
-
   void connectFunc() {
 
       _channel = IOWebSocketChannel.connect(Uri.parse(websocket));
@@ -293,7 +287,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       broadcastStream!.listen((event) {
         var data = jsonDecode(event);
       // _channel.sink.close(event.goingAway);
-      print("event listner ${event}");
       print("LISTENING $data");
   setState(() {
     responseGetData = [
@@ -309,16 +302,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       data['pin10Status'],
       data['pin11Status'],
       data['pin12Status'],
-      data['sensor1'],
-      data['sensor2'],
-      data['sensor3'],
-      data['sensor4'],
-      data['sensor5'],
-      data['sensor6'],
-      data['sensor7'],
-      data['sensor8'],
-      data['sensor9'],
-      data['sensor10'],
+      // data['sensor1'],
+      // data['sensor2'],
+      // data['sensor3'],
+      // data['sensor4'],
+      // data['sensor5'],
+      // data['sensor6'],
+      // data['sensor7'],
+      // data['sensor8'],
+      // data['sensor9'],
+      // data['sensor10'],
     ];
   });
 print("List data $responseGetData");
@@ -5058,68 +5051,19 @@ print("List data $responseGetData");
                                       child: StreamBuilder(
                                           stream: broadcastStream,
                                           builder: (context, snapshot) {
-                                            var data = snapshot.data;
-                                              print("CCCCCCCSnapShot $data  ${snapshot.data}");
-                                              return loading[index]
-                                                  ? loadingContainer()
-                                                  : FlutterSwitch(
-                                                  activeText: "On",
-                                                  inactiveText: "Off",
-                                                  value: responseGetData[index] ==
-                                                      1
-                                                      ? true
-                                                      : false,
-                                                  onToggle: (value) async {
+                                             return Switch(
 
+                                                  value: responseGetData[index]==0?false:true,
 
-                                                    // if Internet is not available then _checkInternetConnectivity = true
-                                                    var result =
-                                                    await Connectivity()
-                                                        .checkConnectivity();
-                                                    if (result ==
-                                                        ConnectivityResult
-                                                            .none) {
-                                                      messageSms(
-                                                          context, dId);
-                                                    }
-                                                    setState(() {
-                                                      loading[index] = true;
-                                                    });
-                                                    if (responseGetData[
-                                                    index] ==
-                                                        0) {
-                                                      setState(() {
-                                                        responseGetData[
-                                                        index] = 1;
-                                                      });
+                                                  onChanged: (value) async {
+                                                    int v = value?1:0;
 
-                                                      await dataUpdateWebSocket(responseGetData,dId);
-                                                      // await dataUpdate(dId);
+                                                    responseGetData[index]=v;
 
-                                                      await getPinStatusData(
-                                                          dId);
-                                                      // await getPinStatusByDidLocal(
-                                                      //     dId.toString());
-                                                      setState(() {
-                                                        loading[index] =
-                                                        false;
-                                                      });
-                                                    } else {
-                                                      setState(() {
-                                                        responseGetData[
-                                                        index] = 0;
-                                                      });
-                                                      await dataUpdate(dId).then((value) =>
-                                                          getPinStatusData(
-                                                              dId)
-                                                              .then((value) =>
-                                                              getPinStatusByDidLocal(
-                                                                  dId)));
-                                                      setState(() {
-                                                        loading[index] =
-                                                        false;
-                                                      });
-                                                    }
+                                                      print("iffff responseGetData   $value ${responseGetData[index]}   $responseGetData");
+
+                                                       dataUpdateWebSocket(responseGetData,dId);
+
                                                   });
 
                                           })),
@@ -6960,6 +6904,7 @@ print("List data $responseGetData");
     pref.setString('mobileNumber', mobile);
   }
   dataUpdateWebSocket(responseGetData,dId) async{
+    print("responseGetData $responseGetData");
     var data  ={
       "d_id": dId.toString(),
       'pin1Status': responseGetData[0].toString(),
@@ -6974,16 +6919,16 @@ print("List data $responseGetData");
       'pin10Status': responseGetData[9].toString(),
       'pin11Status': responseGetData[10].toString(),
       'pin12Status': responseGetData[11].toString(),
-      'sensor1': responseGetData[12].toString(),
-      'sensor2': responseGetData[13].toString(),
-      'sensor3': responseGetData[14].toString(),
-      'sensor4': responseGetData[15].toString(),
-      'sensor5': responseGetData[16].toString(),
-      'sensor6': responseGetData[17].toString(),
-      'sensor7': responseGetData[18].toString(),
-      'sensor8': responseGetData[19].toString(),
-      'sensor9': responseGetData[20].toString(),
-      'sensor10': responseGetData[21].toString(),
+      // 'sensor1': responseGetData[12].toString(),
+      // 'sensor2': responseGetData[13].toString(),
+      // 'sensor3': responseGetData[14].toString(),
+      // 'sensor4': responseGetData[15].toString(),
+      // 'sensor5': responseGetData[16].toString(),
+      // 'sensor6': responseGetData[17].toString(),
+      // 'sensor7': responseGetData[18].toString(),
+      // 'sensor8': responseGetData[19].toString(),
+      // 'sensor9': responseGetData[20].toString(),
+      // 'sensor10': responseGetData[21].toString(),
     };
     print("BBBB $data");
     _channel!.sink.add(jsonEncode(data));
