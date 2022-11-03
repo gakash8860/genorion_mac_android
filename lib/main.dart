@@ -47,7 +47,8 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
-const api = 'https://genorion1.herokuapp.com/';
+// const api = 'http://genorion1.herokuapp.com/';
+const api = 'http://3.110.204.181/';
 
  var changeColor;
  Image? setImage;
