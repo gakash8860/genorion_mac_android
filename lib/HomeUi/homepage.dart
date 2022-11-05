@@ -5043,7 +5043,40 @@ print("List data $responseGetData");
                             children: [
                               Row(
                                 children: [
-
+                                  Expanded(
+                                    child: FutureBuilder(
+                                      future: nameFuture,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.data != null) {
+                                          return TextButton(
+                                            child: AutoSizeText(
+                                              // '$index',
+                                              namesDataList[index ]
+                                                  .toString(),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 2,
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                              ),
+                                            ),
+                                            onPressed: () async {
+                                              int newIndex = index + 9;
+                                              pinNameController.clear();
+                                              setState(() {
+                                                hintText =
+                                                    namesDataList[newIndex]
+                                                        .toString();
+                                              });
+                                              _createAlertDialogForNameDeviceBox(
+                                                  context, newIndex, dId);
+                                            },
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      },
+                                    ),
+                                  ),
                                   Padding(
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 4.5,
