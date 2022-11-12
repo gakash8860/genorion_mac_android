@@ -11,7 +11,6 @@ import 'package:flutter/foundation.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:genorion_mac_android/AddPlace/addplace.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -42,7 +41,6 @@ import '../DrawerPages/pinschedulepage.dart';
 import '../EmergencyNumber/emergencynumber.dart';
 import '../LocalDatabase/alldb.dart';
 import '../Models/devicemodel.dart';
-import 'package:web_socket_channel/status.dart' as status;
 import '../Models/ip.dart';
 import '../Models/pinschedule.dart';
 import '../Models/sensor.dart';
@@ -97,7 +95,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   int getUidVariable2 = 0;
   String tabbarState = " ";
-
   int _currentIndex = 0;
   bool isListening = false;
   TextEditingController addDeviceController = TextEditingController();
@@ -161,12 +158,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   PlaceType? pt;
   FloorType? fl;
   FlatType? flt;
-  var allgetSubUsers = List.empty(growable: true);
-  var allPlacegetSubUsers = List.empty(growable: true);
-  var allFloorgetSubUsers = List.empty(growable: true);
-  var allFlatgetSubUsers = List.empty(growable: true);
-  var allRoomgetSubUsers = List.empty(growable: true);
-  var allDevicegetSubUsers = List.empty(growable: true);
+  var allGetSubUsers = List.empty(growable: true);
+  var allPlaceGetSubUsers = List.empty(growable: true);
+  var allFloorGetSubUsers = List.empty(growable: true);
+  var allFlatGetSubUsers = List.empty(growable: true);
+  var allRoomGetSubUsers = List.empty(growable: true);
+  var allDeviceGetSubUsers = List.empty(growable: true);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController phoneController = TextEditingController();
   var deviceIdForScroll;
@@ -176,7 +173,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   String websocket = "ws://10.0.2.2:8000/ws/notification/";
   IOWebSocketChannel ?_channel;
   Stream? broadcastStream;
-  // AudioPlayer audioPlayer = AudioPlayer();
   var email;
   List<bool> loading = List.filled(9, false);
   List changeIcon = List.filled(9, null);
@@ -222,15 +218,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     connectFunc();
-    // fcmTokenGet(widget.dv[0].dId);
-
     setState(() {
       _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
 
       tabbarState = widget.rm![0].rId;
     });
-
-
 
     tabC = TabController(length: widget.rm!.length, vsync: this);
     refreshImages();
@@ -279,8 +271,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       // });
     }
   }
-  void connectFunc() {
 
+  void connectFunc() {
       _channel = IOWebSocketChannel.connect(Uri.parse(websocket));
     broadcastStream = _channel!.stream.asBroadcastStream();
     print("eepeepe   ${_channel!.sink.done.toString()}");
@@ -1220,7 +1212,7 @@ print("List data $responseGetData");
                                                                               setState(() {
                                                                                 flatVal = flatQueryFunc(widget.fl!.fId);
                                                                               });
-                                                                              _creatDialogChangeFlat();
+                                                                              _createDialogChangeFlat();
                                                                             },
                                                                           ),
                                                                           const SizedBox(
@@ -1687,7 +1679,7 @@ print("List data $responseGetData");
     return getUidVariable2;
   }
 
-  Future<void> getrooms(String fltid) async {
+  Future<void> getRooms(String fltid) async {
     final url = api + 'addroom/?flt_id=' + fltid;
     String? token = await getToken();
     final response = await http.get(Uri.parse(url), headers: {
@@ -1844,7 +1836,7 @@ print("List data $responseGetData");
                   child: const Text('Submit'),
                   onPressed: () async {
                     await addRoom(roomEditing.text);
-                    await getrooms(widget.flat!.fltId);
+                    await getRooms(widget.flat!.fltId);
                     await roomQueryFunc(widget.flat!.fltId);
                     Navigator.of(context).pop();
                   },
@@ -2966,7 +2958,7 @@ print("List data $responseGetData");
     );
   }
 
-  _creatDialogChangeFlat() {
+  _createDialogChangeFlat() {
     return showDialog(
         context: context,
         builder: (context) {
@@ -3353,9 +3345,6 @@ print("List data $responseGetData");
 
   Future<bool> getPinNameByLocal(dId, index) async {
     List pinName = await AllDatabase.instance.getPinNamesByDeviceId(dId);
-    if (kDebugMode) {
-      print("getPuinName $pinName");
-    }
     if (pinName.isNotEmpty) {
       setState(() {
         devicePin =
@@ -6610,9 +6599,9 @@ print("List data $responseGetData");
         await AllDatabase.instance.deleteSubAccess();
 
         for (int i = 0; i < ans.length; i++) {
-          allgetSubUsers.add(ans[i]);
+          allGetSubUsers.add(ans[i]);
           var query = SubAccessModel.fromJson(ans[i]);
-          print("insert $allgetSubUsers ");
+          print("insert $allGetSubUsers ");
 
           await AllDatabase.instance.insertSubAccess(query);
           List<dynamic> getSubDataLocal1 =
@@ -6924,11 +6913,11 @@ print("List data $responseGetData");
       }
     }
 
-    allgetSubUsers = List.empty(growable: true);
-    allPlacegetSubUsers = List.empty(growable: true);
-    allFloorgetSubUsers = List.empty(growable: true);
-    allFlatgetSubUsers = List.empty(growable: true);
-    allRoomgetSubUsers = List.empty(growable: true);
+    allGetSubUsers = List.empty(growable: true);
+    allPlaceGetSubUsers = List.empty(growable: true);
+    allFloorGetSubUsers = List.empty(growable: true);
+    allFlatGetSubUsers = List.empty(growable: true);
+    allRoomGetSubUsers = List.empty(growable: true);
     allDevicegetSubUsers = List.empty(growable: true);
   }
 
