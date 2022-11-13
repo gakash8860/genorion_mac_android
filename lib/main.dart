@@ -26,6 +26,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> main() async {
+
  if(Platform.isAndroid){
    WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
@@ -43,9 +44,10 @@ Future<void> main() async {
      sound: true,
    );
    runApp(MyApp());
+ }else {
+   runApp(MyApp());
  }
-  runApp(MyApp());
-}
+ }
 
 // const api = 'http://genorion1.herokuapp.com/';
 const api = 'http://3.110.204.181/';
