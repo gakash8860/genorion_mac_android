@@ -73,7 +73,7 @@ dev_dependencies:
     sdk: flutter
   flutter_launcher_icons: ^0.9.2
   flutter_native_splash: ^2.0.1+1
-
+  firebase_core_platform_interface: 4.5.1
 flutter_native_splash:
   image: assets/images/gen.png
   color: "#ffffff"
@@ -92,6 +92,7 @@ flutter_icons:
   ios: true
   
   image_path: "assets/images/genLogo.png"
+
 
 
 # For information on the generic Dart part of this file, see the
