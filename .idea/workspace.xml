@@ -14,11 +14,13 @@
   <component name="ChangeListManager">
     <list default="true" id="c1305e05-7821-4671-a780-453aaad52a1b" name="Changes" comment="Main file">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Auth/loginscreen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Auth/loginscreen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/DrawerPages/pinschedulepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DrawerPages/pinschedulepage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/LocalDatabase/alldb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/LocalDatabase/alldb.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Models/allpinsscheduled.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Models/allpinsscheduled.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Models/pinschedule.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Models/pinschedule.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -413,7 +415,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668334961975</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Main file">
+      <created>1668530606029</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1668530606029</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -444,6 +453,22 @@
     <MESSAGE value="new file" />
     <MESSAGE value="Main file" />
     <option name="LAST_COMMIT_MESSAGE" value="Main file" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/DrawerPages/pinschedulepage.dart</url>
+          <line>637</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/DrawerPages/pinschedulepage.dart</url>
+          <line>638</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

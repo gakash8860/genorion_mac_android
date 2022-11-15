@@ -5600,11 +5600,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                         trailing: Text(schedulePin[index]
-                                            .date1
+                                            .date
                                             .toString()
                                             .substring(0, 10)),
                                         subtitle: Text(schedulePin[index]
-                                            .timing1
+                                            .timing
                                             .toString()),
                                         onTap: () {}),
                                     Column(
