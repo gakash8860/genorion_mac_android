@@ -268,7 +268,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       switchFuture = getPinStatusByDidLocal(widget.dv[0].dId);
       updatePinNamesGet(widget.dv[0].dId);
       nameFuture = getPinNameByLocal(widget.dv[0].dId, 0);
-      fcmTokenGet(widget.dv[0].dId);
+      // fcmTokenGet(widget.dv[0].dId);
       timer = Timer.periodic(Duration(seconds: 3), (timer) {
         // You can also call here any function.
         setState(() {
@@ -3452,6 +3452,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         data[0]['pin10Status'],
         data[0]['pin11Status'],
         data[0]['pin12Status'],
+        data[0]['sensor1'],
+        data[0]['sensor2'],
+        data[0]['sensor3'],
+        data[0]['sensor4'],
+        data[0]['sensor5'],
+        data[0]['sensor6'],
+        data[0]['sensor7'],
+        data[0]['sensor8'],
+        data[0]['sensor9'],
+        data[0]['sensor10'],
       ];
       sensorData = [
         data[0]['sensor1'],
@@ -4097,6 +4107,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       'pin10Status': responseGetData[9],
       'pin11Status': responseGetData[10],
       'pin12Status': responseGetData[11],
+      'sensor1': responseGetData[12],
+      'sensor2': responseGetData[13],
+      'sensor3': responseGetData[14],
+      'sensor4': responseGetData[15],
+      'sensor5': responseGetData[16],
+      'sensor6': responseGetData[17],
+      'sensor7': responseGetData[18],
+      'sensor8': responseGetData[19],
+      'sensor9': responseGetData[20],
+      'sensor10': responseGetData[21],
     };
 
     final response =
@@ -4106,7 +4126,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
     if (response.statusCode == 201 || response.statusCode == 200) {
       return;
-    } else {}
+    } else {
+      print("DATA   AASSA   ${response.statusCode}");
+    }
   }
 
   Future updatePinName(int index, String data, String deviceId) async {
@@ -5624,96 +5646,96 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (index == 0) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate.toString(),
-        "timing1": cutTime.toString(),
+        "date": cutDate.toString(),
+        "timing": cutTime.toString(),
         "pin1Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 1) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate.toString(),
-        "timing1": _alarmTimeString.toString(),
+        "date": cutDate.toString(),
+        "timing": _alarmTimeString.toString(),
         "pin2Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 2) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate.toString(),
-        "timing1": _alarmTimeString,
+        "date": cutDate.toString(),
+        "timing": _alarmTimeString,
         "pin2Status": checkSwitch,
         "d_id": dId.toString(),
       };
     } else if (index == 3) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin4Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 4) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin5Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 5) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin6Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 6) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin7Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 7) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin8Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 8) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin9Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 9) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin10Status": sliderValue,
         "d_id": dId,
       };
     } else if (index == 10) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin11Status": sliderValue,
         "d_id": dId,
       };
     } else if (index == 11) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin12Status": sliderValue,
         "d_id": dId,
       };
@@ -5761,11 +5783,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                         trailing: Text(schedulePin[index]
-                                            .date1
+                                            .date
                                             .toString()
                                             .substring(0, 10)),
                                         subtitle: Text(schedulePin[index]
-                                            .timing1
+                                            .timing
                                             .toString()),
                                         onTap: () {}),
                                     Column(

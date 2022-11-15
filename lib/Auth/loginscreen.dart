@@ -12,7 +12,6 @@ import 'package:genorion_mac_android/Models/pinname.dart';
 import 'package:genorion_mac_android/Models/pinschedule.dart';
 import 'package:genorion_mac_android/ProfilePage/utility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../LocalDatabase/alldb.dart';
 import '../Models/devicemodel.dart';
 import '../Models/floormodel.dart';
@@ -593,8 +592,8 @@ class _LoginScreenState extends State<LoginScreen> {
         for (int i = 0; i < ans.length; i++) {
           var schedule = ScheduledPin(
               id: ans[i]['id'],
-              date1: DateTime.parse(ans[i]['date1']),
-              timing1: ans[i]['timing1'],
+              date: DateTime.parse(ans[i]['date']),
+              timing: ans[i]['timing'],
               pin1Status: ans[i]['pin1Status'],
               pin2Status: ans[i]['pin2Status'],
               pin3Status: ans[i]['pin3Status'],
