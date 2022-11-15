@@ -67,6 +67,10 @@ dependencies:
   auto_size_text: ^3.0.0
   firebase_core: ^1.22.0
   
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
+
+
 
 dev_dependencies:
   flutter_test:

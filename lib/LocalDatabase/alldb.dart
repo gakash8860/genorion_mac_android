@@ -139,9 +139,9 @@ class AllDatabase {
 
   static const _devicePinSchedule = '_devicePinSchedule';
   static const user = 'user';
-  static const date1 = 'date1';
+  static const date1 = 'date';
   static const id = 'id';
-  static const timing1 = 'timing1';
+  static const timing1 = 'timing';
   static const schedulePin1Status = 'pin1Status';
   static const schedulePin2Status = 'pin2Status';
   static const schedulePin3Status = 'pin3Status';
@@ -278,10 +278,10 @@ class AllDatabase {
 
   static const _allDevicePinSchedul = 'alldevicepinschedule';
   static const allDeviceUser = 'user';
-  static const allDevicedate1 = 'date1';
+  static const allDevicedate1 = 'date';
   static const allDeviceid = 'id';
   static const allDeviceDid = 'd_id';
-  static const allDevicetiming1 = 'timing1';
+  static const allDevicetiming1 = 'timing';
   static const allDeviceschedulePin1Status = 'pin1Status';
   static const allDeviceschedulePin2Status = 'pin2Status';
   static const allDeviceschedulePin3Status = 'pin3Status';

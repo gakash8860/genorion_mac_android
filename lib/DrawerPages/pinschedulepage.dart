@@ -156,7 +156,7 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
                                       title: Text(
                                           pinScheduled[index].dId.toString()),
                                       trailing: Text(pinScheduled[index]
-                                          .date1
+                                          .date
                                           .toString()
                                           .substring(0, 11)),
                                       leading: IconButton(
@@ -178,7 +178,7 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
                                         },
                                       ),
                                       subtitle: Text(pinScheduled[index]
-                                          .timing1
+                                          .timing
                                           .toString()
                                           .substring(0, 5)),
                                     ),
