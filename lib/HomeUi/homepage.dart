@@ -5463,96 +5463,96 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (index == 0) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate.toString(),
-        "timing1": cutTime.toString(),
+        "date": cutDate.toString(),
+        "timing": cutTime.toString(),
         "pin1Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 1) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate.toString(),
-        "timing1": _alarmTimeString.toString(),
+        "date": cutDate.toString(),
+        "timing": _alarmTimeString.toString(),
         "pin2Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 2) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate.toString(),
-        "timing1": _alarmTimeString,
+        "date": cutDate.toString(),
+        "timing": _alarmTimeString,
         "pin2Status": checkSwitch,
         "d_id": dId.toString(),
       };
     } else if (index == 3) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin4Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 4) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin5Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 5) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin6Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 6) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin7Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 7) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin8Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 8) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin9Status": checkSwitch,
         "d_id": dId,
       };
     } else if (index == 9) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin10Status": sliderValue,
         "d_id": dId,
       };
     } else if (index == 10) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin11Status": sliderValue,
         "d_id": dId,
       };
     } else if (index == 11) {
       postData = {
         "user": getUidVariable2,
-        "date1": cutDate,
-        "timing1": _alarmTimeString,
+        "date": cutDate,
+        "timing": _alarmTimeString,
         "pin12Status": sliderValue,
         "d_id": dId,
       };
