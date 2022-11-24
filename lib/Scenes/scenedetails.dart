@@ -1,10 +1,6 @@
 import 'dart:convert';
-import 'dart:ffi';
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:genorion_mac_android/Models/devicemodel.dart';
-import 'package:genorion_mac_android/Models/pinname.dart';
 import 'package:http/http.dart' as http;
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -46,12 +42,11 @@ class _SceneDetailsState extends State<SceneDetails> {
   FlatType? flt;
   String selectedDeviceId="";
   String selectedPinName="";
-  List <String>pinName = [];
   List <String>namesDataList = [];
   bool placeremove = false;
   bool slider = false;
   int sliderValue = 0;
-
+  var pinName = List.empty(growable: true);
   bool showOnOffOption = false ;
 
   @override
@@ -69,6 +64,8 @@ class _SceneDetailsState extends State<SceneDetails> {
       ),
       body: Container(
         child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             placeBool ? changePlace() : Container(),
             showOnOffOption?selectTime():Container()
@@ -142,7 +139,7 @@ class _SceneDetailsState extends State<SceneDetails> {
 
 
   Future<List<String>> devicePinQueryFunc(dId) async {
-    List pinName = await AllDatabase.instance.getPinNamesByDeviceId(dId);
+     pinName = await AllDatabase.instance.getPinNamesByDeviceId(dId);
 
     if (pinName.isNotEmpty) {
       setState(() {
@@ -688,7 +685,7 @@ class _SceneDetailsState extends State<SceneDetails> {
                                                         selectedDeviceId = selectDevice!.dId.toString();
                                                         devicePinNameVal =
                                                             devicePinQueryFunc(
-                                                                selectDevice!
+                                                                selectDevice
                                                                     .dId);
                                                       });
                                                     },
@@ -708,111 +705,112 @@ class _SceneDetailsState extends State<SceneDetails> {
                                         }),
                                   )
                                 : pinBoolBool
-                                    ?  Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: FutureBuilder<List<String>>(
-                  future: devicePinNameVal,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data!.isEmpty) {
-                        return const Center(
-                            child: Text(
-                                "No Devices on this place"));
-                      }
-                      return Container(
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 50.0,
-                          child: Container(
-                            width: MediaQuery.of(context)
-                                .size
-                                .width *
-                                2,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: Colors.black,
-                                      blurRadius: 30,
-                                      offset:
-                                      Offset(20, 20))
-                                ],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 0.5,
-                                )),
-                            child:
-                            DropdownButtonFormField<
-                                String>(
-                              decoration: InputDecoration(
-                                contentPadding:
-                                const EdgeInsets.all(
-                                    15),
-                                focusedBorder:
-                                OutlineInputBorder(
-                                  borderSide:
-                                  const BorderSide(
-                                      color: Colors
-                                          .white),
-                                  borderRadius:
-                                  BorderRadius
-                                      .circular(10),
-                                ),
-                                enabledBorder:
-                                UnderlineInputBorder(
-                                  borderSide:
-                                  const BorderSide(
-                                      color: Colors
-                                          .black),
-                                  borderRadius:
-                                  BorderRadius
-                                      .circular(50),
-                                ),
-                              ),
-                              dropdownColor:
-                              Colors.white70,
-                              icon: const Icon(
-                                  Icons.arrow_drop_down),
-                              iconSize: 28,
-                              hint: const Text(
-                                  'Select Device Pin Name'),
-                              isExpanded: true,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight:
-                                FontWeight.bold,
-                              ),
-                              items: namesDataList.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value.trim(),style:TextStyle(color:Colors.black),),
-                                );
-                              }).toList(),
-                              onChanged: (selectDevice) {
-                                setState(() {
-                                  deviceBool = false;
-                                  pinBoolBool = true;
-                                  selectedPinName = selectDevice!;
-
-                                  showOnOffOption = true;
-
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                        margin:
-                        const EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 10),
-                      );
-                    } else {
-                      return const Center(
-                          child:
-                          CircularProgressIndicator());
-                    }
-                  }),
-            )
+                                    ? listViewPins()
+            // Padding(
+            //   padding: const EdgeInsets.all(18.0),
+            //   child: FutureBuilder<List<String>>(
+            //       future: devicePinNameVal,
+            //       builder: (context, snapshot) {
+            //         if (snapshot.hasData) {
+            //           if (snapshot.data!.isEmpty) {
+            //             return const Center(
+            //                 child: Text(
+            //                     "No Devices on this place"));
+            //           }
+            //           return Container(
+            //             child: SizedBox(
+            //               width: double.infinity,
+            //               height: 50.0,
+            //               child: Container(
+            //                 width: MediaQuery.of(context)
+            //                     .size
+            //                     .width *
+            //                     2,
+            //                 decoration: BoxDecoration(
+            //                     color: Colors.white,
+            //                     boxShadow: const [
+            //                       BoxShadow(
+            //                           color: Colors.black,
+            //                           blurRadius: 30,
+            //                           offset:
+            //                           Offset(20, 20))
+            //                     ],
+            //                     border: Border.all(
+            //                       color: Colors.black,
+            //                       width: 0.5,
+            //                     )),
+            //                 child:
+            //                 DropdownButtonFormField<
+            //                     String>(
+            //                   decoration: InputDecoration(
+            //                     contentPadding:
+            //                     const EdgeInsets.all(
+            //                         15),
+            //                     focusedBorder:
+            //                     OutlineInputBorder(
+            //                       borderSide:
+            //                       const BorderSide(
+            //                           color: Colors
+            //                               .white),
+            //                       borderRadius:
+            //                       BorderRadius
+            //                           .circular(10),
+            //                     ),
+            //                     enabledBorder:
+            //                     UnderlineInputBorder(
+            //                       borderSide:
+            //                       const BorderSide(
+            //                           color: Colors
+            //                               .black),
+            //                       borderRadius:
+            //                       BorderRadius
+            //                           .circular(50),
+            //                     ),
+            //                   ),
+            //                   dropdownColor:
+            //                   Colors.white70,
+            //                   icon: const Icon(
+            //                       Icons.arrow_drop_down),
+            //                   iconSize: 28,
+            //                   hint: const Text(
+            //                       'Select Device Pin Name'),
+            //                   isExpanded: true,
+            //                   style: const TextStyle(
+            //                     color: Colors.black,
+            //                     fontWeight:
+            //                     FontWeight.bold,
+            //                   ),
+            //                   items: namesDataList.map<DropdownMenuItem<String>>((String value) {
+            //                     return DropdownMenuItem<String>(
+            //                       value: value,
+            //                       child: Text(value.trim(),style:TextStyle(color:Colors.black),),
+            //                     );
+            //                   }).toList(),
+            //                   onChanged: (selectDevice) {
+            //                     setState(() {
+            //                       deviceBool = false;
+            //                       pinBoolBool = true;
+            //                       selectedPinName = selectDevice!;
+            //
+            //                       showOnOffOption = true;
+            //
+            //                     });
+            //                   },
+            //                 ),
+            //               ),
+            //             ),
+            //             margin:
+            //             const EdgeInsets.symmetric(
+            //                 vertical: 10,
+            //                 horizontal: 10),
+            //           );
+            //         } else {
+            //           return const Center(
+            //               child:
+            //               CircularProgressIndicator());
+            //         }
+            //       }),
+            // )
                                     : Container()
           ],
         ),
@@ -889,7 +887,34 @@ class _SceneDetailsState extends State<SceneDetails> {
     }
   }
 
+  List<bool> color = List.filled( 12, false);
+  Widget listViewPins(){
 
+   return Container(
+     child: ListView.builder(
+         padding: const EdgeInsets.all(4),
+         shrinkWrap: true,
+         itemCount: namesDataList.length,
+         itemBuilder: (BuildContext context, int index) {
+           return Row(
+             children: [
+               Container(
+                 child: Text(namesDataList[index]),
+               ),
+               SizedBox(width: 10,),
+               MaterialButton(color: color[index]?Colors.green:Colors.red ,onPressed: (){
+                 setState(() {
+                   color[index] = true;
+                 });
+               }, child: Text("On "),),
+               SizedBox(width: 10,),
+               ElevatedButton(onPressed: null, child: Text("Off")),
+             ],
+           );
+         }
+     ),
+   );
+  }
 
 
 }

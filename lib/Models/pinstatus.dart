@@ -62,8 +62,8 @@ class DevicePinStatus {
   int? pin16Status;
   int? pin17Status;
   int? pin18Status;
-  String? pin19Status;
-  String? pin20Status;
+  int? pin19Status;
+  int? pin20Status;
   double? sensor1;
   double? sensor2;
   double? sensor3;
