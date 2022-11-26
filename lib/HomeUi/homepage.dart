@@ -882,7 +882,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ListTile(
                     leading: const Icon(Icons.settings, color: Colors.white),
                     title: const Text(
-                      'Setting',
+                      'Settings',
                       style: TextStyle(
                         color: Colors.white,
                       ),
@@ -999,7 +999,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         ),
                         placeBool
                             ? cool()
-                              : changeFloorBool
+                            : changeFloorBool
                                 ? changeFloor()
                                 : changeFlatBool
                                     ? changeFlat()
@@ -2010,184 +2010,189 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return flatType;
   }
-  var dropdownItemPlaceList = List.empty(growable:true);
-    void listPlace()async{
 
-      List data = await AllDatabase.instance.queryPlace();
-      setState(() {
-        placeType = data.map((data) => PlaceType.fromJson(data)).toList();
-      });
-      for(int i=0; i<data.length;i++){
-        var data ={'label': '${placeType[i].pType}', 'value': '${placeType[i].pId}'};
-        dropdownItemPlaceList.add(data);
-      }
+  var dropdownItemPlaceList = List.empty(growable: true);
+
+  void listPlace() async {
+    List data = await AllDatabase.instance.queryPlace();
+    setState(() {
+      placeType = data.map((data) => PlaceType.fromJson(data)).toList();
+    });
+    for (int i = 0; i < data.length; i++) {
+      var data = {
+        'label': '${placeType[i].pType}',
+        'value': '${placeType[i].pId}'
+      };
+      dropdownItemPlaceList.add(data);
     }
-  var dropdownItemListFloor = List.empty(growable:true);
-  var dropdownItemListFlat = List.empty(growable:true);
+  }
 
-  Future<List<FloorType>> listFloor(id)async{
+  var dropdownItemListFloor = List.empty(growable: true);
+  var dropdownItemListFlat = List.empty(growable: true);
 
+  Future<List<FloorType>> listFloor(id) async {
     List data = await AllDatabase.instance.getFloorById(id);
     List<FloorType> flatType = [];
     setState(() {
       flatType = data.map((data) => FloorType.fromJson(data)).toList();
     });
-    for(int i=0; i<data.length;i++){
-      var as ={'label': '${flatType[i].fName}', 'value': '${flatType[i].fId}'};
+    for (int i = 0; i < data.length; i++) {
+      var as = {'label': '${flatType[i].fName}', 'value': '${flatType[i].fId}'};
       dropdownItemListFloor.add(as);
     }
     return flatType;
   }
 
-  Future<List<FlatType>> listFlat(id)async{
-
+  Future<List<FlatType>> listFlat(id) async {
     List data = await AllDatabase.instance.getFlatByFId(id);
     List<FlatType> flatType = [];
     setState(() {
       flatType = data.map((data) => FlatType.fromJson(data)).toList();
     });
-    for(int i=0; i<data.length;i++){
-      var as ={'label': '${flatType[i].fltName}', 'value': '${flatType[i].fltId}'};
+    for (int i = 0; i < data.length; i++) {
+      var as = {
+        'label': '${flatType[i].fltName}',
+        'value': '${flatType[i].fltId}'
+      };
       dropdownItemListFlat.add(as);
     }
     return flatType;
   }
 
-
-  Widget cool(){
+  Widget cool() {
     return Container(
-        child:SingleChildScrollView(
-          child:Column(
-          children:[
-            const SizedBox(
-              height: 15,
-            ),
-            InkWell(
-              child: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onTap: () {
-                setState(() {
-                  placeBool = !placeBool;
-                });
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: FutureBuilder<List<PlaceType>>(
-                  future: placeVal,
-                builder:(context,snapshot){
-                    if(snapshot.hasData){
-                      if (snapshot.data!.isEmpty) {
-                        return const Center(
-                            child: Text("No Devices on this place"));
-                      }
-                      return CoolDropdown(
-                        dropdownList: dropdownItemPlaceList,
-                        onChange: (value) {
-                          setState(() {
-                            pt = PlaceType(pId: value['value'], pType: value['label'], user: getUidVariable2);
-                            floorVal = listFloor(pt!.pId);
-                          });
-                        },);
-                    }
-                    return const Center(child: CircularProgressIndicator());
+        child: SingleChildScrollView(
+            child: Column(children: [
+      const SizedBox(
+        height: 15,
+      ),
+      InkWell(
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.white,
+        ),
+        onTap: () {
+          setState(() {
+            placeBool = !placeBool;
+          });
+        },
+      ),
+      Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: FutureBuilder<List<PlaceType>>(
+            future: placeVal,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data!.isEmpty) {
+                  return const Center(child: Text("No Devices on this place"));
                 }
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: FutureBuilder<List<FloorType>>(
-                  future: floorVal,
-                builder:(context,snapshot){
-                    if(snapshot.hasData){
-                      if (snapshot.data!.isEmpty) {
-                        return const Center(
-                            child: Text("No Devices on this place"));
-                      }
-                      return CoolDropdown(
-                        dropdownList: dropdownItemListFloor,
-                        onChange: (value) {
-                          setState(() {
-                            flatVal = listFlat(value['value']);
-                            fl = FloorType(fId: value['value'], fName: value['label'], user: getUidVariable2, pId: pt!.pId.toString());
-                          });
-
-                        },);
-                    }
-                    return const Center(child: CircularProgressIndicator());
+                return CoolDropdown(
+                  dropdownList: dropdownItemPlaceList,
+                  onChange: (value) {
+                    setState(() {
+                      pt = PlaceType(
+                          pId: value['value'],
+                          pType: value['label'],
+                          user: getUidVariable2);
+                      floorVal = listFloor(pt!.pId);
+                    });
+                  },
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            }),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: FutureBuilder<List<FloorType>>(
+            future: floorVal,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data!.isEmpty) {
+                  return const Center(child: Text("No Devices on this place"));
                 }
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: FutureBuilder<List<FlatType>>(
-                  future: flatVal,
-                builder:(context,snapshot){
-                    if(snapshot.hasData){
-                      if (snapshot.data!.isEmpty) {
-                        return const Center(
-                            child: Text("No Devices on this place"));
-                      }
-                      return CoolDropdown(
-                        dropdownList: dropdownItemListFlat,
-                        onChange: (value) {
-                          setState(() {
-                            flt = FlatType(fltId: value['value'], fltName: value['label'], user: getUidVariable2, fId: fl!.fId);
-                          });
-
-                          print("VVAVVAV ${value}");
-
-                        },);
-                    }
-                    return const Center(child: CircularProgressIndicator());
+                return CoolDropdown(
+                  dropdownList: dropdownItemListFloor,
+                  onChange: (value) {
+                    setState(() {
+                      flatVal = listFlat(value['value']);
+                      fl = FloorType(
+                          fId: value['value'],
+                          fName: value['label'],
+                          user: getUidVariable2,
+                          pId: pt!.pId.toString());
+                    });
+                  },
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            }),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: FutureBuilder<List<FlatType>>(
+            future: flatVal,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data!.isEmpty) {
+                  return const Center(child: Text("No Devices on this place"));
                 }
-              ),
-            ),
-            Container(
-              height: 50.0,
-              width: 150.0,
-              color: Colors.transparent,
-              child: Container(
-                  decoration: const BoxDecoration(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  child: Center(
-                    child: InkWell(
-                      child: const Text(
-                        "Submit",
-                        style: TextStyle(color: Colors.white, fontSize: 22),
-                        textAlign: TextAlign.center,
-                      ),
-                      onTap: () async {
-                        List<RoomType> rm = [];
+                return CoolDropdown(
+                  dropdownList: dropdownItemListFlat,
+                  onChange: (value) {
+                    setState(() {
+                      flt = FlatType(
+                          fltId: value['value'],
+                          fltName: value['label'],
+                          user: getUidVariable2,
+                          fId: fl!.fId);
+                    });
 
-                        List data =
-                        await AllDatabase.instance.getRoomById(flt!.fltId);
-                        setState(() {
-                          rm = data
-                              .map((data) => RoomType.fromJson(data))
-                              .toList();
-                        });
-                        timer!.cancel();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage(
-                                    fl: fl,
-                                    flat: flt,
-                                    pt: pt,
-                                    rm: rm,
-                                    dv: const [])));
-                      },
-                    ),
-                  )),
-            ),
-          ]
-          )
-        )
-    );
+                    print("VVAVVAV ${value}");
+                  },
+                );
+              }
+              return const Center(child: CircularProgressIndicator());
+            }),
+      ),
+      Container(
+        height: 50.0,
+        width: 150.0,
+        color: Colors.transparent,
+        child: Container(
+            decoration: const BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            child: Center(
+              child: InkWell(
+                child: const Text(
+                  "Submit",
+                  style: TextStyle(color: Colors.white, fontSize: 22),
+                  textAlign: TextAlign.center,
+                ),
+                onTap: () async {
+                  List<RoomType> rm = [];
+
+                  List data =
+                      await AllDatabase.instance.getRoomById(flt!.fltId);
+                  setState(() {
+                    rm = data.map((data) => RoomType.fromJson(data)).toList();
+                  });
+                  timer!.cancel();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomePage(
+                              fl: fl,
+                              flat: flt,
+                              pt: pt,
+                              rm: rm,
+                              dv: const [])));
+                },
+              ),
+            )),
+      ),
+    ])));
   }
 
   Widget changePlace() {
@@ -2215,7 +2220,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     });
                   },
                 ),
-
               ],
             ),
             Padding(
@@ -4803,6 +4807,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             title: const Text("Enter Floor Name"),
             content: TextField(
               controller: floorNameEditing,
+              decoration: InputDecoration(
+                hintText: widget.fl!.fName.toString()
+              ),
             ),
             actions: [
               Padding(
