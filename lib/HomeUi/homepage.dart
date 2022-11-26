@@ -249,7 +249,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           print("Stop !!!!");
         }
 
-        getAllFuncForScroll();
+        // getAllFuncForScroll();
       }
 
       if (scrollController.position.pixels ==
@@ -269,12 +269,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       updatePinNamesGet(widget.dv[0].dId);
       nameFuture = getPinNameByLocal(widget.dv[0].dId, 0);
       // fcmTokenGet(widget.dv[0].dId);
-      timer = Timer.periodic(Duration(seconds: 3), (timer) {
-        // You can also call here any function.
-        setState(() {
-          updatePinStatusDataInSeconds(deviceIdForScroll);
-        });
-      });
+      // timer = Timer.periodic(Duration(seconds: 3), (timer) {
+      //   // You can also call here any function.
+      //   setState(() {
+      //     updatePinStatusDataInSeconds(deviceIdForScroll);
+      //   });
+      // });
     }
   }
 

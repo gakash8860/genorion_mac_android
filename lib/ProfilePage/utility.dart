@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -59,5 +60,20 @@ class Utility {
     final id = prefs.getInt("uid");
     int userId = id!;
     return userId;
+  }
+
+  static exitScreen(context,text,title) {
+    // dialog implementation
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.ERROR,
+      animType: AnimType.BOTTOMSLIDE,
+      title: title,
+      desc: text,
+
+      btnOkOnPress: () async {
+        Navigator.pop(context);
+      },
+    )..show();
   }
 }
