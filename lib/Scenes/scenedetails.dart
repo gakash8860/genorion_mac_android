@@ -39,6 +39,7 @@ class _SceneDetailsState extends State<SceneDetails> {
   Future<List<RoomType>>? roomVal;
   Future<List<DeviceType>>? deviceVal;
   Future<List<String>>? devicePinNameVal;
+  TextEditingController sceneNameController = TextEditingController();
   PlaceType? pt;
   FloorType? fl;
   FlatType? flt;
@@ -69,6 +70,7 @@ class _SceneDetailsState extends State<SceneDetails> {
       backgroundColor: const Color(0xff121421),
       appBar: AppBar(
         title: Text(widget.sceneName.toString()),
+
       ),
       body: Container(
         child: SingleChildScrollView(
@@ -76,7 +78,7 @@ class _SceneDetailsState extends State<SceneDetails> {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: placeBool ? Container(): FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
           setState(() {
@@ -978,7 +980,8 @@ class _SceneDetailsState extends State<SceneDetails> {
     var url = api + 'scenedevice/';
     Map data = {
       "scene_id": widget.sceneId.toString(),
-      "d_id": "123",
+      "d_id": selectedDeviceId.toString(),
+      "sceneName":sceneNameController.text,
       "status1": value[0],
       "status2": value[1],
       "status3": value[2],
@@ -1009,6 +1012,7 @@ class _SceneDetailsState extends State<SceneDetails> {
     });
     if (response.statusCode == 201 || response.statusCode == 200) {
       print("response.body ${response.body}");
+      Navigator.pop(context);
 
     } else {
       Utility.exitScreen(context, "Please Create Scene for another device", "Scene is already created");
@@ -1020,44 +1024,61 @@ class _SceneDetailsState extends State<SceneDetails> {
   List<bool> color = List.filled( 12, false);
   List<bool> colorFalse = List.filled( 12, false);
   Widget listViewPins(){
-    int indexValue = 0;
    return Column(
      children: [
        selectTime(),
+       Container(
+         width: 345,
+         color: Colors.white,
+         child: TextField(
+           decoration: InputDecoration(
+             filled: true,
+             fillColor: Colors.white,
+             hintText: 'Enter Scene Name',
+           ),
+           controller:sceneNameController,
+           style: const TextStyle(fontSize: 18, color: Colors.black54),
+
+         ),
+       ),
        ListView.builder(
          padding: const EdgeInsets.all(4),
          shrinkWrap: true,
          itemCount: namesDataList.length,
          itemBuilder: (BuildContext context, int index) {
-           indexValue = index;
-           return Row(
-             children: [
-               Container(
-                 child: Text(namesDataList[index],style: TextStyle(color: Colors.white),),
-               ),
-               SizedBox(width: 10,),
-               MaterialButton(color: color[index]?Colors.green:Colors.red ,onPressed: (){
-                 setState(() {
-                   color[index] = !color[index];
-                 });
-                 if(color[index]){
-                   value[index] = 1;
-                 }
-                 print( value[index]);
-               }, child: Text("On "),),
-               SizedBox(width: 10,),
-               MaterialButton(color: colorFalse[index] == false?Colors.red:Colors.green ,onPressed: (){
-                 setState(() {
-                   colorFalse[index] = ! colorFalse[index];
+           return Card(
+             child: Row(
+               children: [
+                 Container(
+                   color: Colors.green,
+                   width:110,
+                   height: 50,
+                   child: Center(child: Text(namesDataList[index],style: TextStyle(color: Colors.black),)),
+                 ),
+                 SizedBox(width: 10,),
+                 MaterialButton(color: color[index]?Colors.green:Colors.red ,onPressed: (){
+                   setState(() {
+                     color[index] = !color[index];
+                   });
+                   if(color[index]){
+                     value[index] = 1;
+                   }
+                   print( value[index]);
+                 }, child: Text("On "),),
+                 SizedBox(width: 10,),
+                 MaterialButton(color: colorFalse[index] == false?Colors.red:Colors.yellow ,onPressed: (){
+                   setState(() {
+                     colorFalse[index] = ! colorFalse[index];
 
-                   
-                 });
-                 if(colorFalse[index] == false){
-                   value[index] =0;
-                 }
-               }, child: Text("Off "),),
+                     
+                   });
+                   if(colorFalse[index] == false){
+                     value[index] =0;
+                   }
+                 }, child: Text("Off "),),
 
-             ],
+               ],
+             ),
            );
          }
      ),
