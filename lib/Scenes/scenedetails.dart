@@ -186,7 +186,18 @@ class _SceneDetailsState extends State<SceneDetails> {
                         semanticContainer: true,
                         shadowColor: Colors.grey,
                         child: ListTile(
-                          trailing: Text(sceneDevice[index].timing.toString()),
+
+                          trailing: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(sceneDevice[index].timing.toString()),
+                                IconButton(onPressed: (){
+
+                                }, icon: Icon(Icons.delete))
+                              ],
+                            ),
+                          ),
                           subtitle: Text(sceneDevice[index].date.toString().substring(0,10)),
                           leading: Text(" ${sceneDevice[index].sceneName.toString()}"),
                       title: Text(" ${sceneDevice[index].dId.toString()}"),
@@ -959,17 +970,6 @@ class _SceneDetailsState extends State<SceneDetails> {
               ),
             ),
           ),
-          // SizedBox(height: 15,),
-          // FloatingActionButton.extended(
-          //   heroTag: null,
-          //   onPressed: () async {
-          //     // await schedulingDevicePin(dId, index);
-          //
-          //     Navigator.pop(context);
-          //   },
-          //   icon: const Icon(Icons.alarm),
-          //   label: const Text('Save'),
-          // ),
         ]));
   }
 
@@ -1069,8 +1069,6 @@ class _SceneDetailsState extends State<SceneDetails> {
                  MaterialButton(color: colorFalse[index] == false?Colors.red:Colors.yellow ,onPressed: (){
                    setState(() {
                      colorFalse[index] = ! colorFalse[index];
-
-                     
                    });
                    if(colorFalse[index] == false){
                      value[index] =0;
