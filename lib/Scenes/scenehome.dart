@@ -173,8 +173,6 @@ class _SceneHomeState extends State<SceneHome> {
   Future<bool> getScene() async {
     String? token = await Utility.getToken();
     int userId = await Utility.getUidShared();
-    print("TOKEEE $token");
-    print("WREQWEDFSE ${userId}");
     var url = api + 'scenedetail/?user=' + userId.toString();
     final response =
     await http.get(Uri.parse(url), headers: {

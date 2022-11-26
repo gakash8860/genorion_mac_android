@@ -50,7 +50,8 @@ Future<void> main() async {
  }
 
 // const api = 'http://genorion1.herokuapp.com/';
-const api = 'http://3.110.45.229:8000/';
+// const api = 'http://3.110.45.229:8000/';
+const api = 'https://genorion.pythonanywhere.com/';
 
  var changeColor;
  Image? setImage;
