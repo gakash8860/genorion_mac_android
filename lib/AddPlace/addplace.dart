@@ -28,15 +28,16 @@ class _AddPlaceState extends State<AddPlace> {
                 padding: const EdgeInsets.only(
                   left: 28,
                   right: 18,
-                  top: 36,
+                  top: 16,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
-                      child: const Text(" "),
-                      onTap: () {},
-                    ),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(Icons.arrow_back_ios,color: Colors.white)),
                     Row(
                       children: const [
                         Text("Add Place",
@@ -48,16 +49,18 @@ class _AddPlaceState extends State<AddPlace> {
                     ),
                     InkWell(
                       borderRadius: BorderRadius.circular(360),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                       child: const SizedBox(
                         height: 35,
                         width: 35,
                         child: Center(
-                            // child: Icon(
-                            //   Icons.notifications,
-                            //   color: Colors.white,
-                            // ),
-                            ),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ],

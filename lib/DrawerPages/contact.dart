@@ -69,7 +69,7 @@ class _ContactPageState extends State<ContactPage> {
 
               linkedinURL: 'https://www.linkedin.com/company/spaceorion/',
               tagLine: 'Automation',
-              twitterHandle: 'https://twitter.com/GENORION1',
+              twitterHandle: 'https://twitter.com/GENORION1?t=6QxaeJx7z8WelgGp0BFhJw&s=09',
               emailText: 'contact@genorion.com',
               
               phoneNumberText: '+919911757588',
