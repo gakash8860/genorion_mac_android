@@ -243,7 +243,7 @@ class _AddPlaceState extends State<AddPlace> {
         child: const Text(
           'Submit',
           style: TextStyle(
-            color: Color(0xFF527DAA),
+            color: Colors.white,
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,

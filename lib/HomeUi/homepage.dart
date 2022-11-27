@@ -43,6 +43,7 @@ import '../BillPrediction/placebill.dart';
 import '../DrawerPages/pinschedulepage.dart';
 import '../EmergencyNumber/emergencynumber.dart';
 import '../LocalDatabase/alldb.dart';
+import '../Models/CustomException.dart';
 import '../Models/devicemodel.dart';
 
 import '../Models/ip.dart';
@@ -129,7 +130,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List deviceData = [];
   bool changeFloorBool = false;
   bool changeFlatBool = false;
-  bool submitClicked = false;
   TextEditingController floorNameEditing = TextEditingController();
   TextEditingController flatNameEditing = TextEditingController();
   ScrollController scrollController = ScrollController();
@@ -208,6 +208,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   PhotoModel? photo;
   bool isAllFunctionRunningBackground = true;
+
+  Future? localfloorFuture;
 
   @override
   void dispose() {
@@ -998,7 +1000,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ),
                         ),
                         placeBool
-                            ? cool()
+                            ? changePlace()
                             : changeFloorBool
                                 ? changeFloor()
                                 : changeFlatBool
@@ -1177,8 +1179,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                                                 () {
                                                                               setState(() {
                                                                                 flatVal = flatQueryFunc(widget.fl!.fId);
+                                                                                changeFlatBool =! changeFlatBool;
                                                                               });
-                                                                              _creatDialogChangeFlat();
+                                                                              // _creatDialogChangeFlat();
                                                                             },
                                                                           ),
                                                                           const SizedBox(
@@ -1860,7 +1863,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return;
     } else {
-      throw Exception('Failed to create Device.');
+      var error = jsonDecode(response.body);
+      List<String> e = List.filled(1, error['d_id'][0]);
+      CustomException customException = CustomException(dId: e);
+      Utility.exitScreen(context, customException.dId!.first,"Id Doesn't Exist");
+        print(response.statusCode);
+        // print(response.body);
     }
   }
 
@@ -1914,9 +1922,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       return;
     }
   }
-
+bool loaderForProcessing  = false;
   _createAlertDialogForAddDevice(BuildContext context) {
-    return showDialog(
+    return  showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -1931,6 +1939,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   elevation: 5.0,
                   child: const Text('Submit'),
                   onPressed: () async {
+                    setState(() {
+                      loaderForProcessing = !loaderForProcessing;
+                    });
                     await sendDeviceId(addDeviceController.text);
                     await getDevice(tabbarState);
                     await deviceQueryFunc(tabbarState);
@@ -1938,6 +1949,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         .then((value) => getPinNames(addDeviceController.text));
                     nameFuture = getPinNameByLocal(
                         addDeviceController.text.toString(), 0);
+                    setState(() {
+                      loaderForProcessing = !loaderForProcessing;
+                    });
                     Navigator.pop(context);
                   },
                 ),
@@ -2264,7 +2278,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: Colors.white,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Place'),
@@ -2338,7 +2352,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: Colors.white,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Floor'),
@@ -2412,7 +2426,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: Colors.white,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Flat'),
@@ -2640,7 +2654,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: Colors.white,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Floor'),
@@ -2714,7 +2728,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: Colors.white,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Flat'),
@@ -2860,7 +2874,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                             ),
-                            dropdownColor: Colors.white70,
+                            dropdownColor: Colors.white,
                             icon: const Icon(Icons.arrow_drop_down),
                             iconSize: 28,
                             hint: const Text('Select Flat'),
@@ -2914,26 +2928,36 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   }
                 }),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
-              elevation: 5.0,
-              child: const Text('Submit'),
-              onPressed: () async {
-                // timer!.cancel();
+              Container(
+                height: 50.0,
+                width: 150.0,
+                color: Colors.transparent,
+                child: Container(
+                    decoration: const BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    child: Center(
+                      child: InkWell(
+                        child: const Text(
+                          "Submit",
+                          style: TextStyle(color: Colors.white, fontSize: 22),
+                          textAlign: TextAlign.center,
+                        ),
+                        onTap: () async {
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomePage(
-                            fl: widget.fl,
-                            flat: flt,
-                            pt: widget.pt,
-                            rm: rm,
-                            dv: dv)));
-              },
-            ),
-          )
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage(
+                                      fl: widget.fl,
+                                      flat: flt,
+                                      pt: widget.pt,
+                                      rm: rm,
+                                      dv: dv)));
+                        },
+                      ),
+                    )),
+              ),
         ])));
   }
 
@@ -3108,151 +3132,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  _creatDialogChangeFlat() {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Change Flat'),
-            content: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: FutureBuilder<List<FlatType>>(
-                          future: flatVal,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              if (snapshot.data!.isEmpty) {
-                                return const Center(
-                                    child: Text("No Devices on this place"));
-                              }
-                              return Container(
-                                child: SizedBox(
-                                  width: double.infinity,
-                                  height: 50.0,
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 2,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: const [
-                                          BoxShadow(
-                                              color: Colors.black,
-                                              blurRadius: 30,
-                                              offset: Offset(20, 20))
-                                        ],
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 0.5,
-                                        )),
-                                    child: DropdownButtonFormField<FlatType>(
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        contentPadding:
-                                            const EdgeInsets.all(15),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.black),
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                        ),
-                                      ),
-                                      dropdownColor: Colors.white70,
-                                      icon: const Icon(Icons.arrow_drop_down),
-                                      iconSize: 28,
-                                      hint: const Text('Select Flat'),
-                                      isExpanded: true,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      items: snapshot.data!.map((selectedflat) {
-                                        return DropdownMenuItem<FlatType>(
-                                          value: selectedflat,
-                                          child: Text(selectedflat.fltName),
-                                        );
-                                      }).toList(),
-                                      onChanged: (selectFlat) async {
-                                        setState(() {
-                                          flt = selectFlat;
-                                        });
-
-                                        List roomList = await AllDatabase
-                                            .instance
-                                            .getRoomById(flt!.fltId);
-
-                                        setState(() {
-                                          rm = List.generate(
-                                              roomList.length,
-                                              (index) => RoomType(
-                                                    rId: roomList[index]['r_id']
-                                                        .toString(),
-                                                    fltId: roomList[index]
-                                                            ['flt_id']
-                                                        .toString(),
-                                                    rName: roomList[index]
-                                                            ['r_name']
-                                                        .toString(),
-                                                    user: roomList[index]
-                                                        ['user'],
-                                                  ));
-                                        });
-
-                                        List device = await AllDatabase.instance
-                                            .getDeviceById(rm[0].rId);
-                                        dv = device
-                                            .map((e) => DeviceType.fromJson(e))
-                                            .toList();
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 10, horizontal: 10),
-                              );
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                          }),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MaterialButton(
-                  elevation: 5.0,
-                  child: const Text('Submit'),
-                  onPressed: () async {
-                    // timer!.cancel();
-
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomePage(
-                                fl: widget.fl,
-                                flat: flt,
-                                pt: widget.pt,
-                                rm: rm,
-                                dv: dv)));
-                  },
-                ),
-              )
-            ],
-          );
-        });
-  }
 
   bool statusOfDevice = false;
 
@@ -4330,66 +4209,71 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               'Choose One For Floor',
               style: TextStyle(fontSize: 20),
             ),
-            content: SingleChildScrollView(
-              child: SizedBox(
-                height: 155,
-                child: Column(
-                  children: [
-                    TextButton(
-                      child: Row(
-                        children: const [
-                          Icon(Icons.add),
-                          SizedBox(
-                            width: 54,
-                          ),
-                          Text(
-                            'Add Floor',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+            content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return SingleChildScrollView(
+                child: SizedBox(
+                  height: 155,
+                  child: Column(
+                    children: [
+                      TextButton(
+                        child: Row(
+                          children: const [
+                            Icon(Icons.add),
+                            SizedBox(
+                              width: 54,
+                            ),
+                            Text(
+                              'Add Floor',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        onPressed: () async {
+
+                          localfloorFuture  = allFloor();
+                          _createAlertDialogForAddFloor(context);
+                        },
                       ),
-                      onPressed: () async {
-                        await allFloor();
-                        _createAlertDialogForAddFloor(context);
-                      },
-                    ),
-                    TextButton(
-                      child: Row(
-                        children: const [
-                          Icon(Icons.delete),
-                          SizedBox(
-                            width: 54,
-                          ),
-                          Text(
-                            'Delete Floor',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                      TextButton(
+                        child: Row(
+                          children: const [
+                            Icon(Icons.delete),
+                            SizedBox(
+                              width: 54,
+                            ),
+                            Text(
+                              'Delete Floor',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        onPressed: () async {
+                          deleteFloorOption(context);
+                        },
                       ),
-                      onPressed: () async {
-                        deleteFloorOption(context);
-                      },
-                    ),
-                    TextButton(
-                      child: Row(
-                        children: const [
-                          Icon(Icons.edit),
-                          SizedBox(
-                            width: 54,
-                          ),
-                          Text(
-                            'Edit Floor Name',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                      TextButton(
+                        child: Row(
+                          children: const [
+                            Icon(Icons.edit),
+                            SizedBox(
+                              width: 54,
+                            ),
+                            Text(
+                              'Edit Floor Name',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        onPressed: () {
+                          _editFloorNameAlertDialog(context);
+                        },
                       ),
-                      onPressed: () {
-                        _editFloorNameAlertDialog(context);
-                      },
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+              );
+            }
             ),
             actions: const <Widget>[],
           );
@@ -4558,12 +4442,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   _createAlertDialogForAddFloor(BuildContext context) {
-    return submitClicked
-        ? const Center(child: CircularProgressIndicator())
-        : showDialog(
+    return  showDialog(
             context: context,
             builder: (context) {
-              return AlertDialog(
+              return  AlertDialog(
                 title: const Text('Enter the Name of Floor'),
                 content: SizedBox(
                   height: 320,
@@ -4655,8 +4537,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           elevation: 5.0,
                           child: const Text('Submit'),
                           onPressed: () async {
+                            print(loaderForProcessing);
                             setState(() {
-                              submitClicked = true;
+                              loaderForProcessing = !loaderForProcessing;
                             });
                             await addFloor(floorEditing.text);
                             await addFlat2(flatEditing.text);
@@ -4665,7 +4548,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             await getAllFlatByAddedFloor();
                             await getAllRoomByAddedFlat();
                             setState(() {
-                              submitClicked = true;
+                              loaderForProcessing = !loaderForProcessing;
                             });
                           },
                         ),
@@ -4677,14 +4560,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             });
   }
 
-  allFloor() async {
-    listOfAllFloor = await AllDatabase.instance.queryFloor();
-    if (kDebugMode) {
-      print(listOfAllFloor);
+  Future<bool>allFloor() async {
+    listOfAllFloor = List.empty();
+    listOfAllFloor = await AllDatabase.instance.getFloorById(widget.pt!.pId);
+    if(listOfAllFloor.isNotEmpty){
+      return true;
     }
+    return false;
   }
 
-  Future<void> deleteFloor(String fId) async {
+  Future deleteFloor(String fId) async {
     String? token = await getToken();
     final url = api + 'addyourfloor/?f_id=' + fId;
     final response = await http.delete(Uri.parse(url), headers: {
@@ -4697,7 +4582,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         print('deleteFloor ${response.body}');
       }
       await AllDatabase.instance.deleteFloorModel(fId);
-      listOfAllFloor = await AllDatabase.instance.getFloorById(fId);
+      setState(() {
+        localfloorFuture  = allFloor();
+      });
 
       const snackBar = SnackBar(
         content: Text('Floor Deleted'),
@@ -4834,54 +4721,106 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         builder: (context) {
           return AlertDialog(
             title: const Text('Select Floor'),
-            content: Container(
-              color: Colors.amber,
-              width: 78,
-              child: ListView.builder(
-                  itemCount: listOfAllFloor.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      color: Colors.blueGrey,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          semanticContainer: true,
-                          shadowColor: Colors.grey,
-                          child: Column(
-                            children: <Widget>[
-                              ListTile(
-                                title: Text(listOfAllFloor[index]['f_name']),
-                              ),
-                              // ignore: deprecated_member_use
-                              ElevatedButton(
-                                child: const Text('Delete Floor'),
-                                onPressed: () async {
-                                  var deleteFloorId;
-                                  if (widget.fl!.fId.contains(
-                                      listOfAllFloor[index]['f_id']
-                                          .toString())) {
-                                    oops();
-                                  } else {
-                                    setState(() {
-                                      deleteFloorId = listOfAllFloor[index]
-                                              ['f_id']
-                                          .toString();
-                                    });
-                                    await deleteFloor(deleteFloorId);
+            content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                color: Colors.amber,
+                width: 78,
+                child: FutureBuilder(
+                  future:     localfloorFuture ,
+                  builder: (context,snapshot){
+                    return ListView.builder(
+                        itemCount: listOfAllFloor.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            color: Colors.blueGrey,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Card(
+                                semanticContainer: true,
+                                shadowColor: Colors.grey,
+                                child: Column(
+                                  children: <Widget>[
+                                    ListTile(
+                                      title: Text(listOfAllFloor[index]['f_name']),
+                                    ),
+                                    // ignore: deprecated_member_use
+                                    ElevatedButton(
+                                      child: const Text('Delete Floor'),
+                                      onPressed: () async {
+                                        var deleteFloorId;
+                                        if (widget.fl!.fId.contains(
+                                            listOfAllFloor[index]['f_id']
+                                                .toString())) {
+                                          oops();
+                                        } else {
+                                          setState(() {
+                                            deleteFloorId = listOfAllFloor[index]
+                                            ['f_id']
+                                                .toString();
+                                          });
+                                          deleteDialogGlobal(context,deleteFloorId);
+                                          setState(() {
+                                            localfloorFuture = allFloor();});// await deleteFloor(deleteFloorId);
 
-                                    Navigator.of(context).pop();
-                                  }
-                                },
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  }),
+                                          // Navigator.of(context).pop();
+                                        }
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                ),
+              );
+            }
             ),
           );
         });
+  }
+
+  deleteDialogGlobal(context,deleteFloorId){
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: const Text("Are you sure to want Delete ??"),
+        actions: <Widget>[
+          ElevatedButton(onPressed: ()async{
+            await deleteFloor(deleteFloorId);
+
+            Navigator.of(context).pop();
+          }, child: const Text("Yes")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("No")),
+        ],
+      ),
+    );
+  }
+  deleteDialogFlat(context,deleteFlatId){
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: const Text("Are you sure to want Delete ??"),
+        actions: <Widget>[
+          ElevatedButton(onPressed: ()async{
+            await deleteFlat(deleteFlatId);
+
+            Navigator.of(context).pop();
+          }, child: const Text("Yes")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("No")),
+        ],
+      ),
+    );
   }
 
   var recipents = "9911757588";
@@ -4978,7 +4917,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     deviceIdForScroll = dId;
     return Container(
       color: Colors.transparent,
-      height: MediaQuery.of(context).size.height * 2.9,
+      // height: MediaQuery.of(context).size.height * 2.9,
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -5419,7 +5358,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ],
             ),
-            const Divider()
           ],
         ),
       ),
@@ -6649,7 +6587,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               ['flt_id']
                                           .toString();
                                     });
-                                    await deleteFlat(deletedFlatId);
+                                    deleteDialogFlat(context,deletedFlatId);
                                     Navigator.of(context).pop();
                                   }
                                 },
