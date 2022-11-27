@@ -208,7 +208,7 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                 ),
-                                dropdownColor: Colors.white70,
+                                dropdownColor: Colors.white,
                                 icon: const Icon(Icons.arrow_drop_down),
                                 iconSize: 28,
                                 hint: const Text('Select Place'),

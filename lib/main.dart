@@ -52,7 +52,7 @@ Future<void> main() async {
 // const api = 'http://genorion1.herokuapp.com/';
 // const api = 'http://3.110.45.229:8000/';
 const api = 'https://genorion.pythonanywhere.com/';
-
+bool changeDone = false;
  var changeColor;
  Image? setImage;
  
@@ -118,7 +118,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: changeColor??Colors.blue,
+        primarySwatch: changeDone?changeColor:Colors.blue,
       ),
       home: const GettingStartedScreen(),
     );

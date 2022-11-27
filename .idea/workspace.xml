@@ -13,12 +13,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Scene Device">
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/AddPlace/addplace.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/AddPlace/addplace.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/BillPrediction/devicebill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/devicebill.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/BillPrediction/faltbill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/faltbill.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/BillPrediction/floorbill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/floorbill.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/BillPrediction/placebill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/placebill.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/BillPrediction/roomdevicebill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/roomdevicebill.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ColorPlates/changecolor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ColorPlates/changecolor.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/DrawerPages/contact.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DrawerPages/contact.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -475,7 +479,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669542263784</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Scene Device">
+      <created>1669544424404</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1669544424404</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
