@@ -6,12 +6,25 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const IMAGE_KEY = 'IMAGE_KEY';
 
 class Utility {
+
+
+
+  static Widget circularIndicator(){
+    return Container(
+      height: 54,
+      width: 45,
+      child: CircularProgressIndicator(
+        color: Colors.red,
+      ),
+    );
+  }
 
 
 

@@ -409,7 +409,7 @@ class _FloorBillPredState extends State<FloorBillPred> {
                         await showDatePicker1();
                       },
                       child: Text(
-                        cutDate ?? 'Select Date',
+                        cutDate ?? 'Select Current Date',
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
@@ -425,7 +425,7 @@ class _FloorBillPredState extends State<FloorBillPred> {
                         // print12();
                       },
                       child: Text(
-                        cutDate2 ?? 'Select Date 2 ',
+                        cutDate2 ?? 'Select Past Date ',
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
