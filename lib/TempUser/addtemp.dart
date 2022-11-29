@@ -11,6 +11,7 @@ import 'package:genorion_mac_android/Models/floormodel.dart';
 import 'package:genorion_mac_android/Models/roommodel.dart';
 import 'package:genorion_mac_android/Models/tempuser.dart';
 import 'package:genorion_mac_android/Models/userprofike.dart';
+import 'package:genorion_mac_android/ProfilePage/utility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../LocalDatabase/alldb.dart';
@@ -40,6 +41,7 @@ class _AddTempUserState extends State<AddTempUser> {
   bool changeFlat = true;
   bool changeroom = true;
   bool changeDevice = true;
+  bool loader = false;
   var assignFloorId;
   var assignFlatId;
   var assignRoomId;
@@ -61,6 +63,8 @@ class _AddTempUserState extends State<AddTempUser> {
     getUidShared();
     userPersonalData();
   }
+
+
 
   Future<String?> getToken() async {
     final tokenVar = await storage.read(key: "token");
@@ -214,6 +218,9 @@ class _AddTempUserState extends State<AddTempUser> {
     });
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+      setState(() {
+        loader = ! loader;
+      });
       await getTempUser();
       const snackBar = SnackBar(
         content: Text('Temp User Added'),
@@ -221,6 +228,9 @@ class _AddTempUserState extends State<AddTempUser> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
     } else {
+      setState(() {
+        loader = ! loader;
+      });
       if (kDebugMode) {
         print(response.statusCode);
         print(response.body);
@@ -260,6 +270,12 @@ class _AddTempUserState extends State<AddTempUser> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff121421),
@@ -277,6 +293,9 @@ class _AddTempUserState extends State<AddTempUser> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        setState(() {
+                          loader = false;
+                        });
                         Navigator.pop(context);
                       },
                       icon: const Icon(
@@ -884,7 +903,7 @@ class _AddTempUserState extends State<AddTempUser> {
                               : const Center(
                                   child: CircularProgressIndicator(),
                                 ),
-          ElevatedButton(
+          loader?Utility.circularIndicator(): ElevatedButton(
               child: const Text(
                 'Submit',
                 style: TextStyle(
@@ -892,13 +911,11 @@ class _AddTempUserState extends State<AddTempUser> {
                   fontSize: 20,
                 ),
               ),
-              // shape: OutlineInputBorder(
-              //   borderSide: const BorderSide(color: Colors.white, width: 2),
-              //   borderRadius: BorderRadius.circular(90),
-              // ),
-              // padding: const EdgeInsets.all(15),
-              // textColor: Colors.white,
+
               onPressed: () async {
+                setState(() {
+                  loader = ! loader;
+                });
                 await addTempUser();
               }),
         ],

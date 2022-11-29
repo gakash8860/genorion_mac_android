@@ -3973,6 +3973,7 @@ bool loaderForProcessing  = false;
   }
 
   Future<void> dataUpdate(dId) async {
+    print("RRRRRRRRRRRRRRREEEEEEEEE =>    $responseGetData");
     String? token = await getToken();
     var url = api + 'getpostdevicePinStatus/?d_id=' + dId;
     Map data = {
@@ -6007,15 +6008,15 @@ bool loaderForProcessing  = false;
               onPressed: () async {
                 var result = await Connectivity().checkConnectivity();
                 if (result == ConnectivityResult.wifi) {
-                  responseGetData.replaceRange(0, responseGetData.length,
-                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                
+                  responseGetData.fillRange(0, responseGetData.length,0);
                   await dataUpdate(dId);
 
                   await getPinStatusData(dId);
                   await getPinStatusByDidLocal(dId.toString());
                 } else if (result == ConnectivityResult.mobile) {
-                  responseGetData.replaceRange(0, responseGetData.length,
-                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+                  responseGetData.fillRange(0, responseGetData.length,0);
+
                   await dataUpdate(dId);
                   await getPinStatusData(dId);
                   await getPinStatusByDidLocal(dId.toString());

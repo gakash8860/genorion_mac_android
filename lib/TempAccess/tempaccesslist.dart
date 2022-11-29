@@ -151,17 +151,17 @@ class _ListOfTempAccessPageState extends State<ListOfTempAccessPage> {
                       shadowColor: Colors.grey,
                       child: ListTile(
                         title: Text(
-                          temp[index].ownerName,
+                          temp[index].ownerName.toString(),
                         ),
-                        subtitle: Text(temp[index].email),
+                        subtitle: Text(temp[index].email.toString()),
                         onTap: () {
                           if (temp[index].pId != null) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => TempPlace(
-                                          ownerName: temp[index].ownerName,
-                                          placeId: temp[index].pId,
+                                          ownerName: temp[index].ownerName.toString(),
+                                          placeId: temp[index].pId.toString(),
                                         )));
                           }
 
