@@ -12,16 +12,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Scene Device">
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/AddSubUser/addsubs.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/AddSubUser/addsubs.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Models/tempuser.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Models/tempuser.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/TempAccess/tempaccesslist.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/TempAccess/tempaccesslist.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/TempUser/addtemp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/TempUser/addtemp.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/TempUser/showtemp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/TempUser/showtemp.dart" afterDir="false" />
-    </list>
+    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Temp User , SubUser Add, Turn Off All device" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -140,13 +131,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639203997973</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Second Commit From Akash">
-      <created>1639314078754</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1639314078754</updated>
     </task>
     <task id="LOCAL-00003" summary="Commit From Akash">
       <created>1639829963007</created>
@@ -484,7 +468,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669546268125</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Temp User , SubUser Add, Turn Off All device">
+      <created>1669747007680</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1669747007681</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -517,7 +508,8 @@
     <MESSAGE value="Change Date JSON" />
     <MESSAGE value="Change Api" />
     <MESSAGE value="Scene Device" />
-    <option name="LAST_COMMIT_MESSAGE" value="Scene Device" />
+    <MESSAGE value="Temp User , SubUser Add, Turn Off All device" />
+    <option name="LAST_COMMIT_MESSAGE" value="Temp User , SubUser Add, Turn Off All device" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

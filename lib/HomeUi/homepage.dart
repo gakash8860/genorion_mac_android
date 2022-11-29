@@ -905,7 +905,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       style: TextStyle(color: Colors.white),
                     ),
                     onTap: () {
-                      Utility.launchURL('https://genorion.com/about.html');
+                      Utility.launchURL(api);
                     },
                   ),
                   ListTile(
