@@ -226,7 +226,7 @@ class _AddTempUserState extends State<AddTempUser> {
         content: Text('Temp User Added'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+      Navigator.pop(context);
     } else {
       setState(() {
         loader = ! loader;
@@ -250,20 +250,7 @@ class _AddTempUserState extends State<AddTempUser> {
       List data = jsonDecode(response.body);
       await AllDatabase.instance.deleteAllTempUser();
       for (int i = 0; i < data.length; i++) {
-        var temp = TempUserDetails(
-            id: data[i]['id'],
-            ownerName: data[i]['owner_name'],
-            mobile: data[i]['mobile'],
-            email: data[i]['email'],
-            name: data[i]['name'],
-            date: data[i]['date'],
-            timing: data[i]['timing'],
-            user: data[i]['user'],
-            pId: data[i]['p_id'],
-            fId: data[i]['f_id'],
-            fltId: data[i]['flt_id'],
-            rId: data[i]['r_id'],
-            dId: data[i]['d_id']);
+        TempUserDetails temp = TempUserDetails.fromJson(data[i]);
         await AllDatabase.instance.insertTempUserData(temp);
       }
     }
