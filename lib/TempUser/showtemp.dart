@@ -165,9 +165,9 @@ class _ShowTempUserState extends State<ShowTempUser> {
                       shadowColor: Colors.grey,
                       child: ListTile(
                         title: Text(
-                          temp[index].name,
+                          temp[index].name.toString(),
                         ),
-                        subtitle: Text(temp[index].email),
+                        subtitle: Text(temp[index].email.toString()),
                         leading: IconButton(
                           icon: const Icon(
                             Icons.delete_forever,
