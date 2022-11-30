@@ -733,7 +733,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           ),
                           CircularProfileAvatar(
                             '',
-                            child: setImage ??
+                            child: setImage!= null?setImage:
                                 Image.asset('assets/images/blank.png'),
                             radius: 60,
                             elevation: 5,

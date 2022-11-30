@@ -132,6 +132,7 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
                   Center(
                       child: Text(
                     'Sorry we cannot find any Scheduled please add',
+                        style: TextStyle(color: Colors.white),
                   )),
                 ],
               );
@@ -638,9 +639,13 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
         AllPinScheduled allPinScheduled = AllPinScheduled.fromJson(ans[i]);
         await AllDatabase.instance.insertAllDevicePinScheduled(allPinScheduled);
       }
-      futurePinScheduled = getAllLocalScheduled();
+      setState(() {
+        futurePinScheduled = getAllLocalScheduled();
+      });
     }else{
-      futurePinScheduled = getAllLocalScheduled();
+      setState(() {
+        futurePinScheduled = getAllLocalScheduled();
+      });
 
     }
   }
@@ -674,10 +679,6 @@ class _ScheduledPinPageState extends State<ScheduledPinPage> {
       print("getPuinName $dId");
     }
     if (pinName.isNotEmpty) {
-      if (kDebugMode) {
-        print(
-            "getPuinNamepppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp $pinName");
-      }
       setState(() {
         namesDataList = [
           pinName[0],
