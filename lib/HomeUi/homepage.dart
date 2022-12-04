@@ -3297,7 +3297,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
 
 
-  Future<void> getPinStatusByDidLocal(did) async {
+  Future getPinStatusByDidLocal(did) async {
     print("DID $did");
     List data =
     await AllDatabase.instance.getPinStatusByDeviceId(did.toString());
@@ -3348,9 +3348,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           "objectAndSensor $responseGetData  => ${sensorData[1]} => ${sensorData[7]}  ");
     }
     if (data.isNotEmpty) {
-      // return true;
+      return true;
     }
-    // return false;
+    return false;
   }
 
   Future<bool> getPinNameByLocal(dId, index) async {
