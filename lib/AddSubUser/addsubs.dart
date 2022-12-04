@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:genorion_mac_android/AddSubUser/showsub.dart';
 import 'package:genorion_mac_android/Models/userprofike.dart';
+import 'package:genorion_mac_android/ProfilePage/utility.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../LocalDatabase/alldb.dart';
@@ -69,9 +70,12 @@ class _AddSubUserState extends State<AddSubUser> {
     });
 
     if (response.statusCode == 201) {
+
       setState(() {
+        loader = !loader;
         changeWidget = true;
       });
+
       const snackBar = SnackBar(
         content: Text('SubUser Added'),
       );
@@ -128,13 +132,20 @@ class _AddSubUserState extends State<AddSubUser> {
         },
         body: jsonEncode(postData));
     if (response.statusCode == 201) {
+      setState(() {
+        loader = !loader;
+      });
       const snackBar = SnackBar(
         content: Text('Place Assigned'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ShowAndAddSubUser()));
       await getSubUsers();
-    } else {}
+    } else {
+      setState(() {
+        loader = !loader;
+      });
+    }
   }
 
   Future getSubUsers() async {
@@ -227,8 +238,9 @@ class _AddSubUserState extends State<AddSubUser> {
       )),
     );
   }
-
+  bool loader = false;
   Widget emailSend() {
+
     return Column(
       children: [
         const SizedBox(
@@ -300,7 +312,7 @@ class _AddSubUserState extends State<AddSubUser> {
           height: 35,
         ),
         // ignore: deprecated_member_use
-        ElevatedButton(
+        loader?Utility.circularIndicator(): ElevatedButton(
             child: const Text(
               'Submit',
               style: TextStyle(
@@ -308,19 +320,12 @@ class _AddSubUserState extends State<AddSubUser> {
                 fontSize: 20,
               ),
             ),
-            // shape: OutlineInputBorder(
-            //   borderSide: const BorderSide(color: Colors.white, width: 2),
-            //   borderRadius: BorderRadius.circular(90),
-            // ),
-            // padding: const EdgeInsets.all(15),
-            // textColor: Colors.white,
             onPressed: () async {
+              setState(() {
+                loader = !loader;
+              });
               await addSubUser(emailController.text);
 
-              // Navigator.of(context).pop();
-
-              // await floorVal;
-              // goToNextPage();
             }),
       ],
     );
@@ -404,7 +409,7 @@ class _AddSubUserState extends State<AddSubUser> {
                   }
                 }),
             // ignore: deprecated_member_use
-            ElevatedButton(
+            loader?Utility.circularIndicator():ElevatedButton(
                 child: const Text(
                   'Submit',
                   style: TextStyle(
@@ -419,6 +424,9 @@ class _AddSubUserState extends State<AddSubUser> {
                 // padding: const EdgeInsets.all(15),
                 // textColor: Colors.white,
                 onPressed: () async {
+                  setState(() {
+                    loader = !loader;
+                  });
                   await _assignPlace();
                 }),
           ],
@@ -437,9 +445,11 @@ class _AddSubUserState extends State<AddSubUser> {
         actions: <Widget>[
           // ignore: deprecated_member_use
           ElevatedButton(
-              child: const Text("No"),
+              child: const Text("Ok"),
               onPressed: () {
                 setState(() {
+                    loader = !loader;
+
                   changeWidget = true;
                 });
                 Navigator.of(context).pop();

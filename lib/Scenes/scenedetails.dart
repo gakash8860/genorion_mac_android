@@ -1,14 +1,12 @@
 import 'dart:convert';
-import 'dart:ffi';
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:genorion_mac_android/Models/devicemodel.dart';
-import 'package:genorion_mac_android/Models/pinname.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 import '../LocalDatabase/alldb.dart';
+import '../Models/SceneDevice.dart';
 import '../Models/flatmodel.dart';
 import '../Models/floormodel.dart';
 import '../Models/placemodel.dart';
@@ -41,42 +39,46 @@ class _SceneDetailsState extends State<SceneDetails> {
   Future<List<RoomType>>? roomVal;
   Future<List<DeviceType>>? deviceVal;
   Future<List<String>>? devicePinNameVal;
+  TextEditingController sceneNameController = TextEditingController();
   PlaceType? pt;
   FloorType? fl;
   FlatType? flt;
   String selectedDeviceId="";
   String selectedPinName="";
-  List <String>pinName = [];
   List <String>namesDataList = [];
   bool placeremove = false;
   bool slider = false;
   int sliderValue = 0;
-
+  Future? sceneFuture;
+  var pinName = List.empty(growable: true);
   bool showOnOffOption = false ;
-
+  List<SceneDevice> sceneDevice = List.empty(growable: true);
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    sceneFuture = getScene();
     placeVal = placeQueryFunc();
+    _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
+    pickedDate = DateTime.now();
+    cutDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff121421),
       appBar: AppBar(
         title: Text(widget.sceneName.toString()),
+
       ),
       body: Container(
-        child: Column(
-          children: [
-            placeBool ? changePlace() : Container(),
-            showOnOffOption?selectTime():Container()
-          ],
+        child: SingleChildScrollView(
+          child:  placeBool ? changePlace() : sceneDetails(),
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: placeBool ? Container(): FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
           setState(() {
@@ -127,7 +129,27 @@ class _SceneDetailsState extends State<SceneDetails> {
 
     return roomType;
   }
-
+  Future<bool> getScene() async {
+    String? token = await Utility.getToken();
+    int userId = await Utility.getUidShared();
+    var url = api + 'scenedevice/?scene_id=' + widget.sceneId;
+    final response =
+    await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Token $token',
+    });
+    if (response.statusCode == 201 || response.statusCode == 200) {
+      print("Scene Details : ${response.body}");
+      List data = jsonDecode(response.body);
+      setState(() {
+        sceneDevice = data.map((data) => SceneDevice.fromJson(data)).toList();
+      });
+      return true;
+    } else {
+      print(response.statusCode);
+    }
+    return false;
+  }
   Future<List<DeviceType>> deviceQueryFunc(id) async {
     List data = await AllDatabase.instance.getDeviceById(id);
     List<DeviceType> deviceType = [];
@@ -139,10 +161,62 @@ class _SceneDetailsState extends State<SceneDetails> {
   }
 
 
+  Widget sceneDetails(){
+    return Container(
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
+      height: MediaQuery
+          .of(context)
+          .size
+          .width,
+      child: FutureBuilder(
+        future:sceneFuture ,
+        builder: (context,snapshot){
+          return Column(
+            children: [
+              ListView.builder(
+                  itemCount:sceneDevice.length ,
+                  shrinkWrap: true,
+                  itemBuilder: (context,index){
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Card(
+                        semanticContainer: true,
+                        shadowColor: Colors.grey,
+                        child: ListTile(
+
+                          trailing: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(sceneDevice[index].timing.toString()),
+                                IconButton(onPressed: (){
+
+                                }, icon: Icon(Icons.delete))
+                              ],
+                            ),
+                          ),
+                          subtitle: Text(sceneDevice[index].date.toString().substring(0,10)),
+                          leading: Text(" ${sceneDevice[index].sceneName.toString()}"),
+                      title: Text(" ${sceneDevice[index].dId.toString()}"),
+                        ),
+                      ),
+                    );
+                  }),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+
 
 
   Future<List<String>> devicePinQueryFunc(dId) async {
-    List pinName = await AllDatabase.instance.getPinNamesByDeviceId(dId);
+     pinName = await AllDatabase.instance.getPinNamesByDeviceId(dId);
 
     if (pinName.isNotEmpty) {
       setState(() {
@@ -688,7 +762,7 @@ class _SceneDetailsState extends State<SceneDetails> {
                                                         selectedDeviceId = selectDevice!.dId.toString();
                                                         devicePinNameVal =
                                                             devicePinQueryFunc(
-                                                                selectDevice!
+                                                                selectDevice
                                                                     .dId);
                                                       });
                                                     },
@@ -708,173 +782,124 @@ class _SceneDetailsState extends State<SceneDetails> {
                                         }),
                                   )
                                 : pinBoolBool
-                                    ?  Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: FutureBuilder<List<String>>(
-                  future: devicePinNameVal,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data!.isEmpty) {
-                        return const Center(
-                            child: Text(
-                                "No Devices on this place"));
-                      }
-                      return Container(
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 50.0,
-                          child: Container(
-                            width: MediaQuery.of(context)
-                                .size
-                                .width *
-                                2,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: Colors.black,
-                                      blurRadius: 30,
-                                      offset:
-                                      Offset(20, 20))
-                                ],
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 0.5,
-                                )),
-                            child:
-                            DropdownButtonFormField<
-                                String>(
-                              decoration: InputDecoration(
-                                contentPadding:
-                                const EdgeInsets.all(
-                                    15),
-                                focusedBorder:
-                                OutlineInputBorder(
-                                  borderSide:
-                                  const BorderSide(
-                                      color: Colors
-                                          .white),
-                                  borderRadius:
-                                  BorderRadius
-                                      .circular(10),
-                                ),
-                                enabledBorder:
-                                UnderlineInputBorder(
-                                  borderSide:
-                                  const BorderSide(
-                                      color: Colors
-                                          .black),
-                                  borderRadius:
-                                  BorderRadius
-                                      .circular(50),
-                                ),
-                              ),
-                              dropdownColor:
-                              Colors.white70,
-                              icon: const Icon(
-                                  Icons.arrow_drop_down),
-                              iconSize: 28,
-                              hint: const Text(
-                                  'Select Device Pin Name'),
-                              isExpanded: true,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight:
-                                FontWeight.bold,
-                              ),
-                              items: namesDataList.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value.trim(),style:TextStyle(color:Colors.black),),
-                                );
-                              }).toList(),
-                              onChanged: (selectDevice) {
-                                setState(() {
-                                  deviceBool = false;
-                                  pinBoolBool = true;
-                                  selectedPinName = selectDevice!;
-
-                                  showOnOffOption = true;
-
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                        margin:
-                        const EdgeInsets.symmetric(
-                            vertical: 10,
-                            horizontal: 10),
-                      );
-                    } else {
-                      return const Center(
-                          child:
-                          CircularProgressIndicator());
-                    }
-                  }),
-            )
+                                    ? listViewPins()
                                     : Container()
           ],
         ),
       ),
     );
   }
+  var cutDate;
+  TimeOfDay? time;
+  var cutTime;
+  int checkSwitch = 0;
+  String? _alarmTimeString = "";
+  DateTime pickedDate = DateTime.now();
+  pickDate() async {
+    DateTime? date = await showDatePicker(
+      context: context,
+      initialDate: pickedDate,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2100),
+    );
+    if (date != null) {
+      setState(() {
+        pickedDate = date;
+      });
+    }
 
+    setState(() {
+      String date2 = pickedDate.toString();
+      cutDate = date2.substring(0, 10);
+    });
+  }
+
+  pickTime(index) async {
+    TimeOfDay? time23 = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    // print(time23);
+    String time12;
+    if (time23 != null) {
+      setState(() {
+        time = time23;
+      });
+      time12 = time.toString();
+      cutTime = time12.substring(10, 15);
+      setState(() {
+        _alarmTimeString = cutTime;
+      });
+    }
+  }
   Widget selectTime(){
-    return Container(
-        padding: const EdgeInsets.all(32),
+    return  Container(
+        width: MediaQuery.of(context).size.width,
+
         child: Column(children: [
-          const ListTile(
-            title: Text(
-              'What Do You Want ??',
-            ),
-            trailing: Icon(Icons.timer),
+          SizedBox(height: 45,),
+          SizedBox(
+            child: GestureDetector(
+                child: Text(
+                  cutDate.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                onTap: () {
+                  pickDate();
+                }),
           ),
-          Center(
-            child: ListTile(
-              title: slider?Slider(
-                  value: 10,
-                  min: 0,
-                  max: 10,
-                  onChanged: (onChanged) async {
-                    setState(() {
-                      sliderValue = onChanged.round();
-                    });
-                  }): ToggleSwitch(
-                minWidth: 100,
-                initialLabelIndex: 0,
-                labels: const ['Off', 'On'],
-                onToggle: (index) {
-                  sliderValue = index!;
-                },
-                totalSwitches: 2,
+          SizedBox(height: 15,),
+          // ignore: deprecated_member_use
+          GestureDetector(
+            onTap: () async {
+              await pickTime(0);
+              setState(() {
+                _alarmTimeString = cutTime;
+              });
+            },
+            child: Text(
+              _alarmTimeString!,
+              style: const TextStyle(
+                fontSize: 32,
+                color: Colors.white
               ),
             ),
-          ),
-          FloatingActionButton.extended(
-            onPressed: () async {
-             await addSceneDetails();
-
-            },
-            icon: const Icon(Icons.alarm),
-            label: const Text('Save'),
           ),
         ]));
   }
 
-
-  Future<void> addSceneDetails() async {
+  List<int> value= List.filled(20,0);
+  Future<void> addSceneDetails(value) async {
     String? token = await Utility.getToken();
     int userId = await Utility.getUidShared();
     var url = api + 'scenedevice/';
     Map data = {
-      "scene_id": widget.sceneId,
+      "scene_id": widget.sceneId.toString(),
       "d_id": selectedDeviceId.toString(),
-      "scene_device_type": selectedPinName.toString(),
-      "status": sliderValue,
-      "user":userId
+      "sceneName":sceneNameController.text,
+      "status1": value[0],
+      "status2": value[1],
+      "status3": value[2],
+      "status4": value[3],
+      "status5": value[4],
+      "status6": value[5],
+      "status7": value[6],
+      "status8": value[7],
+      "status9": value[8],
+      "status10": value[9],
+      "status11": value[10],
+      "status12": value[11],
+      "status13": value[12],
+      "status14": value[13],
+      "status15": value[14],
+      "status16": value[15],
+      "status17": value[16],
+      "status18": value[17],
+      "status19": value[18],
+      "status20": value[19],
+      "date":cutDate,
+      "timing":cutTime
     };
-
     final response =
     await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -882,14 +907,85 @@ class _SceneDetailsState extends State<SceneDetails> {
     });
     if (response.statusCode == 201 || response.statusCode == 200) {
       print("response.body ${response.body}");
+      Navigator.pop(context);
 
     } else {
+      Utility.exitScreen(context, "Please Create Scene for another device", "Scene is already created");
       print(response.statusCode);
       print(response.body);
     }
   }
 
+  List<bool> color = List.filled( 12, false);
+  List<bool> colorFalse = List.filled( 12, false);
+  Widget listViewPins(){
+   return Column(
+     children: [
+       selectTime(),
+       Container(
+         width: 345,
+         color: Colors.white,
+         child: TextField(
+           decoration: InputDecoration(
+             filled: true,
+             fillColor: Colors.white,
+             hintText: 'Enter Scene Name',
+           ),
+           controller:sceneNameController,
+           style: const TextStyle(fontSize: 18, color: Colors.black54),
 
+         ),
+       ),
+       ListView.builder(
+         padding: const EdgeInsets.all(4),
+         shrinkWrap: true,
+         itemCount: namesDataList.length,
+         itemBuilder: (BuildContext context, int index) {
+           return Card(
+             child: Row(
+               children: [
+                 Container(
+                   color: Colors.green,
+                   width:110,
+                   height: 50,
+                   child: Center(child: Text(namesDataList[index],style: TextStyle(color: Colors.black),)),
+                 ),
+                 SizedBox(width: 10,),
+                 MaterialButton(color: color[index]?Colors.green:Colors.red ,onPressed: (){
+                   setState(() {
+                     color[index] = !color[index];
+                   });
+                   if(color[index]){
+                     value[index] = 1;
+                   }
+                   print( value[index]);
+                 }, child: Text("On "),),
+                 SizedBox(width: 10,),
+                 MaterialButton(color: colorFalse[index] == false?Colors.red:Colors.yellow ,onPressed: (){
+                   setState(() {
+                     colorFalse[index] = ! colorFalse[index];
+                   });
+                   if(colorFalse[index] == false){
+                     value[index] =0;
+                   }
+                 }, child: Text("Off "),),
+
+               ],
+             ),
+           );
+         }
+     ),
+
+       MaterialButton(color: Colors.white ,onPressed: ()async{
+         setState(() {
+           // placeBool = ! placeBool;
+           // showOnOffOption = ! showOnOffOption;
+         });
+         await addSceneDetails(value);
+
+       }, child: Text("Done "),),]
+   );
+  }
 
 
 }

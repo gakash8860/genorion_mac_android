@@ -2,15 +2,29 @@
 
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const IMAGE_KEY = 'IMAGE_KEY';
 
 class Utility {
+
+
+
+  static Widget circularIndicator(){
+    return Container(
+      height: 54,
+      width: 45,
+      child: CircularProgressIndicator(
+        color: Colors.red,
+      ),
+    );
+  }
 
 
 
@@ -59,5 +73,20 @@ class Utility {
     final id = prefs.getInt("uid");
     int userId = id!;
     return userId;
+  }
+
+  static exitScreen(context,text,title) {
+    // dialog implementation
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.ERROR,
+      animType: AnimType.BOTTOMSLIDE,
+      title: title,
+      desc: text,
+
+      btnOkOnPress: () async {
+        Navigator.pop(context);
+      },
+    )..show();
   }
 }

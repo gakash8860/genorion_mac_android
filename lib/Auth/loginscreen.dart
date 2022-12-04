@@ -12,7 +12,6 @@ import 'package:genorion_mac_android/Models/pinname.dart';
 import 'package:genorion_mac_android/Models/pinschedule.dart';
 import 'package:genorion_mac_android/ProfilePage/utility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../LocalDatabase/alldb.dart';
 import '../Models/devicemodel.dart';
 import '../Models/floormodel.dart';
@@ -251,7 +250,7 @@ class _LoginScreenState extends State<LoginScreen> {
       alignment: Alignment.centerRight,
       child: ElevatedButton(
         onPressed: () {
-         Utility.launchURL('https://genorionofficial.herokuapp.com/reset_password/');
+         Utility.launchURL('https://genorion1.herokuapp.com/reset_password/');
         },
         // padding: const EdgeInsets.only(right: 0.0),
         child: const Text(
@@ -273,15 +272,10 @@ class _LoginScreenState extends State<LoginScreen> {
             goToNextPage();
           } else {}
         },
-        // padding: const EdgeInsets.all(15.0),
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.circular(30.0),
-        // ),
-        // color: Colors.white,
         child: const Text(
           'LOGIN',
           style: TextStyle(
-            color: Color(0xFF527DAA),
+            color: Colors.white,
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -593,8 +587,8 @@ class _LoginScreenState extends State<LoginScreen> {
         for (int i = 0; i < ans.length; i++) {
           var schedule = ScheduledPin(
               id: ans[i]['id'],
-              date1: DateTime.parse(ans[i]['date1']),
-              timing1: ans[i]['timing1'],
+              date: DateTime.parse(ans[i]['date']),
+              timing: ans[i]['timing'],
               pin1Status: ans[i]['pin1Status'],
               pin2Status: ans[i]['pin2Status'],
               pin3Status: ans[i]['pin3Status'],
@@ -718,9 +712,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 user: roomList[index]['user'],
               ));
     });
-    if (kDebugMode) {
-      print("popo $rm");
-    }
+
     List deviceList = await AllDatabase.instance.getDeviceById(rm.first.rId);
 
     if (deviceList.isNotEmpty) {

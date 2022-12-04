@@ -1630,7 +1630,7 @@ class _SubAccessState extends State<SubAccess> with TickerProviderStateMixin {
     }else{
 
       List data = await AllDatabase.instance.getAllPlacesByIdSubAccess(id);
-      print("Data prorororororor ${data}");
+
       setState(() {
         subAccessplace = SubAccessPlace.fromJson(data[0]);
       });

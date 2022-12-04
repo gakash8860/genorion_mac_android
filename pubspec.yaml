@@ -66,9 +66,13 @@ dependencies:
   image_picker: ^0.8.4+8
   auto_size_text: ^3.0.0
   firebase_core: ^1.22.0
-  web_socket_channel: ^2.2.0
-  websocket: ^0.0.5
-  socket_io_client: ^1.0.1
+  cool_dropdown: ^1.4.2
+  flutter_screenutil: ^5.6.0
+  
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
+
+
 
 dev_dependencies:
   flutter_test:

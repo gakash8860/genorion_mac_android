@@ -73,12 +73,12 @@ class HomePage extends StatefulWidget {
 
   HomePage(
       {Key? key,
-      required this.fl,
-      required this.flat,
-      required this.pt,
-      required this.rm,
-      required this.dv,
-      this.roomResponse})
+        required this.fl,
+        required this.flat,
+        required this.pt,
+        required this.rm,
+        required this.dv,
+        this.roomResponse})
       : super(key: key);
 
   @override
@@ -273,40 +273,40 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 
   void connectFunc() {
-      _channel = IOWebSocketChannel.connect(Uri.parse(websocket));
+    _channel = IOWebSocketChannel.connect(Uri.parse(websocket));
     broadcastStream = _channel!.stream.asBroadcastStream();
     print("eepeepe   ${_channel!.sink.done.toString()}");
-      broadcastStream!.listen((event) {
-        var data = jsonDecode(event);
+    broadcastStream!.listen((event) {
+      var data = jsonDecode(event);
       // _channel.sink.close(event.goingAway);
       print("LISTENING $data");
-  setState(() {
-    responseGetData = [
-      data['pin1Status'],
-      data['pin2Status'],
-      data['pin3Status'],
-      data['pin4Status'],
-      data['pin5Status'],
-      data['pin6Status'],
-      data['pin7Status'],
-      data['pin8Status'],
-      data['pin9Status'],
-      data['pin10Status'],
-      data['pin11Status'],
-      data['pin12Status'],
-      // data['sensor1'],
-      // data['sensor2'],
-      // data['sensor3'],
-      // data['sensor4'],
-      // data['sensor5'],
-      // data['sensor6'],
-      // data['sensor7'],
-      // data['sensor8'],
-      // data['sensor9'],
-      // data['sensor10'],
-    ];
-  });
-print("List data $responseGetData");
+      setState(() {
+        responseGetData = [
+          data['pin1Status'],
+          data['pin2Status'],
+          data['pin3Status'],
+          data['pin4Status'],
+          data['pin5Status'],
+          data['pin6Status'],
+          data['pin7Status'],
+          data['pin8Status'],
+          data['pin9Status'],
+          data['pin10Status'],
+          data['pin11Status'],
+          data['pin12Status'],
+          // data['sensor1'],
+          // data['sensor2'],
+          // data['sensor3'],
+          // data['sensor4'],
+          // data['sensor5'],
+          // data['sensor6'],
+          // data['sensor7'],
+          // data['sensor8'],
+          // data['sensor9'],
+          // data['sensor10'],
+        ];
+      });
+      print("List data $responseGetData");
     }, onError: (error) {
       print("error $error");
     });
@@ -617,7 +617,7 @@ print("List data $responseGetData");
     if (allDevicePinNameList.length == allPinName.length) {
       for (int i = 0; i < allDevicePinNameList.length; i++) {
         var devicePinNamesQuery =
-            DevicePinName.fromJson(allDevicePinNameList[i]);
+        DevicePinName.fromJson(allDevicePinNameList[i]);
         await AllDatabase.instance.updateDevicePinNames(devicePinNamesQuery);
       }
       await getAllSensorData();
@@ -625,7 +625,7 @@ print("List data $responseGetData");
       await AllDatabase.instance.deleteDevicePinNameModelAll();
       for (int i = 0; i < allDevicePinNameList.length; i++) {
         var devicePinNamesQuery =
-            DevicePinName.fromJson(allDevicePinNameList[i]);
+        DevicePinName.fromJson(allDevicePinNameList[i]);
         await AllDatabase.instance.insertDevicePinNames(devicePinNamesQuery);
       }
       await getAllSensorData();
@@ -778,7 +778,7 @@ print("List data $responseGetData");
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const ProfilePage()));
+                                      const ProfilePage()));
                             },
                             cacheImage: true,
                           ),
@@ -856,8 +856,8 @@ print("List data $responseGetData");
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ListOfTempAccessPage(
-                                      mobileNumber: number,
-                                    )),
+                                  mobileNumber: number,
+                                )),
                           );
                         }
                       }
@@ -865,7 +865,7 @@ print("List data $responseGetData");
                   ),
                   ListTile(
                       leading:
-                          const Icon(Icons.perm_identity, color: Colors.white),
+                      const Icon(Icons.perm_identity, color: Colors.white),
                       title: const Text(
                         'Add Members',
                         style: TextStyle(
@@ -877,7 +877,7 @@ print("List data $responseGetData");
                       }),
                   ListTile(
                       leading:
-                          const Icon(Icons.perm_identity, color: Colors.white),
+                      const Icon(Icons.perm_identity, color: Colors.white),
                       title: const Text(
                         'Scenes',
                         style: TextStyle(
@@ -892,7 +892,7 @@ print("List data $responseGetData");
                       }),
                   ListTile(
                       leading:
-                          const Icon(Icons.power_rounded, color: Colors.white),
+                      const Icon(Icons.power_rounded, color: Colors.white),
                       title: const Text('Bill Prediction',
                           style: TextStyle(
                             color: Colors.white,
@@ -913,7 +913,7 @@ print("List data $responseGetData");
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const ScheduledPinPage()));
+                                const ScheduledPinPage()));
                       }),
                   ListTile(
                     leading: const Icon(Icons.settings, color: Colors.white),
@@ -980,638 +980,638 @@ print("List data $responseGetData");
               child: remoteBool
                   ? remoteUi()
                   : ListView(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 28,
+                      right: 18,
+                      top: 6,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 28,
-                            right: 18,
-                            top: 6,
+                        InkWell(
+                          child: const Icon(
+                            Icons.menu_rounded,
+                            color: Colors.white,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                child: const Icon(
-                                  Icons.menu_rounded,
-                                  color: Colors.white,
-                                ),
-                                onTap: () =>
-                                    scaffoldKey.currentState!.openDrawer(),
-                              ),
-                              Row(
-                                children: [
-                                  InkWell(
-                                    child: Text(widget.pt!.pType.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 28,
-                                            fontWeight: FontWeight.bold)),
-                                    onTap: () {
-                                      setState(() {
-                                        placeBool = !placeBool;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                              InkWell(
-                                borderRadius: BorderRadius.circular(360),
-                                onTap: () {},
-                                child: const SizedBox(
-                                  height: 35,
-                                  width: 35,
-                                  child: Center(
-                                      // child: Icon(
-                                      //   Icons.notifications,
-                                      //   color: Colors.white,
-                                      // ),
-                                      ),
-                                ),
-                              ),
-                            ],
+                          onTap: () =>
+                              scaffoldKey.currentState!.openDrawer(),
+                        ),
+                        Row(
+                          children: [
+                            InkWell(
+                              child: Text(widget.pt!.pType.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold)),
+                              onTap: () {
+                                setState(() {
+                                  placeBool = !placeBool;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        InkWell(
+                          borderRadius: BorderRadius.circular(360),
+                          onTap: () {},
+                          child: const SizedBox(
+                            height: 35,
+                            width: 35,
+                            child: Center(
+                              // child: Icon(
+                              //   Icons.notifications,
+                              //   color: Colors.white,
+                              // ),
+                            ),
                           ),
                         ),
-                        placeBool
-                            ? changePlace()
-                              : changeFloorBool
-                                ? changeFloor()
-                                : changeFlatBool
-                                    ? changeFlat()
-                                    : SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height /
-                                                0.5,
-                                        child: DefaultTabController(
-                                          length: widget.rm!.length,
-                                          child: CustomScrollView(
-                                            controller: scrollController,
-                                            slivers: [
-                                              SliverToBoxAdapter(
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    Container(
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height *
-                                                              0.41,
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        gradient: LinearGradient(
-                                                            begin: Alignment
-                                                                .topCenter,
-                                                            end: Alignment
-                                                                .bottomCenter,
-                                                            colors: [
-                                                              Color(0xff669df4),
-                                                              Color(0xff4e80f3)
-                                                            ]),
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  30),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  30),
-                                                          bottomLeft:
-                                                              Radius.circular(
-                                                                  30),
-                                                          bottomRight:
-                                                              Radius.circular(
-                                                                  30),
+                      ],
+                    ),
+                  ),
+                  placeBool
+                      ? changePlace()
+                      : changeFloorBool
+                      ? changeFloor()
+                      : changeFlatBool
+                      ? changeFlat()
+                      : SizedBox(
+                    height:
+                    MediaQuery.of(context).size.height /
+                        0.5,
+                    child: DefaultTabController(
+                      length: widget.rm!.length,
+                      child: CustomScrollView(
+                        controller: scrollController,
+                        slivers: [
+                          SliverToBoxAdapter(
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  height:
+                                  MediaQuery.of(context)
+                                      .size
+                                      .height *
+                                      0.41,
+                                  width:
+                                  MediaQuery.of(context)
+                                      .size
+                                      .width,
+                                  decoration:
+                                  const BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment
+                                            .topCenter,
+                                        end: Alignment
+                                            .bottomCenter,
+                                        colors: [
+                                          Color(0xff669df4),
+                                          Color(0xff4e80f3)
+                                        ]),
+                                    borderRadius:
+                                    BorderRadius.only(
+                                      topLeft:
+                                      Radius.circular(
+                                          30),
+                                      topRight:
+                                      Radius.circular(
+                                          30),
+                                      bottomLeft:
+                                      Radius.circular(
+                                          30),
+                                      bottomRight:
+                                      Radius.circular(
+                                          30),
+                                    ),
+                                  ),
+                                  padding:
+                                  const EdgeInsets.only(
+                                    top: 40,
+                                    bottom: 10,
+                                    left: 28,
+                                    right: 30,
+                                  ),
+                                  // alignment: Alignment.topLeft,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment
+                                        .start,
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment
+                                            .spaceBetween,
+                                        children: <Widget>[
+                                          Column(
+                                            children: <
+                                                Widget>[
+                                              Row(
+                                                children: [
+                                                  GestureDetector(
+                                                    onLongPress:
+                                                        () {},
+                                                    child:
+                                                    Row(
+                                                      children: [
+                                                        const Text(
+                                                          'Floor ',
+                                                          style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 22,
+                                                            fontWeight: FontWeight.bold,
+                                                            // fontStyle: FontStyle
+                                                            //     .italic
+                                                          ),
                                                         ),
-                                                      ),
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        top: 40,
-                                                        bottom: 10,
-                                                        left: 28,
-                                                        right: 30,
-                                                      ),
-                                                      // alignment: Alignment.topLeft,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: <Widget>[
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: <Widget>[
-                                                              Column(
-                                                                children: <
-                                                                    Widget>[
-                                                                  Row(
-                                                                    children: [
-                                                                      GestureDetector(
-                                                                        onLongPress:
-                                                                            () {},
-                                                                        child:
-                                                                            Row(
-                                                                          children: [
-                                                                            const Text(
-                                                                              'Floor ',
-                                                                              style: TextStyle(
-                                                                                color: Colors.white,
-                                                                                fontSize: 22,
-                                                                                fontWeight: FontWeight.bold,
-                                                                                // fontStyle: FontStyle
-                                                                                //     .italic
-                                                                              ),
-                                                                            ),
-                                                                            Text(
-                                                                              widget.fl!.fName,
-                                                                              style: const TextStyle(color: Colors.white, fontSize: 22, fontStyle: FontStyle.italic),
-                                                                            ),
-                                                                            const Icon(Icons.arrow_drop_down),
-                                                                            const SizedBox(
-                                                                              width: 10,
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        onTap:
-                                                                            () {
-                                                                          setState(
-                                                                              () {
-                                                                            changeFloorBool =
-                                                                                !changeFloorBool;
-                                                                            floorVal =
-                                                                                null;
-                                                                            floorVal =
-                                                                                floorQueryFunc(widget.pt!.pId);
-                                                                          });
-                                                                        },
-                                                                      ),
-                                                                      const SizedBox(
-                                                                        width:
-                                                                            10,
-                                                                      ),
-                                                                      GestureDetector(
-                                                                        child:
-                                                                            const Icon(
-                                                                          Icons
-                                                                              .settings,
-                                                                          size:
-                                                                              18,
-                                                                        ),
-                                                                        onTap:
-                                                                            () async {
-                                                                          listOfAllFloor = await AllDatabase
-                                                                              .instance
-                                                                              .getFloorById(widget.pt!.pId);
-                                                                          _createAlertDialogForDeleteFloorAndAddFloor(
-                                                                              context);
-                                                                        },
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  const SizedBox(
-                                                                    height: 12,
-                                                                  ),
-                                                                  Column(
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Row(
-                                                                        children: <
-                                                                            Widget>[
-                                                                          GestureDetector(
-                                                                            onLongPress:
-                                                                                () {},
-                                                                            child:
-                                                                                Row(
-                                                                              children: [
-                                                                                const Text(
-                                                                                  'Flat ',
-                                                                                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
-                                                                                ),
-                                                                                Text(
-                                                                                  widget.flat!.fltName,
-                                                                                  style: const TextStyle(
-                                                                                      color: Colors.white,
-                                                                                      // fontWeight: FontWeight.bold,
-                                                                                      fontStyle: FontStyle.italic,
-                                                                                      fontSize: 22),
-                                                                                ),
-                                                                                const Icon(Icons.arrow_drop_down),
-                                                                                const SizedBox(
-                                                                                  width: 10,
-                                                                                ),
-                                                                              ],
-                                                                            ),
-                                                                            onTap:
-                                                                                () {
-                                                                              setState(() {
-                                                                                flatVal = flatQueryFunc(widget.fl!.fId);
-                                                                              });
-                                                                              _createDialogChangeFlat();
-                                                                            },
-                                                                          ),
-                                                                          const SizedBox(
-                                                                              width: 28),
-                                                                          GestureDetector(
-                                                                            onTap:
-                                                                                () async {
-                                                                              listOfAllFlat = await AllDatabase.instance.getFlatByFId(widget.fl!.fId);
-                                                                              _createAlertDialogForDeleteFlatAndAddFlat(context);
-                                                                            },
-                                                                            child:
-                                                                                const Icon(
-                                                                              Icons.settings,
-                                                                              size: 18,
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 45,
-                                                          ),
-                                                          SingleChildScrollView(
-                                                            scrollDirection:
-                                                                Axis.horizontal,
-                                                            child: Row(
-                                                              // mainAxisAlignment: MainAxisAlignment.start,
-                                                              children: <
-                                                                  Widget>[
-                                                                FutureBuilder(
-                                                                  future:
-                                                                      switchFuture,
-                                                                  builder: (context,
-                                                                      snapshot) {
-                                                                    if (snapshot
-                                                                        .hasData) {
-                                                                      return Column(
-                                                                        children: <
-                                                                            Widget>[
-                                                                          Row(
-                                                                            children: <Widget>[
-                                                                              const SizedBox(
-                                                                                width: 8,
-                                                                              ),
-                                                                              Column(children: <Widget>[
-                                                                                const Icon(
-                                                                                  FontAwesomeIcons.fire,
-                                                                                  color: Colors.yellow,
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 25,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: <Widget>[
-                                                                                    Text(sensorData[0].toString(), style: const TextStyle(fontSize: 14, color: Colors.white70)),
-                                                                                  ],
-                                                                                ),
-                                                                              ]),
-                                                                              const SizedBox(
-                                                                                width: 35,
-                                                                              ),
-                                                                              Column(children: <Widget>[
-                                                                                const Icon(
-                                                                                  FontAwesomeIcons.temperatureLow,
-                                                                                  color: Colors.orange,
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 30,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: <Widget>[
-                                                                                    Text(sensorData[1].toString(), style: const TextStyle(fontSize: 14, color: Colors.white70)),
-                                                                                  ],
-                                                                                ),
-                                                                              ]),
-                                                                              const SizedBox(
-                                                                                width: 45,
-                                                                              ),
-                                                                              Column(children: <Widget>[
-                                                                                const Icon(
-                                                                                  FontAwesomeIcons.wind,
-                                                                                  color: Colors.white,
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 30,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: <Widget>[
-                                                                                    Text(sensorData[2].toString(), style: const TextStyle(fontSize: 14, color: Colors.white70)),
-                                                                                  ],
-                                                                                ),
-                                                                              ]),
-                                                                              const SizedBox(
-                                                                                width: 42,
-                                                                              ),
-                                                                              Column(children: <Widget>[
-                                                                                const Icon(
-                                                                                  FontAwesomeIcons.cloud,
-                                                                                  color: Colors.orange,
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 30,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: <Widget>[
-                                                                                    Text(
-                                                                                      sensorData[3].toString(),
-                                                                                      style: const TextStyle(color: Colors.white70),
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                              ]),
-                                                                              const SizedBox(
-                                                                                width: 42,
-                                                                              ),
-                                                                              Column(children: <Widget>[
-                                                                                const Icon(
-                                                                                  FontAwesomeIcons.cloud,
-                                                                                  color: Colors.orange,
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 30,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: <Widget>[
-                                                                                    Text(
-                                                                                      sensorData[4].toString(),
-                                                                                      style: const TextStyle(color: Colors.white70),
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                              ]),
-                                                                              const SizedBox(
-                                                                                width: 42,
-                                                                              ),
-                                                                              Column(children: <Widget>[
-                                                                                const Icon(
-                                                                                  FontAwesomeIcons.warehouse,
-                                                                                  color: Colors.brown,
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 30,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: <Widget>[
-                                                                                    Text(
-                                                                                      sensorData[5].toString(),
-                                                                                      style: const TextStyle(color: Colors.white70),
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                              ]),
-                                                                              const SizedBox(
-                                                                                width: 42,
-                                                                              ),
-                                                                              Column(children: <Widget>[
-                                                                                const Icon(
-                                                                                  FontAwesomeIcons.warehouse,
-                                                                                  color: Colors.brown,
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 30,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: <Widget>[
-                                                                                    Text(
-                                                                                      sensorData[6].toString(),
-                                                                                      style: const TextStyle(color: Colors.white70),
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                              ]),
-                                                                              const SizedBox(
-                                                                                width: 42,
-                                                                              ),
-                                                                              Column(children: <Widget>[
-                                                                                const Icon(
-                                                                                  FontAwesomeIcons.warehouse,
-                                                                                  color: Colors.brown,
-                                                                                ),
-                                                                                const SizedBox(
-                                                                                  height: 30,
-                                                                                ),
-                                                                                Row(
-                                                                                  children: <Widget>[
-                                                                                    Text(
-                                                                                      sensorData[7].toString(),
-                                                                                      style: const TextStyle(color: Colors.white70),
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                              ]),
-                                                                            ],
-                                                                          ),
-                                                                          const SizedBox(
-                                                                            height:
-                                                                                12,
-                                                                          ),
-                                                                          Text(
-                                                                            sensorData[10].toString(),
-                                                                            style:
-                                                                                const TextStyle(color: Colors.white70),
-                                                                          ),
-                                                                        ],
-                                                                      );
-                                                                    } else {
-                                                                      return const Center(
-                                                                        child: Text(
-                                                                            'Loading...'),
-                                                                      );
-                                                                    }
-                                                                  },
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
+                                                        Text(
+                                                          widget.fl!.fName,
+                                                          style: const TextStyle(color: Colors.white, fontSize: 22, fontStyle: FontStyle.italic),
+                                                        ),
+                                                        const Icon(Icons.arrow_drop_down),
+                                                        const SizedBox(
+                                                          width: 10,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    onTap:
+                                                        () {
+                                                      setState(
+                                                              () {
+                                                            changeFloorBool =
+                                                            !changeFloorBool;
+                                                            floorVal =
+                                                            null;
+                                                            floorVal =
+                                                                floorQueryFunc(widget.pt!.pId);
+                                                          });
+                                                    },
+                                                  ),
+                                                  const SizedBox(
+                                                    width:
+                                                    10,
+                                                  ),
+                                                  GestureDetector(
+                                                    child:
+                                                    const Icon(
+                                                      Icons
+                                                          .settings,
+                                                      size:
+                                                      18,
+                                                    ),
+                                                    onTap:
+                                                        () async {
+                                                      listOfAllFloor = await AllDatabase
+                                                          .instance
+                                                          .getFloorById(widget.pt!.pId);
+                                                      _createAlertDialogForDeleteFloorAndAddFloor(
+                                                          context);
+                                                    },
+                                                  )
+                                                ],
                                               ),
-                                              //Room Tabs
-                                              SliverAppBar(
-                                                automaticallyImplyLeading:
-                                                    false,
-                                                floating: true,
-                                                pinned: true,
-                                                backgroundColor: Colors.white,
-                                                title: Container(
-                                                  alignment:
-                                                      Alignment.bottomLeft,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SingleChildScrollView(
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        child: Row(
+                                              const SizedBox(
+                                                height: 12,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
+                                                children: <
+                                                    Widget>[
+                                                  Row(
+                                                    children: <
+                                                        Widget>[
+                                                      GestureDetector(
+                                                        onLongPress:
+                                                            () {},
+                                                        child:
+                                                        Row(
                                                           children: [
-                                                            Column(
-                                                              children: <
-                                                                  Widget>[
-                                                                Column(
-                                                                  children: [
-                                                                    InkWell(
-                                                                        onTap:
-                                                                            () async {
-                                                                          _createAlertDialogForAddRoom();
-                                                                        },
-                                                                        child:
-                                                                            Row(
-                                                                          children: const [
-                                                                            Icon(
-                                                                              Icons.add,
-                                                                              color: Colors.black,
-                                                                            ),
-                                                                          ],
-                                                                        )),
-                                                                  ],
-                                                                ),
-                                                              ],
+                                                            const Text(
+                                                              'Flat ',
+                                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
                                                             ),
-                                                            GestureDetector(
-                                                              onLongPress: () {
-                                                                _createAlertDialogForAddRoomDeleteDevices(
-                                                                    context,
-                                                                    tabbarState,
-                                                                    deleteRoomIndex);
-                                                              },
-                                                              child: TabBar(
-                                                                indicatorColor:
-                                                                    Colors
-                                                                        .blueAccent,
-                                                                controller:
-                                                                    tabC,
-                                                                labelColor: Colors
-                                                                    .blueAccent,
-                                                                indicatorWeight:
-                                                                    2.0,
-                                                                isScrollable:
-                                                                    true,
-                                                                tabs: widget.rm!
-                                                                    .map<Widget>(
-                                                                        (RoomType
-                                                                            rm) {
-                                                                  return Tab(
-                                                                    text: rm
-                                                                        .rName,
-                                                                  );
-                                                                }).toList(),
-                                                                onTap:
-                                                                    (index) async {
-                                                                  setState(() {
-                                                                    tabbarState =
-                                                                        widget
-                                                                            .rm![index]
-                                                                            .rId;
-                                                                  });
-                                                                  if (widget
-                                                                          .roomResponse !=
-                                                                      null) {
-                                                                    setState(
-                                                                        () {
-                                                                      tabbarState = widget
-                                                                          .rm![
-                                                                              index]
-                                                                          .rId;
-                                                                    });
-                                                                  }
-                                                                  setState(() {
-                                                                    tabbarState =
-                                                                        widget
-                                                                            .rm![index]
-                                                                            .rId;
-                                                                    deleteRoomIndex =
-                                                                        index;
-                                                                  });
-                                                                  List deviceList = await AllDatabase
-                                                                      .instance
-                                                                      .getDeviceById(widget
-                                                                          .rm![
-                                                                              index]
-                                                                          .rId);
-                                                                  int deviceIndex =
-                                                                      0;
-                                                                  setState(() {
-                                                                    widget.dv = List.generate(
-                                                                        deviceList
-                                                                            .length,
-                                                                        (index) => DeviceType(
-                                                                            id: deviceList[index][
-                                                                                'id'],
-                                                                            dateInstalled:
-                                                                                DateTime.parse(deviceList[index]['date_installed']),
-                                                                            user: deviceList[index]['user'],
-                                                                            rId: deviceList[index]['r_id'].toString(),
-                                                                            dId: deviceList[index]['d_id']));
-                                                                  });
-                                                                  if (widget.dv
-                                                                      .isNotEmpty) {
-                                                                    switchFuture =
-                                                                        getPinStatusByDidLocal(
-                                                                      widget
-                                                                          .dv[0]
-                                                                          .dId
-                                                                          .toString(),
-                                                                    );
-
-                                                                    nameFuture = getPinNameByLocal(
-                                                                        widget
-                                                                            .dv[0]
-                                                                            .dId,
-                                                                        index);
-                                                                  } else {
-                                                                    return;
-                                                                  }
-                                                                },
-                                                              ),
+                                                            Text(
+                                                              widget.flat!.fltName,
+                                                              style: const TextStyle(
+                                                                  color: Colors.white,
+                                                                  // fontWeight: FontWeight.bold,
+                                                                  fontStyle: FontStyle.italic,
+                                                                  fontSize: 22),
+                                                            ),
+                                                            const Icon(Icons.arrow_drop_down),
+                                                            const SizedBox(
+                                                              width: 10,
                                                             ),
                                                           ],
                                                         ),
+                                                        onTap:
+                                                            () {
+                                                          setState(() {
+                                                            flatVal = flatQueryFunc(widget.fl!.fId);
+                                                          });
+                                                          _createDialogChangeFlat();
+                                                        },
+                                                      ),
+                                                      const SizedBox(
+                                                          width: 28),
+                                                      GestureDetector(
+                                                        onTap:
+                                                            () async {
+                                                          listOfAllFlat = await AllDatabase.instance.getFlatByFId(widget.fl!.fId);
+                                                          _createAlertDialogForDeleteFlatAndAddFlat(context);
+                                                        },
+                                                        child:
+                                                        const Icon(
+                                                          Icons.settings,
+                                                          size: 18,
+                                                        ),
                                                       ),
                                                     ],
-                                                  ),
-                                                ),
+                                                  )
+                                                ],
                                               ),
-
-                                              SliverList(
-                                                delegate:
-                                                    SliverChildBuilderDelegate(
-                                                        (context, index) {
-                                                  if (index <
-                                                      widget.dv.length) {
-                                                    if (widget.dv.isEmpty) {
-                                                      return Container();
-                                                    }
-                                                    // return Container();
-                                                    return deviceContainer(
-                                                        widget.dv[index].dId,
-                                                        index);
-                                                  } else {
-                                                    return null;
-                                                  }
-                                                }),
-                                              )
                                             ],
                                           ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 45,
+                                      ),
+                                      SingleChildScrollView(
+                                        scrollDirection:
+                                        Axis.horizontal,
+                                        child: Row(
+                                          // mainAxisAlignment: MainAxisAlignment.start,
+                                          children: <
+                                              Widget>[
+                                            FutureBuilder(
+                                              future:
+                                              switchFuture,
+                                              builder: (context,
+                                                  snapshot) {
+                                                if (snapshot
+                                                    .hasData) {
+                                                  return Column(
+                                                    children: <
+                                                        Widget>[
+                                                      Row(
+                                                        children: <Widget>[
+                                                          const SizedBox(
+                                                            width: 8,
+                                                          ),
+                                                          Column(children: <Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons.fire,
+                                                              color: Colors.yellow,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 25,
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                Text(sensorData[0].toString(), style: const TextStyle(fontSize: 14, color: Colors.white70)),
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width: 35,
+                                                          ),
+                                                          Column(children: <Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons.temperatureLow,
+                                                              color: Colors.orange,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                Text(sensorData[1].toString(), style: const TextStyle(fontSize: 14, color: Colors.white70)),
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width: 45,
+                                                          ),
+                                                          Column(children: <Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons.wind,
+                                                              color: Colors.white,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                Text(sensorData[2].toString(), style: const TextStyle(fontSize: 14, color: Colors.white70)),
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width: 42,
+                                                          ),
+                                                          Column(children: <Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons.cloud,
+                                                              color: Colors.orange,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                Text(
+                                                                  sensorData[3].toString(),
+                                                                  style: const TextStyle(color: Colors.white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width: 42,
+                                                          ),
+                                                          Column(children: <Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons.cloud,
+                                                              color: Colors.orange,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                Text(
+                                                                  sensorData[4].toString(),
+                                                                  style: const TextStyle(color: Colors.white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width: 42,
+                                                          ),
+                                                          Column(children: <Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons.warehouse,
+                                                              color: Colors.brown,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                Text(
+                                                                  sensorData[5].toString(),
+                                                                  style: const TextStyle(color: Colors.white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width: 42,
+                                                          ),
+                                                          Column(children: <Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons.warehouse,
+                                                              color: Colors.brown,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                Text(
+                                                                  sensorData[6].toString(),
+                                                                  style: const TextStyle(color: Colors.white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                          const SizedBox(
+                                                            width: 42,
+                                                          ),
+                                                          Column(children: <Widget>[
+                                                            const Icon(
+                                                              FontAwesomeIcons.warehouse,
+                                                              color: Colors.brown,
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Row(
+                                                              children: <Widget>[
+                                                                Text(
+                                                                  sensorData[7].toString(),
+                                                                  style: const TextStyle(color: Colors.white70),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ]),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                        height:
+                                                        12,
+                                                      ),
+                                                      Text(
+                                                        sensorData[10].toString(),
+                                                        style:
+                                                        const TextStyle(color: Colors.white70),
+                                                      ),
+                                                    ],
+                                                  );
+                                                } else {
+                                                  return const Center(
+                                                    child: Text(
+                                                        'Loading...'),
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ],
                                         ),
                                       )
-                      ],
-                    )),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          //Room Tabs
+                          SliverAppBar(
+                            automaticallyImplyLeading:
+                            false,
+                            floating: true,
+                            pinned: true,
+                            backgroundColor: Colors.white,
+                            title: Container(
+                              alignment:
+                              Alignment.bottomLeft,
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment
+                                    .start,
+                                children: [
+                                  SingleChildScrollView(
+                                    scrollDirection:
+                                    Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        Column(
+                                          children: <
+                                              Widget>[
+                                            Column(
+                                              children: [
+                                                InkWell(
+                                                    onTap:
+                                                        () async {
+                                                      _createAlertDialogForAddRoom();
+                                                    },
+                                                    child:
+                                                    Row(
+                                                      children: const [
+                                                        Icon(
+                                                          Icons.add,
+                                                          color: Colors.black,
+                                                        ),
+                                                      ],
+                                                    )),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        GestureDetector(
+                                          onLongPress: () {
+                                            _createAlertDialogForAddRoomDeleteDevices(
+                                                context,
+                                                tabbarState,
+                                                deleteRoomIndex);
+                                          },
+                                          child: TabBar(
+                                            indicatorColor:
+                                            Colors
+                                                .blueAccent,
+                                            controller:
+                                            tabC,
+                                            labelColor: Colors
+                                                .blueAccent,
+                                            indicatorWeight:
+                                            2.0,
+                                            isScrollable:
+                                            true,
+                                            tabs: widget.rm!
+                                                .map<Widget>(
+                                                    (RoomType
+                                                rm) {
+                                                  return Tab(
+                                                    text: rm
+                                                        .rName,
+                                                  );
+                                                }).toList(),
+                                            onTap:
+                                                (index) async {
+                                              setState(() {
+                                                tabbarState =
+                                                    widget
+                                                        .rm![index]
+                                                        .rId;
+                                              });
+                                              if (widget
+                                                  .roomResponse !=
+                                                  null) {
+                                                setState(
+                                                        () {
+                                                      tabbarState = widget
+                                                          .rm![
+                                                      index]
+                                                          .rId;
+                                                    });
+                                              }
+                                              setState(() {
+                                                tabbarState =
+                                                    widget
+                                                        .rm![index]
+                                                        .rId;
+                                                deleteRoomIndex =
+                                                    index;
+                                              });
+                                              List deviceList = await AllDatabase
+                                                  .instance
+                                                  .getDeviceById(widget
+                                                  .rm![
+                                              index]
+                                                  .rId);
+                                              int deviceIndex =
+                                              0;
+                                              setState(() {
+                                                widget.dv = List.generate(
+                                                    deviceList
+                                                        .length,
+                                                        (index) => DeviceType(
+                                                        id: deviceList[index][
+                                                        'id'],
+                                                        dateInstalled:
+                                                        DateTime.parse(deviceList[index]['date_installed']),
+                                                        user: deviceList[index]['user'],
+                                                        rId: deviceList[index]['r_id'].toString(),
+                                                        dId: deviceList[index]['d_id']));
+                                              });
+                                              if (widget.dv
+                                                  .isNotEmpty) {
+                                                switchFuture =
+                                                    getPinStatusByDidLocal(
+                                                      widget
+                                                          .dv[0]
+                                                          .dId
+                                                          .toString(),
+                                                    );
+
+                                                nameFuture = getPinNameByLocal(
+                                                    widget
+                                                        .dv[0]
+                                                        .dId,
+                                                    index);
+                                              } else {
+                                                return;
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                          SliverList(
+                            delegate:
+                            SliverChildBuilderDelegate(
+                                    (context, index) {
+                                  if (index <
+                                      widget.dv.length) {
+                                    if (widget.dv.isEmpty) {
+                                      return Container();
+                                    }
+                                    // return Container();
+                                    return deviceContainer(
+                                        widget.dv[index].dId,
+                                        index);
+                                  } else {
+                                    return null;
+                                  }
+                                }),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )),
           bottomNavigationBar: BottomNavyBar(
             backgroundColor: Colors.white38,
             selectedIndex: _currentIndex,
@@ -1790,12 +1790,12 @@ print("List data $responseGetData");
     setState(() {
       widget.rm = List.generate(
           roomList.length,
-          (index) => RoomType(
-                rId: roomList[index]['r_id'].toString(),
-                fltId: roomList[index]['flt_id'].toString(),
-                rName: roomList[index]['r_name'].toString(),
-                user: roomList[index]['user'],
-              ));
+              (index) => RoomType(
+            rId: roomList[index]['r_id'].toString(),
+            fltId: roomList[index]['flt_id'].toString(),
+            rName: roomList[index]['r_name'].toString(),
+            user: roomList[index]['user'],
+          ));
       tabC = TabController(length: widget.rm!.length, vsync: this);
     });
   }
@@ -2005,10 +2005,10 @@ print("List data $responseGetData");
     setState(() {
       widget.dv = List.generate(
           deviceList.length,
-          (index) => DeviceType(
+              (index) => DeviceType(
               id: deviceList[index]['id'],
               dateInstalled:
-                  DateTime.parse(deviceList[index]['date_installed']),
+              DateTime.parse(deviceList[index]['date_installed']),
               user: deviceList[index]['user'],
               rId: deviceList[index]['r_id'].toString(),
               dId: deviceList[index]['d_id']));
@@ -2105,12 +2105,12 @@ print("List data $responseGetData");
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2179,12 +2179,12 @@ print("List data $responseGetData");
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2253,12 +2253,12 @@ print("List data $responseGetData");
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2312,7 +2312,7 @@ print("List data $responseGetData");
                         List<RoomType> rm = [];
 
                         List data =
-                            await AllDatabase.instance.getRoomById(flt!.fltId);
+                        await AllDatabase.instance.getRoomById(flt!.fltId);
                         setState(() {
                           rm = data
                               .map((data) => RoomType.fromJson(data))
@@ -2481,12 +2481,12 @@ print("List data $responseGetData");
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2555,12 +2555,12 @@ print("List data $responseGetData");
                                 contentPadding: const EdgeInsets.all(15),
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.white),
+                                  const BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 enabledBorder: UnderlineInputBorder(
                                   borderSide:
-                                      const BorderSide(color: Colors.black),
+                                  const BorderSide(color: Colors.black),
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
@@ -2614,7 +2614,7 @@ print("List data $responseGetData");
                         List<RoomType> rm = [];
 
                         List data =
-                            await AllDatabase.instance.getRoomById(flt!.fltId);
+                        await AllDatabase.instance.getRoomById(flt!.fltId);
                         setState(() {
                           rm = data
                               .map((data) => RoomType.fromJson(data))
@@ -2646,97 +2646,97 @@ print("List data $responseGetData");
         margin: const EdgeInsets.only(bottom: 45),
         child: SingleChildScrollView(
             child: Column(children: [
-          const SizedBox(
-            height: 15,
-          ),
-          Row(
-            children: [
               const SizedBox(
-                width: 15,
+                height: 15,
               ),
-              InkWell(
-                child: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                ),
-                onTap: () {
-                  setState(() {
-                    changeFlatBool = !changeFlatBool;
-                  });
-                },
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(18.0),
-            child: FutureBuilder<List<FlatType>>(
-                future: flatVal,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    if (snapshot.data!.isEmpty) {
-                      return const Center(
-                          child: Text("No Devices on this place"));
-                    }
-                    return Container(
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 50.0,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 2,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: const [
-                                BoxShadow(
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  InkWell(
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onTap: () {
+                      setState(() {
+                        changeFlatBool = !changeFlatBool;
+                      });
+                    },
+                  )
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: FutureBuilder<List<FlatType>>(
+                    future: flatVal,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data!.isEmpty) {
+                          return const Center(
+                              child: Text("No Devices on this place"));
+                        }
+                        return Container(
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 50.0,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 2,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: Colors.black,
+                                        blurRadius: 30,
+                                        offset: Offset(20, 20))
+                                  ],
+                                  border: Border.all(
                                     color: Colors.black,
-                                    blurRadius: 30,
-                                    offset: Offset(20, 20))
-                              ],
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 0.5,
-                              )),
-                          child: DropdownButtonFormField<FlatType>(
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: const EdgeInsets.all(15),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
+                                    width: 0.5,
+                                  )),
+                              child: DropdownButtonFormField<FlatType>(
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: const EdgeInsets.all(15),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
                                     const BorderSide(color: Colors.white),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide:
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
                                     const BorderSide(color: Colors.black),
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                            dropdownColor: Colors.white70,
-                            icon: const Icon(Icons.arrow_drop_down),
-                            iconSize: 28,
-                            hint: const Text('Select Flat'),
-                            isExpanded: true,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            items: snapshot.data!.map((selectedflat) {
-                              return DropdownMenuItem<FlatType>(
-                                value: selectedflat,
-                                child: Text(selectedflat.fltName),
-                              );
-                            }).toList(),
-                            onChanged: (selectFlat) async {
-                              setState(() {
-                                flt = selectFlat;
-                              });
+                                    borderRadius: BorderRadius.circular(50),
+                                  ),
+                                ),
+                                dropdownColor: Colors.white70,
+                                icon: const Icon(Icons.arrow_drop_down),
+                                iconSize: 28,
+                                hint: const Text('Select Flat'),
+                                isExpanded: true,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                items: snapshot.data!.map((selectedflat) {
+                                  return DropdownMenuItem<FlatType>(
+                                    value: selectedflat,
+                                    child: Text(selectedflat.fltName),
+                                  );
+                                }).toList(),
+                                onChanged: (selectFlat) async {
+                                  setState(() {
+                                    flt = selectFlat;
+                                  });
 
-                              List roomList = await AllDatabase.instance
-                                  .getRoomById(flt!.fltId);
+                                  List roomList = await AllDatabase.instance
+                                      .getRoomById(flt!.fltId);
 
-                              setState(() {
-                                rm = List.generate(
-                                    roomList.length,
-                                    (index) => RoomType(
+                                  setState(() {
+                                    rm = List.generate(
+                                        roomList.length,
+                                            (index) => RoomType(
                                           rId: roomList[index]['r_id']
                                               .toString(),
                                           fltId: roomList[index]['flt_id']
@@ -2745,46 +2745,46 @@ print("List data $responseGetData");
                                               .toString(),
                                           user: roomList[index]['user'],
                                         ));
-                              });
+                                  });
 
-                              List device = await AllDatabase.instance
-                                  .getDeviceById(rm[0].rId);
-                              dv = device
-                                  .map((e) => DeviceType.fromJson(e))
-                                  .toList();
-                            },
+                                  List device = await AllDatabase.instance
+                                      .getDeviceById(rm[0].rId);
+                                  dv = device
+                                      .map((e) => DeviceType.fromJson(e))
+                                      .toList();
+                                },
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
-                    );
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                }),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: MaterialButton(
-              elevation: 5.0,
-              child: const Text('Submit'),
-              onPressed: () async {
-                // timer!.cancel();
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: MaterialButton(
+                  elevation: 5.0,
+                  child: const Text('Submit'),
+                  onPressed: () async {
+                    // timer!.cancel();
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HomePage(
-                            fl: widget.fl,
-                            flat: flt,
-                            pt: widget.pt,
-                            rm: rm,
-                            dv: dv)));
-              },
-            ),
-          )
-        ])));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HomePage(
+                                fl: widget.fl,
+                                flat: flt,
+                                pt: widget.pt,
+                                rm: rm,
+                                dv: dv)));
+                  },
+                ),
+              )
+            ])));
   }
 
   Widget remoteUi() {
@@ -2984,7 +2984,7 @@ print("List data $responseGetData");
                                   height: 50.0,
                                   child: Container(
                                     width:
-                                        MediaQuery.of(context).size.width * 2,
+                                    MediaQuery.of(context).size.width * 2,
                                     decoration: BoxDecoration(
                                         color: Colors.white,
                                         boxShadow: const [
@@ -3001,18 +3001,18 @@ print("List data $responseGetData");
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         contentPadding:
-                                            const EdgeInsets.all(15),
+                                        const EdgeInsets.all(15),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: const BorderSide(
                                               color: Colors.white),
                                           borderRadius:
-                                              BorderRadius.circular(10),
+                                          BorderRadius.circular(10),
                                         ),
                                         enabledBorder: UnderlineInputBorder(
                                           borderSide: const BorderSide(
                                               color: Colors.black),
                                           borderRadius:
-                                              BorderRadius.circular(50),
+                                          BorderRadius.circular(50),
                                         ),
                                       ),
                                       dropdownColor: Colors.white70,
@@ -3042,18 +3042,18 @@ print("List data $responseGetData");
                                         setState(() {
                                           rm = List.generate(
                                               roomList.length,
-                                              (index) => RoomType(
-                                                    rId: roomList[index]['r_id']
-                                                        .toString(),
-                                                    fltId: roomList[index]
-                                                            ['flt_id']
-                                                        .toString(),
-                                                    rName: roomList[index]
-                                                            ['r_name']
-                                                        .toString(),
-                                                    user: roomList[index]
-                                                        ['user'],
-                                                  ));
+                                                  (index) => RoomType(
+                                                rId: roomList[index]['r_id']
+                                                    .toString(),
+                                                fltId: roomList[index]
+                                                ['flt_id']
+                                                    .toString(),
+                                                rName: roomList[index]
+                                                ['r_name']
+                                                    .toString(),
+                                                user: roomList[index]
+                                                ['user'],
+                                              ));
                                         });
 
                                         List device = await AllDatabase.instance
@@ -3135,9 +3135,9 @@ print("List data $responseGetData");
         }
 
         int ms =
-            // ((DateTime.now().millisecondsSinceEpoch) / 1000).round() + 19700;
-            ((DateTime.now().millisecondsSinceEpoch) / 1000).round() -
-                100; // -100 for checking a difference for 100 seconds in current time
+        // ((DateTime.now().millisecondsSinceEpoch) / 1000).round() + 19700;
+        ((DateTime.now().millisecondsSinceEpoch) / 1000).round() -
+            100; // -100 for checking a difference for 100 seconds in current time
         if (kDebugMode) {
           print('CheckMs $ms');
         }
@@ -3173,9 +3173,9 @@ print("List data $responseGetData");
         }
 
         int ms =
-            // ((DateTime.now().millisecondsSinceEpoch) / 1000).round() + 19700;
-            ((DateTime.now().millisecondsSinceEpoch) / 1000).round() -
-                100; // -100 for checking a difference for 100 seconds in current time
+        // ((DateTime.now().millisecondsSinceEpoch) / 1000).round() + 19700;
+        ((DateTime.now().millisecondsSinceEpoch) / 1000).round() -
+            100; // -100 for checking a difference for 100 seconds in current time
         if (kDebugMode) {
           print('CheckMs $ms');
         }
@@ -3290,7 +3290,7 @@ print("List data $responseGetData");
   Future<void> getPinStatusByDidLocal(did) async {
     print("DID $did");
     List data =
-        await AllDatabase.instance.getPinStatusByDeviceId(did.toString());
+    await AllDatabase.instance.getPinStatusByDeviceId(did.toString());
     if (kDebugMode) {
       print("All Status $data");
     }
@@ -3444,19 +3444,19 @@ print("List data $responseGetData");
         ];
         devicePin = namesDataList
             .map((e) => DevicePinName(
-                dId: dId,
-                pin1Name: pin1FinalName,
-                pin2Name: pin2FinalName,
-                pin3Name: pin3FinalName,
-                pin4Name: pin4FinalName,
-                pin5Name: pin5FinalName,
-                pin6Name: pin6FinalName,
-                pin7Name: pin7FinalName,
-                pin8Name: pin8FinalName,
-                pin9Name: pin9FinalName,
-                pin10Name: pin10FinalName,
-                pin11Name: pin11FinalName,
-                pin12Name: pin12FinalName))
+            dId: dId,
+            pin1Name: pin1FinalName,
+            pin2Name: pin2FinalName,
+            pin3Name: pin3FinalName,
+            pin4Name: pin4FinalName,
+            pin5Name: pin5FinalName,
+            pin6Name: pin6FinalName,
+            pin7Name: pin7FinalName,
+            pin8Name: pin8FinalName,
+            pin9Name: pin9FinalName,
+            pin10Name: pin10FinalName,
+            pin11Name: pin11FinalName,
+            pin12Name: pin12FinalName))
             .toList();
       });
       for (int i = 0; i < namesDataList.length; i++) {
@@ -3973,7 +3973,7 @@ print("List data $responseGetData");
     };
 
     final response =
-        await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
+    await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Token $token',
     });
@@ -4410,120 +4410,120 @@ print("List data $responseGetData");
     return submitClicked
         ? const Center(child: CircularProgressIndicator())
         : showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('Enter the Name of Floor'),
-                content: SizedBox(
-                  height: 320,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        autofocus: true,
-                        controller: floorEditing,
-                        textInputAction: TextInputAction.next,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        style: const TextStyle(
-                            fontSize: 18, color: Colors.black54),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.place),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Enter Floor Name',
-                          contentPadding: const EdgeInsets.all(15),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        autofocus: true,
-                        controller: flatEditing,
-                        textInputAction: TextInputAction.next,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        style: const TextStyle(
-                            fontSize: 18, color: Colors.black54),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.place),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Enter Flat Name',
-                          contentPadding: const EdgeInsets.all(15),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        autofocus: true,
-                        controller: roomEditingWithFloor,
-                        textInputAction: TextInputAction.next,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        style: const TextStyle(
-                            fontSize: 18, color: Colors.black54),
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.place),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Enter Room Name',
-                          contentPadding: const EdgeInsets.all(15),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: MaterialButton(
-                          elevation: 5.0,
-                          child: const Text('Submit'),
-                          onPressed: () async {
-                            setState(() {
-                              submitClicked = true;
-                            });
-                            await addFloor(floorEditing.text);
-                            await addFlat2(flatEditing.text);
-                            Navigator.of(context).pop();
-                            await getAllCurrentFloor();
-                            await getAllFlatByAddedFloor();
-                            await getAllRoomByAddedFlat();
-                            setState(() {
-                              submitClicked = true;
-                            });
-                          },
-                        ),
-                      )
-                    ],
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Enter the Name of Floor'),
+            content: SizedBox(
+              height: 320,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 15,
                   ),
-                ),
-              );
-            });
+                  TextFormField(
+                    autofocus: true,
+                    controller: floorEditing,
+                    textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: const TextStyle(
+                        fontSize: 18, color: Colors.black54),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.place),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Enter Floor Name',
+                      contentPadding: const EdgeInsets.all(15),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    autofocus: true,
+                    controller: flatEditing,
+                    textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: const TextStyle(
+                        fontSize: 18, color: Colors.black54),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.place),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Enter Flat Name',
+                      contentPadding: const EdgeInsets.all(15),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  TextFormField(
+                    autofocus: true,
+                    controller: roomEditingWithFloor,
+                    textInputAction: TextInputAction.next,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: const TextStyle(
+                        fontSize: 18, color: Colors.black54),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.place),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: 'Enter Room Name',
+                      contentPadding: const EdgeInsets.all(15),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MaterialButton(
+                      elevation: 5.0,
+                      child: const Text('Submit'),
+                      onPressed: () async {
+                        setState(() {
+                          submitClicked = true;
+                        });
+                        await addFloor(floorEditing.text);
+                        await addFlat2(flatEditing.text);
+                        Navigator.of(context).pop();
+                        await getAllCurrentFloor();
+                        await getAllFlatByAddedFloor();
+                        await getAllRoomByAddedFlat();
+                        setState(() {
+                          submitClicked = true;
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   allFloor() async {
@@ -4710,7 +4710,7 @@ print("List data $responseGetData");
                                   } else {
                                     setState(() {
                                       deleteFloorId = listOfAllFloor[index]
-                                              ['f_id']
+                                      ['f_id']
                                           .toString();
                                     });
                                     await deleteFloor(deleteFloorId);
@@ -5073,20 +5073,20 @@ print("List data $responseGetData");
                                       child: StreamBuilder(
                                           stream: broadcastStream,
                                           builder: (context, snapshot) {
-                                             return Switch(
+                                            return Switch(
 
-                                                  value: responseGetData[index]==0?false:true,
+                                                value: responseGetData[index]==0?false:true,
 
-                                                  onChanged: (value) async {
-                                                    int v = value?1:0;
+                                                onChanged: (value) async {
+                                                  int v = value?1:0;
 
-                                                    responseGetData[index]=v;
+                                                  responseGetData[index]=v;
 
-                                                      print("iffff responseGetData   $value ${responseGetData[index]}   $responseGetData");
+                                                  print("iffff responseGetData   $value ${responseGetData[index]}   $responseGetData");
 
-                                                       dataUpdateWebSocket(responseGetData,dId);
+                                                  dataUpdateWebSocket(responseGetData,dId);
 
-                                                  });
+                                                });
 
                                           })),
                                 ],
@@ -5243,8 +5243,8 @@ print("List data $responseGetData");
                     context,
                     MaterialPageRoute(
                         builder: (context) => ShowSSid(
-                              deviceId: dId,
-                            )));
+                          deviceId: dId,
+                        )));
               },
               child: const Text(
                 'Set SSID and Password',
@@ -5259,8 +5259,8 @@ print("List data $responseGetData");
                     context,
                     MaterialPageRoute(
                         builder: (context) => EmergencyNumber(
-                              deviceId: dId,
-                            )));
+                          deviceId: dId,
+                        )));
               },
               child: const Text(
                 'Emergency Number',
@@ -5550,7 +5550,7 @@ print("List data $responseGetData");
       };
     }
     final response =
-        await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
+    await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
       'Authorization': 'Token $token',
       'Content-Type': 'application/json; charset=UTF-8',
     });
@@ -5607,10 +5607,10 @@ print("List data $responseGetData");
                                               itemCount: 1,
                                               itemBuilder: (context, index) {
                                                 if (schedulePin[index]
-                                                            .pin1Status ==
-                                                        0 ||
+                                                    .pin1Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin1Status ==
+                                                        .pin1Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
@@ -5618,223 +5618,223 @@ print("List data $responseGetData");
                                                         width: 17,
                                                       ),
                                                       Text(schedulePin[index]
-                                                                  .pin1Status ==
-                                                              0
+                                                          .pin1Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin1Name +
-                                                              " Off "
+                                                          .pin1Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin1Name +
-                                                              " On ")
+                                                          .pin1Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin2Status ==
-                                                        0 ||
+                                                    .pin2Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin2Status ==
+                                                        .pin2Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin2Status ==
-                                                              0
+                                                          .pin2Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin2Name +
-                                                              " Off "
+                                                          .pin2Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin2Name +
-                                                              " On ")
+                                                          .pin2Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin3Status ==
-                                                        0 ||
+                                                    .pin3Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin3Status ==
+                                                        .pin3Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin3Status ==
-                                                              0
+                                                          .pin3Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin3Name +
-                                                              " Off "
+                                                          .pin3Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin3Name +
-                                                              " On ")
+                                                          .pin3Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin4Status ==
-                                                        0 ||
+                                                    .pin4Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin4Status ==
+                                                        .pin4Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin4Status ==
-                                                              0
+                                                          .pin4Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin4Name +
-                                                              " Off "
+                                                          .pin4Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin4Name +
-                                                              " On ")
+                                                          .pin4Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin5Status ==
-                                                        0 ||
+                                                    .pin5Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin5Status ==
+                                                        .pin5Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin5Status ==
-                                                              0
+                                                          .pin5Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin5Name +
-                                                              " Off "
+                                                          .pin5Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin5Name +
-                                                              " On ")
+                                                          .pin5Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin6Status ==
-                                                        0 ||
+                                                    .pin6Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin6Status ==
+                                                        .pin6Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin6Status ==
-                                                              0
+                                                          .pin6Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin6Name +
-                                                              " Off "
+                                                          .pin6Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin6Name +
-                                                              " On ")
+                                                          .pin6Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin7Status ==
-                                                        0 ||
+                                                    .pin7Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin7Status ==
+                                                        .pin7Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin7Status ==
-                                                              0
+                                                          .pin7Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin7Name +
-                                                              " Off "
+                                                          .pin7Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin7Name +
-                                                              " On ")
+                                                          .pin7Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin8Status ==
-                                                        0 ||
+                                                    .pin8Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin8Status ==
+                                                        .pin8Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin8Status ==
-                                                              0
+                                                          .pin8Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin8Name +
-                                                              " Off "
+                                                          .pin8Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin8Name +
-                                                              " On ")
+                                                          .pin8Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin9Status ==
-                                                        0 ||
+                                                    .pin9Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin9Status ==
+                                                        .pin9Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin9Status ==
-                                                              0
+                                                          .pin9Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin9Name +
-                                                              " Off "
+                                                          .pin9Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin9Name +
-                                                              " On ")
+                                                          .pin9Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin10Status ==
-                                                        0 ||
+                                                    .pin10Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin10Status ==
+                                                        .pin10Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin10Status ==
-                                                              0
+                                                          .pin10Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin10Name +
-                                                              " Off "
+                                                          .pin10Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin10Name +
-                                                              " On ")
+                                                          .pin10Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin11Status ==
-                                                        0 ||
+                                                    .pin11Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin11Status ==
+                                                        .pin11Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin11Status ==
-                                                              0
+                                                          .pin11Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin11Name +
-                                                              " Off "
+                                                          .pin11Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin11Name +
-                                                              " On ")
+                                                          .pin11Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 } else if (schedulePin[index]
-                                                            .pin12Status ==
-                                                        0 ||
+                                                    .pin12Status ==
+                                                    0 ||
                                                     schedulePin[index]
-                                                            .pin12Status ==
+                                                        .pin12Status ==
                                                         1) {
                                                   return Row(
                                                     children: [
                                                       Text(schedulePin[index]
-                                                                  .pin12Status ==
-                                                              0
+                                                          .pin12Status ==
+                                                          0
                                                           ? devicePin[index]
-                                                                  .pin12Name +
-                                                              " Off "
+                                                          .pin12Name +
+                                                          " Off "
                                                           : devicePin[index]
-                                                                  .pin12Name +
-                                                              " On ")
+                                                          .pin12Name +
+                                                          " On ")
                                                     ],
                                                   );
                                                 }
@@ -6372,7 +6372,7 @@ print("List data $responseGetData");
       "f_id": widget.fl!.fId,
     };
     final response =
-        await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
+    await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
       'Authorization': 'Token $token',
       'Content-Type': 'application/json; charset=UTF-8',
     });
@@ -6448,7 +6448,7 @@ print("List data $responseGetData");
                                   } else {
                                     setState(() {
                                       deletedFlatId = listOfAllFlat[index]
-                                              ['flt_id']
+                                      ['flt_id']
                                           .toString();
                                     });
                                     await deleteFlat(deletedFlatId);
@@ -6543,7 +6543,7 @@ print("List data $responseGetData");
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const ShowAndAddSubUser()));
+                                  const ShowAndAddSubUser()));
                         },
                       ),
                     ],
@@ -6593,7 +6593,7 @@ print("List data $responseGetData");
     if (response.statusCode == 200) {
       List<dynamic> ans = jsonDecode(response.body);
       List<dynamic> getSubDataLocal =
-          await AllDatabase.instance.getAllSUbAccess();
+      await AllDatabase.instance.getAllSUbAccess();
       if (ans.length != getSubDataLocal.length) {
         print("Not ");
         await AllDatabase.instance.deleteSubAccess();
@@ -6605,7 +6605,7 @@ print("List data $responseGetData");
 
           await AllDatabase.instance.insertSubAccess(query);
           List<dynamic> getSubDataLocal1 =
-              await AllDatabase.instance.getAllSUbAccess();
+          await AllDatabase.instance.getAllSUbAccess();
           print("insert   ${getSubDataLocal1}");
           await getPlaceNameSubAccess();
         }
@@ -6669,7 +6669,7 @@ print("List data $responseGetData");
   Future getAllFloorSubAccess() async {
     String? token = await getToken();
     List<dynamic> allPlacegetSubUsers =
-        await AllDatabase.instance.getAllPlacesSubAccess();
+    await AllDatabase.instance.getAllPlacesSubAccess();
     var allFloorgetSubUsers = List.empty(growable: true);
     for (int i = 0; i < allPlacegetSubUsers.length; i++) {
       var placeId = allPlacegetSubUsers[i]['p_id'].toString();
@@ -6694,7 +6694,7 @@ print("List data $responseGetData");
         }
       }
       List<dynamic> allFloorLocal =
-          await AllDatabase.instance.getAllFloorSubAccess();
+      await AllDatabase.instance.getAllFloorSubAccess();
       if (allFloorLocal.length != allFloorgetSubUsers.length) {
         await AllDatabase.instance.deleteAllFloorSubAccess();
         for (int i = 0; i < allFloorgetSubUsers.length; i++) {
@@ -6711,7 +6711,7 @@ print("List data $responseGetData");
   Future getAllFlatSubAccess() async {
     String? token = await getToken();
     List<dynamic> allFloorgetSubUsers =
-        await AllDatabase.instance.getAllFloorSubAccess();
+    await AllDatabase.instance.getAllFloorSubAccess();
     var allFlatgetSubUsers = List.empty(growable: true);
     for (int i = 0; i < allFloorgetSubUsers.length; i++) {
       var fId = allFloorgetSubUsers[i]['f_id'].toString();
@@ -6734,7 +6734,7 @@ print("List data $responseGetData");
       }
     }
     List<dynamic> allFlatLocal =
-        await AllDatabase.instance.getAllFlatSubAccess();
+    await AllDatabase.instance.getAllFlatSubAccess();
     if (allFlatLocal.length != allFlatgetSubUsers.length) {
       await AllDatabase.instance.deleteAllFlatSubAccess();
 
@@ -6751,7 +6751,7 @@ print("List data $responseGetData");
   Future getAllRoomSubAccess() async {
     String? token = await getToken();
     List<dynamic> allFlatgetSubUsers =
-        await AllDatabase.instance.getAllFlatSubAccess();
+    await AllDatabase.instance.getAllFlatSubAccess();
     var allRoomgetSubUsers = List.empty(growable: true);
     for (int i = 0; i < allFlatgetSubUsers.length; i++) {
       var flatId = allFlatgetSubUsers[i]['flt_id'].toString();
@@ -6775,7 +6775,7 @@ print("List data $responseGetData");
       }
     }
     List<dynamic> allRoomLocal =
-        await AllDatabase.instance.getAllRoomSubAccess();
+    await AllDatabase.instance.getAllRoomSubAccess();
 
     if (allRoomLocal.length != allRoomgetSubUsers.length) {
       await AllDatabase.instance.deleteAllRoomSubAccess();
@@ -6793,7 +6793,7 @@ print("List data $responseGetData");
   Future getAllDeviceSubAccess() async {
     String? token = await getToken();
     List<dynamic> allRoomgetSubUsers =
-        await AllDatabase.instance.getAllRoomSubAccess();
+    await AllDatabase.instance.getAllRoomSubAccess();
     var allDeviceData = List.empty(growable: true);
     var allDevicegetSubUsers = List.empty(growable: true);
     for (int i = 0; i < allRoomgetSubUsers.length; i++) {
@@ -6820,7 +6820,7 @@ print("List data $responseGetData");
       }
     }
     List getAllDeviceSubAccessList =
-        await AllDatabase.instance.getAllDeviceSubAccess();
+    await AllDatabase.instance.getAllDeviceSubAccess();
     if (getAllDeviceSubAccessList.length != allDevicegetSubUsers.length) {
       await AllDatabase.instance.deleteAllDeviceSubAccess();
       for (int i = 0; i < allDevicegetSubUsers.length; i++) {
@@ -6829,7 +6829,7 @@ print("List data $responseGetData");
       }
     }
     List getAllDeviceSubAccessList1 =
-        await AllDatabase.instance.getAllDeviceSubAccess();
+    await AllDatabase.instance.getAllDeviceSubAccess();
     print("OUT OF IF $getAllDeviceSubAccessList1");
 
     await getAllPinStatusSubAcess();
@@ -6838,7 +6838,7 @@ print("List data $responseGetData");
   Future getAllPinStatusSubAcess() async {
     String? token = await getToken();
     List allDevicegetSubUsers =
-        await AllDatabase.instance.getAllDeviceSubAccess();
+    await AllDatabase.instance.getAllDeviceSubAccess();
     var allDevicePinStatusList = List.empty(growable: true);
     for (int i = 0; i < allDevicegetSubUsers.length; i++) {
       var dId = allDevicegetSubUsers[i]['d_id'];
@@ -6861,13 +6861,13 @@ print("List data $responseGetData");
       }
     }
     List<dynamic> pinStatusLocal =
-        await AllDatabase.instance.subAccessGetAllPinStatus();
+    await AllDatabase.instance.subAccessGetAllPinStatus();
     if (allDevicePinStatusList.length != pinStatusLocal.length) {
       await AllDatabase.instance.deleteAllDevicePinStatusSubAccess();
 
       for (int i = 0; i < allDevicePinStatusList.length; i++) {
         var devicePinStatus =
-            DevicePinStatus.fromJson(allDevicePinStatusList[i]);
+        DevicePinStatus.fromJson(allDevicePinStatusList[i]);
         await AllDatabase.instance
             .insertAllDevicePinStatusSubAccess(devicePinStatus);
       }
@@ -6879,7 +6879,7 @@ print("List data $responseGetData");
   Future getAllPinNameSubAccess() async {
     String? token = await getToken();
     List allDevicegetSubUsers =
-        await AllDatabase.instance.getAllDeviceSubAccess();
+    await AllDatabase.instance.getAllDeviceSubAccess();
     var allDevicePinNameList = List.empty(growable: true);
     for (int i = 0; i < allDevicegetSubUsers.length; i++) {
       var did = allDevicegetSubUsers[i]['d_id'];
@@ -6901,13 +6901,13 @@ print("List data $responseGetData");
       }
     }
     List<dynamic> getAllPinName =
-        await AllDatabase.instance.getAllPinNameSubAccess();
+    await AllDatabase.instance.getAllPinNameSubAccess();
     print("getAllPinName $getAllPinName");
     if (allDevicePinNameList.length != getAllPinName.length) {
       await AllDatabase.instance.deleteAllDevicePinNameSubAccess();
       for (int i = 0; i < allDevicePinNameList.length; i++) {
         var devicePinNamesQuery =
-            DevicePinName.fromJson(allDevicePinNameList[i]);
+        DevicePinName.fromJson(allDevicePinNameList[i]);
         await AllDatabase.instance
             .insertAllDevicePinNameSubAccess(devicePinNamesQuery);
       }
@@ -7020,8 +7020,8 @@ print("List data $responseGetData");
                           context,
                           MaterialPageRoute(
                               builder: (context) => ListOfTempAccessPage(
-                                    mobileNumber: mobile,
-                                  )));
+                                mobileNumber: mobile,
+                              )));
                     }
                   }),
               ElevatedButton(
