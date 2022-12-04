@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   bool placeBool = false;
   List<PlaceType> placeType = [];
   List<DevicePinStatus> devicePinStatus = [];
-  var responseGetData = List.empty(growable:true);
+  List responseGetData = List.filled(30,0);
   Future? switchFuture;
   Future? nameFuture;
   Future? pinScheduledFuture;
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   List<RoomType> rm = [];
   List<DeviceType> dv = [];
   String name = "";
-  String websocket = "ws://10.0.2.2:8000/ws/notification/";
+  String websocket = "ws://146.190.32.184:8000/ws/chat/space/";
   IOWebSocketChannel ?_channel;
   Stream? broadcastStream;
   var email;
@@ -210,14 +210,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
     // timer!.cancel();
     scrollController.dispose();
-    fetchPlace.call();
     refreshImages();
   }
 
   @override
   void initState() {
     super.initState();
-    connectFunc();
+    userPersonalData();
+    getUidShared();
+    fetchPlace();
     setState(() {
       _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
 
@@ -228,9 +229,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     refreshImages();
     pickedDate = DateTime.now();
     cutDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
-    userPersonalData();
 
-    // fetchPlace();
 
     // scrollController.addListener(() async {
     //   if (kDebugMode) {
@@ -253,8 +252,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     //   }
     // });
 
-    getUidShared();
+
     placeVal = placeQueryFunc();
+
     if (widget.dv.isNotEmpty) {
 
       deviceIdForScroll = widget.dv[0].dId.toString();
@@ -270,42 +270,53 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       //   });
       // });
     }
+    connectFunc();
   }
 
   void connectFunc() {
     _channel = IOWebSocketChannel.connect(Uri.parse(websocket));
     broadcastStream = _channel!.stream.asBroadcastStream();
-    print("eepeepe   ${_channel!.sink.done.toString()}");
     broadcastStream!.listen((event) {
       var data = jsonDecode(event);
       // _channel.sink.close(event.goingAway);
       print("LISTENING $data");
-      setState(() {
-        responseGetData = [
-          data['pin1Status'],
-          data['pin2Status'],
-          data['pin3Status'],
-          data['pin4Status'],
-          data['pin5Status'],
-          data['pin6Status'],
-          data['pin7Status'],
-          data['pin8Status'],
-          data['pin9Status'],
-          data['pin10Status'],
-          data['pin11Status'],
-          data['pin12Status'],
-          // data['sensor1'],
-          // data['sensor2'],
-          // data['sensor3'],
-          // data['sensor4'],
-          // data['sensor5'],
-          // data['sensor6'],
-          // data['sensor7'],
-          // data['sensor8'],
-          // data['sensor9'],
-          // data['sensor10'],
-        ];
-      });
+      // setState(() {
+      //   responseGetData = [
+      //     data['pin1Status'],
+      //     data['pin2Status'],
+      //     data['pin3Status'],
+      //     data['pin4Status'],
+      //     data['pin5Status'],
+      //     data['pin6Status'],
+      //     data['pin7Status'],
+      //     data['pin8Status'],
+      //     data['pin9Status'],
+      //     data['pin10Status'],
+      //     data['pin11Status'],
+      //     data['pin12Status'],
+      //     data['pin13Status'],
+      //     data['pin14Status'],
+      //     data['pin15Status'],
+      //     data['pin16Status'],
+      //     data['pin17Status'],
+      //     data['pin18Status'],
+      //     data['pin19Status'],
+      //     data['pin20Status'],
+      //     data['sensor1'],
+      //     data['sensor2'],
+      //     data['sensor3'],
+      //     data['sensor4'],
+      //     data['sensor5'],
+      //     data['sensor6'],
+      //     data['sensor7'],
+      //     data['sensor8'],
+      //     data['sensor9'],
+      //     data['sensor10'],
+      //   ];
+      // });
+      var pinQuery = DevicePinStatus.fromJson(data);
+       AllDatabase.instance.updatePinStatusData(pinQuery);
+      switchFuture = getPinStatusByDidLocal(data['d_id']);
       print("List data $responseGetData");
     }, onError: (error) {
       print("error $error");
@@ -3123,7 +3134,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         setState(() {
           pinStatus = DevicePinStatus.fromJson(ans);
           AllDatabase.instance.insertPinStatusData(pinStatus!);
-          switchFuture = getPinStatusByDidLocal(did.toString());
         });
         String a = pinStatus!.pin20Status.toString();
         if (kDebugMode) {
@@ -3161,7 +3171,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         setState(() {
           pinStatus = DevicePinStatus.fromJson(ans);
           AllDatabase.instance.updatePinStatusData(pinStatus!);
-          switchFuture = getPinStatusByDidLocal(deviceIdForScroll.toString());
+
         });
         String a = pinStatus!.pin20Status.toString();
         if (kDebugMode) {
@@ -4824,7 +4834,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     deviceIdForScroll = dId;
     return Container(
       color: Colors.transparent,
-      height: MediaQuery.of(context).size.height * 2.9,
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -5075,16 +5084,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           builder: (context, snapshot) {
                                             return Switch(
 
-                                                value: responseGetData[index]==0?false:true,
+                                                value: responseGetData[index]==1 ? true : false,
 
                                                 onChanged: (value) async {
-                                                  int v = value?1:0;
+                                                  if(responseGetData[index] == 1){
+                                                   setState(() {
+                                                     responseGetData[index] = 0;
+                                                   });
+                                                   print("IF CONDITION $responseGetData");
+                                                  }else{
+                                                    setState(() {
+                                                      responseGetData[index] = 1;
+                                                    });
+                                                    print("Else CONDITION $responseGetData");
+                                                  }
 
-                                                  responseGetData[index]=v;
+                                                  print("iffff responseGetData   ${responseGetData}   ");
 
-                                                  print("iffff responseGetData   $value ${responseGetData[index]}   $responseGetData");
-
-                                                  dataUpdateWebSocket(responseGetData,dId);
+                                                 await dataUpdateWebSocket(responseGetData,dId);
 
                                                 });
 
@@ -5592,11 +5609,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           style: const TextStyle(fontSize: 12),
                                         ),
                                         trailing: Text(schedulePin[index]
-                                            .date1
+                                            .date
                                             .toString()
                                             .substring(0, 10)),
                                         subtitle: Text(schedulePin[index]
-                                            .timing1
+                                            .timing
                                             .toString()),
                                         onTap: () {}),
                                     Column(
