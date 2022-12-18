@@ -3169,8 +3169,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         }
       } else {
         setState(() {
-          pinStatus = DevicePinStatus.fromJson(ans);
-          AllDatabase.instance.updatePinStatusData(pinStatus!);
+          DevicePinStatus pinStatus = DevicePinStatus.fromJson(ans);
+          AllDatabase.instance.updatePinStatusData(pinStatus);
 
         });
         String a = pinStatus!.pin20Status.toString();

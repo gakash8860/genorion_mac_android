@@ -323,8 +323,6 @@ class _LoginScreenState extends State<LoginScreen> {
       //  final snackBar=SnackBar(content: Text('Login Successful')
       // Navigator.push(context, MaterialPageRoute(builder: (context)=>WrongPassword()));
       _wrongPassword();
-
-      throw ("Wrong Credentials");
     }
     if (response.statusCode == 500) {
       throw ("Internal Server Error");
