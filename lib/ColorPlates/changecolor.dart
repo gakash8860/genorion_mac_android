@@ -38,10 +38,10 @@ class _ChangedThemeState extends State<ChangedTheme> {
                   ),
                 ),
                 Row(
-                  children: const [
+                  children:  [
                     Text("Changed Theme",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: changeColor,
                             fontSize: 28,
                             fontWeight: FontWeight.bold)),
                   ],
@@ -72,16 +72,18 @@ class _ChangedThemeState extends State<ChangedTheme> {
               onColorChanged: (Color onColorChanged) async {
                 setState(() {
                   changeColor = onColorChanged;
+                  changeDone = true;
                   pickerColor = onColorChanged;
                 });
-                saveColor2(onColorChanged.value);
-                saveColor(onColorChanged.red, onColorChanged.green,
-                    onColorChanged.blue, onColorChanged.alpha);
-                var ans = getColor1();
-                int an = int.parse(ans.toString());
-                final Color color1 =
-                    Color(an).withOpacity(1);
-                changeColor = color1;
+                // saveColor2(onColorChanged.value);
+                // saveColor(onColorChanged.red, onColorChanged.green,
+                //     onColorChanged.blue, onColorChanged.alpha);
+                // var ans = getColor1();
+                //
+                // int an = int.parse(ans.toString());
+                // final Color color1 =
+                //     Color(an).withOpacity(1);
+                // changeColor = color1;
               })
         ],
       )),

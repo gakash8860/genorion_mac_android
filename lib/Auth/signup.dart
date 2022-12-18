@@ -456,7 +456,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         // print(response.body);
         // Navigator.push(context, MaterialPageRoute(builder: (context)=>WrongPassword()));
         throw ("Internal Server Error");
+      }else{
+        print(response.statusCode);
       }
+      print(response.statusCode);
     }
   }
 
@@ -505,7 +508,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: const Text(
           'SignUp',
           style: TextStyle(
-            color: Color(0xFF527DAA),
+            color: Colors.white,
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,

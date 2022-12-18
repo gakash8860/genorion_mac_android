@@ -12,13 +12,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="add scene Details">
-      <change afterPath="$PROJECT_DIR$/lib/cooldrop.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+    <list default="true" id="c1305e05-7821-4671-a780-453aaad52a1b" name="Changes" comment="Websocket branch changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Scenes/scenedetails.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Scenes/scenedetails.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/TempUser/addtemp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/TempUser/addtemp.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/TempUser/showtemp.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/TempUser/showtemp.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +43,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="ak/websocket" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -88,7 +86,7 @@
     <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/afmagain" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/pendent_project" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -134,53 +132,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="" />
+      <changelist id="c1305e05-7821-4671-a780-453aaad52a1b" name="Changes" comment="Main file" />
       <created>1639203997973</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639203997973</updated>
-    </task>
-    <task id="LOCAL-00001" summary="First Commit From Akash">
-      <created>1639306495924</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1639306495925</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Second Commit From Akash">
-      <created>1639314078754</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1639314078754</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Commit From Akash">
-      <created>1639829963007</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1639829963007</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Commit From Akash">
-      <created>1639830945091</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1639830945091</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Commit From Akash">
-      <created>1639923556205</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1639923556207</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Commit From Akash">
-      <created>1640283581812</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1640283581812</updated>
     </task>
     <task id="LOCAL-00007" summary="Commit From Akash">
       <created>1640283614157</created>
@@ -399,14 +355,133 @@
       <option name="project" value="LOCAL" />
       <updated>1664707232665</updated>
     </task>
-    <task id="LOCAL-00038" summary="add scene Details">
-      <created>1664717031925</created>
+    <task id="LOCAL-00038" summary="new file">
+      <created>1667630973430</created>
       <option name="number" value="00038" />
       <option name="presentableId" value="LOCAL-00038" />
       <option name="project" value="LOCAL" />
-      <updated>1664717031925</updated>
+      <updated>1667630973430</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Main file">
+      <created>1668334961975</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1668334961975</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Main file">
+      <created>1668530606029</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1668530606029</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Change Date JSON">
+      <created>1668532044212</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1668532044212</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Change Api">
+      <created>1668932273059</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1668932273059</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Scene Device">
+      <created>1669315156302</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1669315156302</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Scene Device">
+      <created>1669462015051</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1669462015051</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Scene Device">
+      <created>1669464455915</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1669464455915</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Scene Device">
+      <created>1669464969023</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1669464969023</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Scene Device">
+      <created>1669467562956</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1669467562956</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Scene Device">
+      <created>1669542263783</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1669542263784</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Scene Device">
+      <created>1669544424404</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1669544424404</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Scene Device">
+      <created>1669546268124</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1669546268125</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Temp User , SubUser Add, Turn Off All device">
+      <created>1669747007680</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1669747007681</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Temp User">
+      <created>1669829388227</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1669829388229</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Websocket branch changes">
+      <created>1670135992875</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1670135992875</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Websocket branch changes">
+      <created>1670141053806</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1670141053807</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Websocket branch changes">
+      <created>1670147433311</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1670147433311</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -434,7 +509,46 @@
     <MESSAGE value="Scenes" />
     <MESSAGE value="add scene func" />
     <MESSAGE value="add scene Details" />
-    <option name="LAST_COMMIT_MESSAGE" value="add scene Details" />
+    <MESSAGE value="new file" />
+    <MESSAGE value="Main file" />
+    <MESSAGE value="Change Date JSON" />
+    <MESSAGE value="Change Api" />
+    <MESSAGE value="Scene Device" />
+    <MESSAGE value="Temp User , SubUser Add, Turn Off All device" />
+    <MESSAGE value="Temp User" />
+    <MESSAGE value="Websocket branch changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Websocket branch changes" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/DrawerPages/pinschedulepage.dart</url>
+          <line>639</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/DrawerPages/pinschedulepage.dart</url>
+          <line>640</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
+          <line>5089</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
+          <line>5091</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
+          <line>5096</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

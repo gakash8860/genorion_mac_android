@@ -206,7 +206,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                 ),
-                                dropdownColor: Colors.white70,
+                                dropdownColor: Colors.white,
                                 icon: const Icon(Icons.arrow_drop_down),
                                 iconSize: 28,
                                 hint: const Text('Select Place'),
@@ -281,7 +281,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
                                         borderRadius: BorderRadius.circular(50),
                                       ),
                                     ),
-                                    dropdownColor: Colors.white70,
+                                    dropdownColor: Colors.white,
                                     icon: const Icon(Icons.arrow_drop_down),
                                     iconSize: 28,
                                     hint: const Text('Select Floor'),
@@ -362,7 +362,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
                                                 BorderRadius.circular(50),
                                           ),
                                         ),
-                                        dropdownColor: Colors.white70,
+                                        dropdownColor: Colors.white,
                                         icon: const Icon(Icons.arrow_drop_down),
                                         iconSize: 28,
                                         hint: const Text('Select Flat'),
@@ -450,7 +450,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
                                                     BorderRadius.circular(50),
                                               ),
                                             ),
-                                            dropdownColor: Colors.white70,
+                                            dropdownColor: Colors.white,
                                             icon: const Icon(
                                                 Icons.arrow_drop_down),
                                             iconSize: 28,
@@ -573,7 +573,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
                         await showDatePicker1();
                       },
                       child: Text(
-                        cutDate ?? 'Select Date',
+                        cutDate ?? 'Select Current Date',
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
@@ -587,7 +587,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
                         // print12();
                       },
                       child: Text(
-                        cutDate2 ?? 'Select Date 2 ',
+                        cutDate2 ?? 'Select Past Date ',
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),

@@ -26,6 +26,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 }
 
 Future<void> main() async {
+
  if(Platform.isAndroid){
    WidgetsFlutterBinding.ensureInitialized();
    await Firebase.initializeApp();
@@ -43,12 +44,16 @@ Future<void> main() async {
      sound: true,
    );
    runApp(MyApp());
+ }else {
+   runApp(MyApp());
  }
-  runApp(MyApp());
-}
+ }
 
-const api = 'https://genorion1.herokuapp.com/';
-
+// const api = 'http://genorion1.herokuapp.com/';
+// const api = 'http://3.110.45.229:8000/';
+// const api = 'https://genorion.pythonanywhere.com/';
+const api = 'http://146.190.32.184:8000/';
+bool changeDone = false;
  var changeColor;
  Image? setImage;
  
@@ -65,8 +70,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
@@ -114,7 +119,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: changeColor??Colors.blue,
+        primarySwatch: changeDone?changeColor:Colors.blue,
       ),
       home: const CoolDrop(),
     );

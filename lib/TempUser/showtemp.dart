@@ -165,9 +165,10 @@ class _ShowTempUserState extends State<ShowTempUser> {
                       shadowColor: Colors.grey,
                       child: ListTile(
                         title: Text(
-                          temp[index].name,
+                          temp[index].name.toString(),
                         ),
-                        subtitle: Text(temp[index].email),
+                        subtitle: Text(temp[index].email.toString()),
+                        trailing: Text("${temp[index].date?.toString().substring(0,10)}${"\n"}${temp[index].timing.toString()}"),
                         leading: IconButton(
                           icon: const Icon(
                             Icons.delete_forever,
@@ -210,13 +211,6 @@ class _ShowTempUserState extends State<ShowTempUser> {
                 deleteDid = temp[index].dId.toString();
                 deleteMobile = temp[index].mobile.toString();
 
-                if (kDebugMode) {
-                  print("deletePid $deletePid");
-                  print("deleteFid $deleteFid");
-                  print("deleteFltid $deleteFltid");
-                  print("deleteRid $deleteRid");
-                  print("deleteDid $deleteDid");
-                }
                 await deleteTempUser();
                 Navigator.pop(context);
               }),

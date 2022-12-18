@@ -11,6 +11,7 @@ import 'package:genorion_mac_android/Models/floormodel.dart';
 import 'package:genorion_mac_android/Models/roommodel.dart';
 import 'package:genorion_mac_android/Models/tempuser.dart';
 import 'package:genorion_mac_android/Models/userprofike.dart';
+import 'package:genorion_mac_android/ProfilePage/utility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import '../LocalDatabase/alldb.dart';
@@ -40,6 +41,7 @@ class _AddTempUserState extends State<AddTempUser> {
   bool changeFlat = true;
   bool changeroom = true;
   bool changeDevice = true;
+  bool loader = false;
   var assignFloorId;
   var assignFlatId;
   var assignRoomId;
@@ -61,6 +63,8 @@ class _AddTempUserState extends State<AddTempUser> {
     getUidShared();
     userPersonalData();
   }
+
+
 
   Future<String?> getToken() async {
     final tokenVar = await storage.read(key: "token");
@@ -93,7 +97,7 @@ class _AddTempUserState extends State<AddTempUser> {
       });
     }
     String se = pickedTime.toString();
-    cutTime = se.substring(10, 16);
+    cutTime = se.substring(10, 15);
   }
 
   Future<List<PlaceType>> placeQueryFunc() async {
@@ -214,13 +218,19 @@ class _AddTempUserState extends State<AddTempUser> {
     });
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+      setState(() {
+        loader = ! loader;
+      });
       await getTempUser();
       const snackBar = SnackBar(
         content: Text('Temp User Added'),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+      Navigator.pop(context);
     } else {
+      setState(() {
+        loader = ! loader;
+      });
       if (kDebugMode) {
         print(response.statusCode);
         print(response.body);
@@ -240,25 +250,18 @@ class _AddTempUserState extends State<AddTempUser> {
       List data = jsonDecode(response.body);
       await AllDatabase.instance.deleteAllTempUser();
       for (int i = 0; i < data.length; i++) {
-        var temp = TempUserDetails(
-            id: data[i]['id'],
-            ownerName: data[i]['owner_name'],
-            mobile: data[i]['mobile'],
-            email: data[i]['email'],
-            name: data[i]['name'],
-            date: data[i]['date'],
-            timing: data[i]['timing'],
-            user: data[i]['user'],
-            pId: data[i]['p_id'],
-            fId: data[i]['f_id'],
-            fltId: data[i]['flt_id'],
-            rId: data[i]['r_id'],
-            dId: data[i]['d_id']);
+        TempUserDetails temp = TempUserDetails.fromJson(data[i]);
         await AllDatabase.instance.insertTempUserData(temp);
       }
     }
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -277,6 +280,9 @@ class _AddTempUserState extends State<AddTempUser> {
                 children: [
                   IconButton(
                       onPressed: () {
+                        setState(() {
+                          loader = false;
+                        });
                         Navigator.pop(context);
                       },
                       icon: const Icon(
@@ -884,7 +890,7 @@ class _AddTempUserState extends State<AddTempUser> {
                               : const Center(
                                   child: CircularProgressIndicator(),
                                 ),
-          ElevatedButton(
+          loader?Utility.circularIndicator(): ElevatedButton(
               child: const Text(
                 'Submit',
                 style: TextStyle(
@@ -892,13 +898,11 @@ class _AddTempUserState extends State<AddTempUser> {
                   fontSize: 20,
                 ),
               ),
-              // shape: OutlineInputBorder(
-              //   borderSide: const BorderSide(color: Colors.white, width: 2),
-              //   borderRadius: BorderRadius.circular(90),
-              // ),
-              // padding: const EdgeInsets.all(15),
-              // textColor: Colors.white,
+
               onPressed: () async {
+                setState(() {
+                  loader = ! loader;
+                });
                 await addTempUser();
               }),
         ],

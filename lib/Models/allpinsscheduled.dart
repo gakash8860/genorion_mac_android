@@ -11,8 +11,8 @@ String allPinScheduledToJson(List<AllPinScheduled> data) => json.encode(List<dyn
 class AllPinScheduled {
     AllPinScheduled({
         this.id,
-        this.date1,
-        this.timing1,
+        this.date,
+        this.timing,
         this.pin1Status,
         this.pin2Status,
         this.pin3Status,
@@ -38,8 +38,8 @@ class AllPinScheduled {
     });
 
     int ?id;
-    DateTime? date1;
-    String? timing1;
+    DateTime? date;
+    String? timing;
     dynamic pin1Status;
     dynamic pin2Status;
     dynamic pin3Status;
@@ -65,8 +65,8 @@ class AllPinScheduled {
 
     factory AllPinScheduled.fromJson(Map<String, dynamic> json) => AllPinScheduled(
         id: json["id"],
-        date1: DateTime.parse(json["date1"]),
-        timing1: json["timing1"],
+        date: DateTime.parse(json["date"]),
+        timing: json["timing"],
         pin1Status: json["pin1Status"],
         pin2Status: json["pin2Status"],
         pin3Status: json["pin3Status"],
@@ -93,8 +93,8 @@ class AllPinScheduled {
 
     Map<String, dynamic> toJson() => {
         "id": id,
-        "date1": "${date1!.year.toString().padLeft(4, '0')}-${date1!.month.toString().padLeft(2, '0')}-${date1!.day.toString().padLeft(2, '0')}",
-        "timing1": timing1,
+        "date": "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
+        "timing": timing,
         "pin1Status": pin1Status,
         "pin2Status": pin2Status,
         "pin3Status": pin3Status,
