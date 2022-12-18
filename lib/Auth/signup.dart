@@ -459,6 +459,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       }else{
         print(response.statusCode);
       }
+      print(response.statusCode);
     }
   }
 

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:genorion_mac_android/Models/devicemodel.dart';
 import 'package:http/http.dart' as http;
@@ -53,6 +54,12 @@ class _SceneDetailsState extends State<SceneDetails> {
   var pinName = List.empty(growable: true);
   bool showOnOffOption = false ;
   List<SceneDevice> sceneDevice = List.empty(growable: true);
+  var cutDate;
+  TimeOfDay? time;
+  var cutTime;
+  int checkSwitch = 0;
+  String? _alarmTimeString = "";
+  DateTime pickedDate = DateTime.now();
   @override
   void initState() {
     // TODO: implement initState
@@ -131,7 +138,6 @@ class _SceneDetailsState extends State<SceneDetails> {
   }
   Future<bool> getScene() async {
     String? token = await Utility.getToken();
-    int userId = await Utility.getUidShared();
     var url = api + 'scenedevice/?scene_id=' + widget.sceneId;
     final response =
     await http.get(Uri.parse(url), headers: {
@@ -160,6 +166,33 @@ class _SceneDetailsState extends State<SceneDetails> {
     return deviceType;
   }
 
+  Future deleteSceneDetails(sceneId)async{
+    String? token = await  Utility.getToken();
+    var url = api + 'scenedevice/?scenedevices_id=' + sceneId;
+    final response = await http.delete(
+      Uri.parse(url!),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      if (kDebugMode) {
+        print(response.statusCode);
+      }
+      const snackBar = SnackBar(
+        content: Text('User Deleted'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      sceneFuture = getScene();
+    } else {
+      if (kDebugMode) {
+        print(response.statusCode);
+      }
+    }
+
+  }
 
   Widget sceneDetails(){
     return Container(
@@ -192,8 +225,8 @@ class _SceneDetailsState extends State<SceneDetails> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(sceneDevice[index].timing.toString()),
-                                IconButton(onPressed: (){
-
+                                IconButton(onPressed: ()async{
+                                await  _showDialogForDelete(sceneDevice[index].scenedevicesId);
                                 }, icon: Icon(Icons.delete))
                               ],
                             ),
@@ -212,7 +245,29 @@ class _SceneDetailsState extends State<SceneDetails> {
     );
   }
 
+  _showDialogForDelete(scene) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Delete"),
+        content: const Text("Are you sure to delete this user"),
+        actions: <Widget>[
+          MaterialButton(
+              child: const Text("Yes"),
+              onPressed: () async {
+                await deleteSceneDetails(scene);
 
+                // Navigator.pop(context);
+              }),
+          MaterialButton(
+              child: const Text("No"),
+              onPressed: () {
+                // Navigator.of(context).pop();
+              }),
+        ],
+      ),
+    );
+  }
 
 
   Future<List<String>> devicePinQueryFunc(dId) async {
@@ -789,12 +844,7 @@ class _SceneDetailsState extends State<SceneDetails> {
       ),
     );
   }
-  var cutDate;
-  TimeOfDay? time;
-  var cutTime;
-  int checkSwitch = 0;
-  String? _alarmTimeString = "";
-  DateTime pickedDate = DateTime.now();
+
   pickDate() async {
     DateTime? date = await showDatePicker(
       context: context,
