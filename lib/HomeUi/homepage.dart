@@ -6113,6 +6113,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     )..show();
   }
 
+  Future logoutFunc()async{
+    const url = api+"logout";
+
+  }
+
   exitScreen() {
     // dialog implementation
     showDialog(
