@@ -12,14 +12,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="add scene Details">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Changes1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Changes2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Changes2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Default_Changelist1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Default_Changelist1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_03-12-2022_15_34__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_03-12-2022_15_34__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_03-12-2022_15_34__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_03-12-2022_15_34__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Scenes/scenedetails.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Scenes/scenedetails.dart" afterDir="false" />
-    </list>
+    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="add scene Details" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -139,13 +132,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639203997973</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Commit From Akash">
-      <created>1640283614157</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1640283614157</updated>
     </task>
     <task id="LOCAL-00008" summary="Commit From Akash">
       <created>1640526999817</created>
@@ -483,7 +469,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670147433311</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="add scene Details">
+      <created>1671350964450</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1671350964450</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -522,7 +515,6 @@
     <MESSAGE value="Hint Text" />
     <MESSAGE value="Scenes" />
     <MESSAGE value="add scene func" />
-    <MESSAGE value="add scene Details" />
     <MESSAGE value="new file" />
     <MESSAGE value="Main file" />
     <MESSAGE value="Change Date JSON" />
@@ -531,7 +523,8 @@
     <MESSAGE value="Temp User , SubUser Add, Turn Off All device" />
     <MESSAGE value="Temp User" />
     <MESSAGE value="Websocket branch changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="Websocket branch changes" />
+    <MESSAGE value="add scene Details" />
+    <option name="LAST_COMMIT_MESSAGE" value="add scene Details" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
