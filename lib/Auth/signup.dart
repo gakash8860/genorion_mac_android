@@ -18,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   SignupData data = SignupData();
   bool isVisible = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-   bool isHiddenPassword = true;
+  bool isHiddenPassword = true;
   bool onChangedHint = false;
   @override
   Widget build(BuildContext context) {
@@ -26,384 +26,384 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: const Color(0xff121421),
       body: isVisible
           ? SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.amber,
-                ),
-              ),
-            )
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: const Center(
+          child: CircularProgressIndicator(
+            color: Colors.amber,
+          ),
+        ),
+      )
           : SafeArea(
-              child: Form(
-                key: formKey,
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
+        child: Form(
+          key: formKey,
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 28,
+                  right: 18,
+                  top: 36,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 28,
-                        right: 18,
-                        top: 36,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.white,
-                              )),
-                          Row(
-                            children: const [
-                              Text("",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold)),
-                            ],
-                          ),
-                          InkWell(
-                            borderRadius: BorderRadius.circular(360),
-                            onTap: () {},
-                            child: const SizedBox(
-                              height: 35,
-                              width: 35,
-                              child: Center(),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                      ),
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          const Text(
-                            'Sign up',
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                        )),
+                    Row(
+                      children: const [
+                        Text("",
                             style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'OpenSans',
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(
-                              // color: Color(0xFF6CA8F1),
-                              color: Colors.white70,
-                              borderRadius: BorderRadius.circular(10.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6.0,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            height: 60.0,
-                            child: TextFormField(
-                              textInputAction: TextInputAction.next,
-                              onSaved: (value) {
-                                // ignore: unused_local_variable
-                                var fName = value!;
-                                if (value.contains(" ")) {
-                                  int v = value.indexOf(" ");
-                                  var ans = value.substring(v);
-                                  var first = value.substring(0, v);
-                                  if (kDebugMode) {
-                                    print("vale $ans");
-                                  }
-                                  setState(() {
-                                    data.lName = ans;
-                                    data.fName = first;
-                                  });
-                                } else {
-                                  setState(() {
-                                    data.fName = value;
-                                    data.lName = " .";
-                                  });
-                                  if (kDebugMode) {
-                                    print("else ${data.lName}");
-                                  }
-                                }
-                              },
-                              keyboardType: TextInputType.text,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter full name';
-                                }
-                                return null;
-                              },
-                              style: const TextStyle(
                                 color: Colors.white,
-                                fontFamily: 'OpenSans',
-                              ),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.only(top: 14.0),
-                                prefixIcon: Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                ),
-                                hintText: 'Full Name',
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(
-                              // color: Color(0xFF6CA8F1),
-                              color: Colors.white70,
-                              borderRadius: BorderRadius.circular(10.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6.0,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            height: 60.0,
-                            child: TextFormField(
-                              textInputAction: TextInputAction.next,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter email';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                setState(() {
-                                  data.email = value!;
-                                });
-                              },
-                              keyboardType: TextInputType.emailAddress,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                              ),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.only(top: 14.0),
-                                prefixIcon: Icon(
-                                  Icons.email,
-                                  color: Colors.white,
-                                ),
-                                hintText: 'Email ',
-                                // hintStyle: kHintTextStyle,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(
-                              // color: Color(0xFF6CA8F1),
-                              color: Colors.white70,
-                              borderRadius: BorderRadius.circular(10.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6.0,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            height: 60.0,
-                            child: TextFormField(
-                              textInputAction: TextInputAction.next,
-                              onSaved: (value) {
-                                setState(() {
-                                  data.pno = value!;
-                                });
-                              },
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter mobile';
-                                }
-                                return null;
-                              },
-                              keyboardType: TextInputType.phone,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                              ),
-                              decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.only(top: 14.0),
-                                prefixIcon: Icon(
-                                  Icons.phone,
-                                  color: Colors.white,
-                                ),
-                                hintText: 'Phone Number ',
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(
-                              // color: Color(0xFF6CA8F1),
-                              color: Colors.white70,
-                              borderRadius: BorderRadius.circular(10.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6.0,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            height: 60.0,
-                            child: TextFormField(
-                              textInputAction: TextInputAction.next,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter password';
-                                } else {
-                                  setState(() {
-                                    data.password = value;
-                                  });
-                                }
-                                return null;
-                              },
-                              onSaved: (value) {
-                                setState(() {
-                                  data.password = value!;
-                                });
-                              },
-                              enableSuggestions: false,
-                              obscureText: isHiddenPassword,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                              ),
-                              onChanged: (value) {
-                                if (value.isNotEmpty) {
-                                  setState(() {
-                                    onChangedHint = true;
-                                  });
-                                }
-                              },
-                              decoration:  InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.only(top: 14.0),
-                                prefixIcon: Icon(
-                                  Icons.security,
-                                  color: Colors.white,
-                                ),
-                                suffixIcon: InkWell(
-                                    onTap: togglePassword,
-                                    child: Icon(isHiddenPassword == true
-                                        ? Icons.visibility
-                                        : Icons.visibility_off)),
-                                hintText: 'Enter password',
-                              ),
-                            ),
-                          ),
-                          onChangedHint
-                              ? passwordHint()
-                              : const SizedBox(
-                                  height: 10,
-                                ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            decoration: BoxDecoration(
-                              // color: Color(0xFF6CA8F1),
-                              color: Colors.white70,
-                              borderRadius: BorderRadius.circular(10.0),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black12,
-                                  blurRadius: 6.0,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            height: 60.0,
-                            child: TextFormField(
-                              textInputAction: TextInputAction.next,
-                              validator: (value) {
-                                if (value != data.password) {
-                                  if (kDebugMode) {
-                                    print(
-                                        "object $value ->  ${data.password} ");
-                                  }
-                                  return "Password not match";
-                                }
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter password';
-                                }
-                                setState(() {
-                                  data.password2 = value;
-                                });
-                                return null;
-                              },
-                              onSaved: (value) {
-                                setState(() {
-                                  data.password2 = value!;
-                                });
-                              },
-                              obscureText: isHiddenPassword,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'OpenSans',
-                              ),
-                              decoration:  InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.only(top: 14.0),
-                                prefixIcon: Icon(
-                                  Icons.security,
-                                  color: Colors.white,
-                                ),
-                                suffixIcon: InkWell(
-                                    onTap: togglePassword,
-                                    child: Icon(isHiddenPassword == true
-                                        ? Icons.visibility
-                                        : Icons.visibility_off)),
-                                hintText: 'confirm password',
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          _buildSignUpBtn(),
-                          _buildLoginBtn()
-                        ],
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(360),
+                      onTap: () {},
+                      child: const SizedBox(
+                        height: 35,
+                        width: 35,
+                        child: Center(),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
+              const SizedBox(
+                height: 24,
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                ),
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    const Text(
+                      'Sign up',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'OpenSans',
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        // color: Color(0xFF6CA8F1),
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6.0,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      height: 60.0,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        onSaved: (value) {
+                          // ignore: unused_local_variable
+                          var fName = value!;
+                          if (value.contains(" ")) {
+                            int v = value.indexOf(" ");
+                            var ans = value.substring(v);
+                            var first = value.substring(0, v);
+                            if (kDebugMode) {
+                              print("vale $ans");
+                            }
+                            setState(() {
+                              data.lName = ans;
+                              data.fName = first;
+                            });
+                          } else {
+                            setState(() {
+                              data.fName = value;
+                              data.lName = " .";
+                            });
+                            if (kDebugMode) {
+                              print("else ${data.lName}");
+                            }
+                          }
+                        },
+                        keyboardType: TextInputType.text,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter full name';
+                          }
+                          return null;
+                        },
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                        ),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.only(top: 14.0),
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: Colors.white,
+                          ),
+                          hintText: 'Full Name',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        // color: Color(0xFF6CA8F1),
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6.0,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      height: 60.0,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter email';
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          setState(() {
+                            data.email = value!;
+                          });
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                        ),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.only(top: 14.0),
+                          prefixIcon: Icon(
+                            Icons.email,
+                            color: Colors.white,
+                          ),
+                          hintText: 'Email ',
+                          // hintStyle: kHintTextStyle,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        // color: Color(0xFF6CA8F1),
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6.0,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      height: 60.0,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        onSaved: (value) {
+                          setState(() {
+                            data.pno = value!;
+                          });
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter mobile';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.phone,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                        ),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.only(top: 14.0),
+                          prefixIcon: Icon(
+                            Icons.phone,
+                            color: Colors.white,
+                          ),
+                          hintText: 'Phone Number ',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        // color: Color(0xFF6CA8F1),
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6.0,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      height: 60.0,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter password';
+                          } else {
+                            setState(() {
+                              data.password = value;
+                            });
+                          }
+                          return null;
+                        },
+                        onSaved: (value) {
+                          setState(() {
+                            data.password = value!;
+                          });
+                        },
+                        enableSuggestions: false,
+                        obscureText: isHiddenPassword,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                        ),
+                        onChanged: (value) {
+                          if (value.isNotEmpty) {
+                            setState(() {
+                              onChangedHint = true;
+                            });
+                          }
+                        },
+                        decoration:  InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.only(top: 14.0),
+                          prefixIcon: Icon(
+                            Icons.security,
+                            color: Colors.white,
+                          ),
+                          suffixIcon: InkWell(
+                              onTap: togglePassword,
+                              child: Icon(isHiddenPassword == true
+                                  ? Icons.visibility
+                                  : Icons.visibility_off)),
+                          hintText: 'Enter password',
+                        ),
+                      ),
+                    ),
+                    onChangedHint
+                        ? passwordHint()
+                        : const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      decoration: BoxDecoration(
+                        // color: Color(0xFF6CA8F1),
+                        color: Colors.white70,
+                        borderRadius: BorderRadius.circular(10.0),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 6.0,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      height: 60.0,
+                      child: TextFormField(
+                        textInputAction: TextInputAction.next,
+                        validator: (value) {
+                          if (value != data.password) {
+                            if (kDebugMode) {
+                              print(
+                                  "object $value ->  ${data.password} ");
+                            }
+                            return "Password not match";
+                          }
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter password';
+                          }
+                          setState(() {
+                            data.password2 = value;
+                          });
+                          return null;
+                        },
+                        onSaved: (value) {
+                          setState(() {
+                            data.password2 = value!;
+                          });
+                        },
+                        obscureText: isHiddenPassword,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'OpenSans',
+                        ),
+                        decoration:  InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.only(top: 14.0),
+                          prefixIcon: Icon(
+                            Icons.security,
+                            color: Colors.white,
+                          ),
+                          suffixIcon: InkWell(
+                              onTap: togglePassword,
+                              child: Icon(isHiddenPassword == true
+                                  ? Icons.visibility
+                                  : Icons.visibility_off)),
+                          hintText: 'confirm password',
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    _buildSignUpBtn(),
+                    _buildLoginBtn()
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
- 
+
   }
 
   goToNextPage() {
@@ -456,10 +456,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         // print(response.body);
         // Navigator.push(context, MaterialPageRoute(builder: (context)=>WrongPassword()));
         throw ("Internal Server Error");
-      }else{
-        print(response.statusCode);
       }
-      print(response.statusCode);
     }
   }
 
