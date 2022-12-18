@@ -97,7 +97,7 @@ class _AddTempUserState extends State<AddTempUser> {
       });
     }
     String se = pickedTime.toString();
-    cutTime = se.substring(10, 16);
+    cutTime = se.substring(10, 15);
   }
 
   Future<List<PlaceType>> placeQueryFunc() async {

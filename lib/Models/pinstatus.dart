@@ -44,26 +44,26 @@ class DevicePinStatus {
   });
 
   String ?dId;
-  int? pin1Status;
-  int? pin2Status;
-  int? pin3Status;
-  int? pin4Status;
-  int? pin5Status;
-  int? pin6Status;
-  int? pin7Status;
-  int? pin8Status;
-  int? pin9Status;
-  int? pin10Status;
-  int? pin11Status;
-  int? pin12Status;
-  int? pin13Status;
-  int? pin14Status;
-  int? pin15Status;
-  int? pin16Status;
-  int? pin17Status;
-  int? pin18Status;
-  int? pin19Status;
-  int? pin20Status;
+  String? pin1Status;
+  String? pin2Status;
+  String? pin3Status;
+  String? pin4Status;
+  String? pin5Status;
+  String? pin6Status;
+  String? pin7Status;
+  String? pin8Status;
+  String? pin9Status;
+  String? pin10Status;
+  String? pin11Status;
+  String? pin12Status;
+  String? pin13Status;
+  String? pin14Status;
+  String? pin15Status;
+  String? pin16Status;
+  String? pin17Status;
+  String? pin18Status;
+  String? pin19Status;
+  String? pin20Status;
   double? sensor1;
   double? sensor2;
   double? sensor3;
@@ -77,26 +77,26 @@ class DevicePinStatus {
 
   factory DevicePinStatus.fromJson(Map<String, dynamic> json) => DevicePinStatus(
     dId: json["d_id"],
-    pin1Status: json["pin1Status"],
-    pin2Status: json["pin2Status"],
-    pin3Status: json["pin3Status"],
-    pin4Status: json["pin4Status"],
-    pin5Status: json["pin5Status"],
-    pin6Status: json["pin6Status"],
-    pin7Status: json["pin7Status"],
-    pin8Status: json["pin8Status"],
-    pin9Status: json["pin9Status"],
-    pin10Status: json["pin10Status"],
-    pin11Status: json["pin11Status"],
-    pin12Status: json["pin12Status"],
-    pin13Status: json["pin13Status"],
-    pin14Status: json["pin14Status"],
-    pin15Status: json["pin15Status"],
-    pin16Status: json["pin16Status"],
-    pin17Status: json["pin17Status"],
-    pin18Status: json["pin18Status"],
-    pin19Status: json["pin19Status"],
-    pin20Status: json["pin20Status"],
+    pin1Status: json["pin1Status"].toString(),
+    pin2Status: json["pin2Status"].toString(),
+    pin3Status: json["pin3Status"].toString(),
+    pin4Status: json["pin4Status"].toString(),
+    pin5Status: json["pin5Status"].toString(),
+    pin6Status: json["pin6Status"].toString(),
+    pin7Status: json["pin7Status"].toString(),
+    pin8Status: json["pin8Status"].toString(),
+    pin9Status: json["pin9Status"].toString(),
+    pin10Status: json["pin10Status"].toString(),
+    pin11Status: json["pin11Status"].toString(),
+    pin12Status: json["pin12Status"].toString(),
+    pin13Status: json["pin13Status"].toString(),
+    pin14Status: json["pin14Status"].toString(),
+    pin15Status: json["pin15Status"].toString(),
+    pin16Status: json["pin16Status"].toString(),
+    pin17Status: json["pin17Status"].toString(),
+    pin18Status: json["pin18Status"].toString(),
+    pin19Status: json["pin19Status"].toString(),
+    pin20Status: json["pin20Status"].toString(),
     sensor1: json["sensor1"],
     sensor2: json["sensor2"],
     sensor3: json["sensor3"],
