@@ -17,6 +17,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 import '../LocalDatabase/alldb.dart';
 import '../Models/pinstatus.dart';
 import '../Models/userprofike.dart';
+import '../ProfilePage/utility.dart';
 import '../SubAccessModels/subaccesflat.dart';
 import '../SubAccessModels/subaccessdevice.dart';
 import '../SubAccessModels/subaccessplace.dart';
@@ -630,16 +631,15 @@ class _SubAccessState extends State<SubAccess> with TickerProviderStateMixin {
               onPressed: () async {
                 var result = await Connectivity().checkConnectivity();
                 if (result == ConnectivityResult.wifi) {
-                  responseGetData.replaceRange(0, responseGetData.length,
-                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                  await dataUpdate(dId);
-                  await dataUpdate(dId);
+                  responseGetData.fillRange(0, responseGetData.length,
+                      0);
+                  await Utility.dataUpdate(dId,responseGetData);
                   await getPinStatusData(dId);
                   await getPinStatusByDidLocal(dId, 0);
                 } else if (result == ConnectivityResult.mobile) {
-                  responseGetData.replaceRange(0, responseGetData.length,
-                      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-                  await dataUpdate(dId);
+                  responseGetData.fillRange(0, responseGetData.length,
+                      0);
+                  await Utility.dataUpdate(dId,responseGetData);
                   await getPinStatusData(dId);
                   await getPinStatusByDidLocal(dId, 0);
                 } else {
@@ -893,7 +893,7 @@ class _SubAccessState extends State<SubAccess> with TickerProviderStateMixin {
                                                         responseGetData[index] =
                                                             1;
                                                       });
-                                                      await dataUpdate(did);
+                                                      await Utility.dataUpdate(did,responseGetData);
 
                                                       await getPinStatusData(
                                                           did);
@@ -904,7 +904,7 @@ class _SubAccessState extends State<SubAccess> with TickerProviderStateMixin {
                                                         responseGetData[index] =
                                                             0;
                                                       });
-                                                      await dataUpdate(did).then(
+                                                      await Utility.dataUpdate(did,responseGetData).then(
                                                           (value) => getPinStatusData(
                                                                   did)
                                                               .then((value) =>
@@ -1023,7 +1023,7 @@ class _SubAccessState extends State<SubAccess> with TickerProviderStateMixin {
                                                               index + 9] =
                                                           onChanged.round();
                                                     });
-                                                    await dataUpdate(did);
+                                                    await Utility.dataUpdate(did,responseGetData);
                                                     await getPinStatusData(did);
                                                   }),
                                             );
@@ -2299,36 +2299,6 @@ class _SubAccessState extends State<SubAccess> with TickerProviderStateMixin {
     return tokenVar;
   }
 
-  Future<void> dataUpdate(dId) async {
-    String? token = await getToken();
-    var url = api + 'getpostdevicePinStatus/?d_id=' + dId;
-    Map data = {
-      'put': 'yes',
-      "d_id": dId,
-      'pin1Status': responseGetData[0],
-      'pin2Status': responseGetData[1],
-      'pin3Status': responseGetData[2],
-      'pin4Status': responseGetData[3],
-      'pin5Status': responseGetData[4],
-      'pin6Status': responseGetData[5],
-      'pin7Status': responseGetData[6],
-      'pin8Status': responseGetData[7],
-      'pin9Status': responseGetData[8],
-      'pin10Status': responseGetData[9],
-      'pin11Status': responseGetData[10],
-      'pin12Status': responseGetData[11],
-    };
-
-    final response =
-        await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Token $token',
-    });
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      await getPinStatusData(dId);
-      return;
-    } else {}
-  }
 
   Future getPinStatusData(did) async {
     var token = await getToken();
