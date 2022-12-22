@@ -14,18 +14,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Master">
       <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_03-12-2022_15_34_[Changes]1/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_03-12-2022_15_34__Changes_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/BillPrediction/devicebill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/devicebill.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/BillPrediction/faltbill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/faltbill.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/BillPrediction/floorbill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/floorbill.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/BillPrediction/placebill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/placebill.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/BillPrediction/roomdevicebill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/roomdevicebill.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/ProfilePage/utility.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ProfilePage/utility.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/TempAccess/tempaccesslist.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/TempAccess/tempaccesslist.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/TempAccess/tempaccessplace.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/TempAccess/tempaccessplace.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -150,13 +141,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639203997973</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Commit From Akash">
-      <created>1640948948217</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1640948948217</updated>
     </task>
     <task id="LOCAL-00010" summary="Commit From Akash">
       <created>1641119229104</created>
@@ -494,7 +478,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671352628734</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="Master">
+      <created>1671727083870</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1671727083871</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -560,37 +551,37 @@
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
-          <line>5089</line>
+          <line>5050</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
-          <line>5091</line>
+          <line>5052</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
-          <line>5096</line>
+          <line>5057</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
-          <line>3172</line>
+          <line>3173</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
-          <line>3171</line>
+          <line>3172</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
-          <line>3131</line>
+          <line>3132</line>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="Dart">
           <url>file://$PROJECT_DIR$/lib/HomeUi/homepage.dart</url>
-          <line>3132</line>
+          <line>3133</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>

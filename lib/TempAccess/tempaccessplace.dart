@@ -36,7 +36,7 @@ class _TempPlaceState extends State<TempPlace> with TickerProviderStateMixin {
   Future? nameFuture;
   List<SubAccessDevice> dv = [];
   Future? switchFuture;
-  List devicePinStatus = [];
+  var devicePinStatus = List.empty(growable: true);
   Future? pinScheduledFuture;
   List namesDataList = [];
   SensorData? sensorData;
@@ -1124,6 +1124,9 @@ class _TempPlaceState extends State<TempPlace> with TickerProviderStateMixin {
           rm = ans.map((e) => SubAccessRoom.fromJson(e)).toList();
           tabC = TabController(length: rm.length, vsync: this);
         });
+        await getDevice(rm[0]
+            .rId
+            .toString());
       }
     }
   }
@@ -1167,6 +1170,16 @@ class _TempPlaceState extends State<TempPlace> with TickerProviderStateMixin {
       'pin10Status': devicePinStatus[9],
       'pin11Status': devicePinStatus[10],
       'pin12Status': devicePinStatus[11],
+      'sensor1': devicePinStatus[12],
+      'sensor2': devicePinStatus[13],
+      'sensor3': devicePinStatus[14],
+      'sensor4': devicePinStatus[15],
+      'sensor5': devicePinStatus[16],
+      'sensor6': devicePinStatus[17],
+      'sensor7': devicePinStatus[18],
+      'sensor8': devicePinStatus[19],
+      'sensor9': devicePinStatus[20],
+      'sensor10': devicePinStatus[21],
     };
 
     final response =
@@ -1211,6 +1224,16 @@ class _TempPlaceState extends State<TempPlace> with TickerProviderStateMixin {
           ans['pin10Status'],
           ans['pin11Status'],
           ans['pin12Status'],
+          ans['sensor1'],
+          ans['sensor2'],
+          ans['sensor3'],
+          ans['sensor4'],
+          ans['sensor5'],
+          ans['sensor6'],
+          ans['sensor7'],
+          ans['sensor8'],
+          ans['sensor9'],
+          ans['sensor10'],
         ];
       });
       if (kDebugMode) {

@@ -210,7 +210,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.dispose();
     // timer!.cancel();
     scrollController.dispose();
-    refreshImages();
   }
 
   @override
@@ -218,6 +217,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     userPersonalData();
     getUidShared();
+    Utility.getImage();
     fetchPlace();
     setState(() {
       _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
@@ -226,7 +226,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
 
     tabC = TabController(length: widget.rm!.length, vsync: this);
-    refreshImages();
     pickedDate = DateTime.now();
     cutDate = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
@@ -341,20 +340,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-  refreshImages() async {
-    List data = await AllDatabase.instance.getPhoto();
-    if (data.isEmpty) {
-      return;
-    }
-    print("Image Not Empty $data");
-    if (!mounted) {
-      return;
-    }
-    setState(() {
-      photo = PhotoModel.fromMap(data[0]);
-      setImage = Utility.imageFrom64BaseString(photo!.file);
-    });
-  }
 
   // play() async {
   //   AssetsAudioPlayer assetsAudioPlayer = AssetsAudioPlayer();
@@ -1723,10 +1708,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       onListening: (isListening) async {
         setState(() => this.isListening = isListening);
         if (text.contains("All") || text.contains("all")) {
-          responseGetData.replaceRange(
-              0, responseGetData.length, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+          responseGetData.fillRange(
+              0, responseGetData.length, 0);
 
-          await dataUpdate(deviceIdForScroll);
+          await Utility.dataUpdate(deviceIdForScroll,responseGetData);
         }
         for (int i = 0; i < namesDataList.length; i++) {
           if (text.contains(namesDataList[i])) {
@@ -1738,7 +1723,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 setState(() {
                   responseGetData[indexForSpeech] = 1;
                 });
-                await dataUpdate(deviceIdForScroll);
+                await Utility.dataUpdate(deviceIdForScroll,responseGetData);
 
                 break;
                 // getStatus();
@@ -1749,7 +1734,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 setState(() {
                   responseGetData[indexForSpeech] = 0;
                 });
-                await dataUpdate(deviceIdForScroll);
+                await Utility.dataUpdate(deviceIdForScroll,responseGetData);
 
                 break;
                 // getStatus();
@@ -3952,47 +3937,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
   }
 
-  Future<void> dataUpdate(dId) async {
-    String? token = await getToken();
-    var url = api + 'getpostdevicePinStatus/?d_id=' + dId;
-    Map data = {
-      'put': 'yes',
-      "d_id": dId,
-      'pin1Status': responseGetData[0],
-      'pin2Status': responseGetData[1],
-      'pin3Status': responseGetData[2],
-      'pin4Status': responseGetData[3],
-      'pin5Status': responseGetData[4],
-      'pin6Status': responseGetData[5],
-      'pin7Status': responseGetData[6],
-      'pin8Status': responseGetData[7],
-      'pin9Status': responseGetData[8],
-      'pin10Status': responseGetData[9],
-      'pin11Status': responseGetData[10],
-      'pin12Status': responseGetData[11],
-      'sensor1': responseGetData[12],
-      'sensor2': responseGetData[13],
-      'sensor3': responseGetData[14],
-      'sensor4': responseGetData[15],
-      'sensor5': responseGetData[16],
-      'sensor6': responseGetData[17],
-      'sensor7': responseGetData[18],
-      'sensor8': responseGetData[19],
-      'sensor9': responseGetData[20],
-      'sensor10': responseGetData[21],
-    };
 
-    final response =
-    await http.post(Uri.parse(url), body: jsonEncode(data), headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Token $token',
-    });
-    if (response.statusCode == 201 || response.statusCode == 200) {
-      return;
-    } else {
-      print("DATA   AASSA   ${response.statusCode}");
-    }
-  }
 
   Future updatePinName(int index, String data, String deviceId) async {
     String? token = await getToken();
@@ -5217,7 +5162,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                                       index + 9] =
                                                           onChanged.round();
                                                     });
-                                                    await dataUpdate(dId);
+                                                    await Utility.dataUpdate(dId,responseGetData);
+
                                                   }),
                                             );
                                           } else {
@@ -5889,13 +5835,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 var result = await Connectivity().checkConnectivity();
                 if (result == ConnectivityResult.wifi) {
                   responseGetData.fillRange(0, responseGetData.length, 0 );
-                  await dataUpdate(dId);
+                  await Utility.dataUpdate(dId,responseGetData);
 
                   await getPinStatusData(dId);
                   await getPinStatusByDidLocal(dId.toString());
                 } else if (result == ConnectivityResult.mobile) {
                   responseGetData.fillRange(0, responseGetData.length, 0 );
-                  await dataUpdate(dId);
+                  await Utility.dataUpdate(dId,responseGetData);
                   await getPinStatusData(dId);
                   await getPinStatusByDidLocal(dId.toString());
                 } else {
