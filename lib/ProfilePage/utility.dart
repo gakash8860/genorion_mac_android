@@ -89,4 +89,19 @@ class Utility {
       },
     )..show();
   }
+  static thereIsNoData(context) {
+    return AwesomeDialog(
+      context: context,
+      dialogType: DialogType.ERROR,
+      animType: AnimType.BOTTOMSLIDE,
+      title: 'Empty',
+      desc: 'There is No Data....',
+      btnCancelOnPress: () {
+        Navigator.of(context).pop();
+      },
+      btnOkOnPress: () async {
+        Navigator.of(context).pop();
+      },
+    )..show();
+  }
 }

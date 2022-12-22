@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, unnecessary_null_comparison
 
 import 'dart:convert';
-
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,6 +12,7 @@ import '../Models/flatmodel.dart';
 import '../Models/floormodel.dart';
 import '../Models/placemodel.dart';
 import '../Models/roommodel.dart';
+import '../ProfilePage/utility.dart';
 import '../main.dart';
 
 class DeviceBillPred extends StatefulWidget {
@@ -853,22 +852,6 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
     await getEnergyDay(selecteddeviceId);
   }
 
-  thereIsNoData() {
-    return AwesomeDialog(
-      context: context,
-      dialogType: DialogType.ERROR,
-      animType: AnimType.BOTTOMSLIDE,
-      title: 'Empty',
-      desc: 'There is No Data....',
-      btnCancelOnPress: () {
-        Navigator.of(context).pop();
-      },
-      btnOkOnPress: () async {
-        Navigator.of(context).pop();
-      },
-    )..show();
-  }
-
   Future<List<PlaceType>> placeQueryFunc() async {
     List data = await AllDatabase.instance.queryPlace();
     List<PlaceType> placeType = [];
@@ -935,7 +918,7 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
         setState(() {
           pleaseSelect = 'There is not Data';
         });
-        thereIsNoData();
+        return Utility.thereIsNoData(context);
       }
       if (chooseValueMinute == '10 minute') {
         setState(() {
@@ -1013,7 +996,7 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
         setState(() {
           pleaseSelect = 'There is not Data';
         });
-        return thereIsNoData();
+        return Utility.thereIsNoData(context);
       }
       if (chooseValueHour == '1 hour') {
         setState(() {
@@ -1702,7 +1685,7 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
         setState(() {
           pleaseSelect = 'There is not Data';
         });
-        return thereIsNoData();
+        return Utility.thereIsNoData(context);
       }
 
       for (int i = 0; i < data.length; i++) {

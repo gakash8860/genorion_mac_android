@@ -13,6 +13,7 @@ import '../Models/flatmodel.dart';
 import '../Models/floormodel.dart';
 import '../Models/placemodel.dart';
 import '../Models/roommodel.dart';
+import '../ProfilePage/utility.dart';
 import '../main.dart';
 import 'package:http/http.dart' as http;
 
@@ -337,7 +338,7 @@ class _FloorBillPredState extends State<FloorBillPred> {
                           });
 
                           await flatQueryFunc2(floorId);
-                          // await getEnergyTenMinutes(chooseValueMinute);
+                          await getEnergyTenMinutes(chooseValueMinute);
                         },
                         items: minute.map((valueItem) {
                           return DropdownMenuItem(
@@ -376,7 +377,7 @@ class _FloorBillPredState extends State<FloorBillPred> {
                             allRoom = List.empty(growable: true);
                           });
                           await flatQueryFuncForHourEnergy(floorId);
-                          // await getEnergyHour(chooseValueHour);
+                          await getEnergyHour(chooseValueHour);
                         },
                         items: hour.map((valueItem) {
                           return DropdownMenuItem(
@@ -1342,21 +1343,7 @@ class _FloorBillPredState extends State<FloorBillPred> {
     return token;
   }
 
-  thereIsNoData() {
-    return AwesomeDialog(
-      context: context,
-      dialogType: DialogType.ERROR,
-      animType: AnimType.BOTTOMSLIDE,
-      title: 'Empty',
-      desc: 'There is No Data....',
-      btnCancelOnPress: () {
-        Navigator.of(context).pop();
-      },
-      btnOkOnPress: () async {
-        Navigator.of(context).pop();
-      },
-    )..show();
-  }
+
 
   Future getEnergyTenMinutes(chooseValueMinute) async {
     String? token = await getToken();
@@ -1370,8 +1357,9 @@ class _FloorBillPredState extends State<FloorBillPred> {
       });
       if (response.statusCode == 200) {
         List ans = jsonDecode(response.body);
+        print("ASAS");
         if (ans.isEmpty) {
-          return thereIsNoData();
+          return Utility.thereIsNoData(context);
         }
         for (int i = 0; i < ans.length; i++) {
           totalTenMinuteEnergy.add(ans[i]);
@@ -1474,7 +1462,7 @@ class _FloorBillPredState extends State<FloorBillPred> {
           setState(() {
             pleaseSelect = 'There is not Data';
           });
-          return thereIsNoData();
+          return Utility.thereIsNoData(context);
         }
 
         for (int i = 0; i < data.length; i++) {
@@ -2384,7 +2372,7 @@ class _FloorBillPredState extends State<FloorBillPred> {
           setState(() {
             pleaseSelect = 'There is not Data';
           });
-          return thereIsNoData();
+          return Utility.thereIsNoData(context);
         }
         for (int i = 0; i < ans.length; i++) {
           onlyDayEnergyList.add(ans[i]);

@@ -1118,6 +1118,7 @@ class _TempPlaceState extends State<TempPlace> with TickerProviderStateMixin {
     });
     if (response.statusCode == 200) {
       List<dynamic> ans = jsonDecode(response.body);
+      print(ans);
       if (mounted) {
         setState(() {
           rm = ans.map((e) => SubAccessRoom.fromJson(e)).toList();

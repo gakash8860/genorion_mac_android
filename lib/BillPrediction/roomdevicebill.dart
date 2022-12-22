@@ -1,8 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison, prefer_if_null_operators, prefer_typing_uninitialized_variables
 
 import 'dart:convert';
-
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -13,6 +11,7 @@ import '../Models/flatmodel.dart';
 import '../Models/floormodel.dart';
 import '../Models/placemodel.dart';
 import '../Models/roommodel.dart';
+import '../ProfilePage/utility.dart';
 import '../main.dart';
 
 class RoomBillPred extends StatefulWidget {
@@ -757,7 +756,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
       if (response.statusCode == 200) {
         List ans = jsonDecode(response.body);
         if (ans.isEmpty) {
-          return thereIsNoData();
+          return Utility.thereIsNoData(context);
         }
         for (int i = 0; i < ans.length; i++) {
           totalTenMinuteEnergy.add(ans[i]);
@@ -905,7 +904,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
           setState(() {
             pleaseSelect = 'There is not Data';
           });
-          return thereIsNoData();
+          return Utility.thereIsNoData(context);
         }
 
         for (int i = 0; i < data.length; i++) {
@@ -1762,21 +1761,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
     }
   }
 
-  thereIsNoData() {
-    return AwesomeDialog(
-      context: context,
-      dialogType: DialogType.ERROR,
-      animType: AnimType.BOTTOMSLIDE,
-      title: 'Empty',
-      desc: 'There is No Data....',
-      btnCancelOnPress: () {
-        Navigator.of(context).pop();
-      },
-      btnOkOnPress: () async {
-        Navigator.of(context).pop();
-      },
-    )..show();
-  }
+
 
   showDatePicker1() {
     showDatePicker(
@@ -1861,7 +1846,7 @@ class _RoomBillPredState extends State<RoomBillPred> {
           setState(() {
             pleaseSelect = 'There is not Data';
           });
-          return thereIsNoData();
+          return Utility.thereIsNoData(context);
         }
         for (int i = 0; i < ans.length; i++) {
           onlyDayEnergyList.add(ans[i]);

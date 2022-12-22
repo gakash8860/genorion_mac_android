@@ -163,9 +163,7 @@ class _ListOfTempAccessPageState extends State<ListOfTempAccessPage> {
                                           ownerName: temp[index].ownerName.toString(),
                                           placeId: temp[index].pId.toString(),
                                         )));
-                          }
-
-                          if (temp[index].dId != null) {
+                          }else if (temp[index].dId != null) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -173,9 +171,7 @@ class _ListOfTempAccessPageState extends State<ListOfTempAccessPage> {
                                           ownerName: temp[index].ownerName,
                                           dId: temp[index].dId,
                                         )));
-                          }
-
-                          if (temp[index].rId != null) {
+                          } else if (temp[index].rId != null) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -183,9 +179,7 @@ class _ListOfTempAccessPageState extends State<ListOfTempAccessPage> {
                                           ownerName: temp[index].ownerName,
                                           rId: temp[index].rId,
                                         )));
-                          }
-
-                          if (temp[index].fltId != null) {
+                          } else if (temp[index].fltId != null) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -194,7 +188,7 @@ class _ListOfTempAccessPageState extends State<ListOfTempAccessPage> {
                                           flatId: temp[index].fltId,
                                         )));
                           }
-                          if (temp[index].fId != null) {
+                          else  if (temp[index].fId != null) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
