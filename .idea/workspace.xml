@@ -12,10 +12,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Update Scene Details">
-      <change beforePath="$PROJECT_DIR$/lib/BillPrediction/devicebill.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/BillPrediction/devicebill.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" afterDir="false" />
-    </list>
+    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Update Scene Details" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -138,13 +135,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639203997973</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Commit From Akash">
-      <created>1641564829873</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1641564829873</updated>
     </task>
     <task id="LOCAL-00015" summary="Commit From Akash">
       <created>1641736635498</created>
@@ -482,7 +472,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671962248378</updated>
     </task>
-    <option name="localTasksCounter" value="63" />
+    <task id="LOCAL-00063" summary="Update Scene Details">
+      <created>1671962725636</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1671962725636</updated>
+    </task>
+    <option name="localTasksCounter" value="64" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
