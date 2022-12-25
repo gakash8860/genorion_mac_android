@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:genorion_mac_android/Models/devicemodel.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 import '../LocalDatabase/alldb.dart';
 import '../Models/SceneDevice.dart';
@@ -13,6 +13,7 @@ import '../Models/placemodel.dart';
 import '../Models/roommodel.dart';
 import '../ProfilePage/utility.dart';
 import '../main.dart';
+import 'editSceneDetailsPage.dart';
 
 class SceneDetails extends StatefulWidget {
   final sceneName;
@@ -131,7 +132,6 @@ class _SceneDetailsState extends State<SceneDetails> {
   }
   Future<bool> getScene() async {
     String? token = await Utility.getToken();
-    int userId = await Utility.getUidShared();
     var url = api + 'scenedevice/?scene_id=' + widget.sceneId;
     final response =
     await http.get(Uri.parse(url), headers: {
@@ -150,6 +150,34 @@ class _SceneDetailsState extends State<SceneDetails> {
     }
     return false;
   }
+
+  Future<void> deleteScene(id)async{
+    var url = api+"scenedevice/?scenedevices_id="+id;
+    String? token = await Utility.getToken();
+    final response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      setState(() {
+        sceneFuture = getScene();
+      });
+      const snackBar = SnackBar(
+        content: Text('Deleted'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      if (kDebugMode) {
+        print(response.statusCode);
+      }
+    }
+
+
+  }
   Future<List<DeviceType>> deviceQueryFunc(id) async {
     List data = await AllDatabase.instance.getDeviceById(id);
     List<DeviceType> deviceType = [];
@@ -162,7 +190,7 @@ class _SceneDetailsState extends State<SceneDetails> {
 
 
   Widget sceneDetails(){
-    return Container(
+    return  Container(
       width: MediaQuery
           .of(context)
           .size
@@ -180,7 +208,7 @@ class _SceneDetailsState extends State<SceneDetails> {
                   itemCount:sceneDevice.length ,
                   shrinkWrap: true,
                   itemBuilder: (context,index){
-                    return Padding(
+                    return  Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Card(
                         semanticContainer: true,
@@ -189,18 +217,40 @@ class _SceneDetailsState extends State<SceneDetails> {
 
                           trailing: SingleChildScrollView(
                             child: Column(
-                              mainAxisSize: MainAxisSize.min,
+                              mainAxisSize: MainAxisSize.max,
                               children: [
-                                Text(sceneDevice[index].timing.toString()),
-                                IconButton(onPressed: (){
 
-                                }, icon: Icon(Icons.delete))
+                                Text(sceneDevice[index].timing.toString()),
+                                // IconButton(onPressed: (){
+                                //   _showDialogForDelete(sceneDevice[index].scenedevicesId);
+                                // }, icon: Icon(Icons.delete)),
+                                IconButton(onPressed: ()async{
+                                     await devicePinQueryFunc(sceneDevice[index].dId);
+
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditSceneDetailPage(
+                                            sceneId: sceneDevice[index].sceneId,
+                                            colorFalse: colorFalse,
+                                            namesDataList: namesDataList,
+                                            cutDate: cutDate,
+                                          )));
+                                }, icon: Icon(Icons.edit)),
+
                               ],
                             ),
                           ),
                           subtitle: Text(sceneDevice[index].date.toString().substring(0,10)),
-                          leading: Text(" ${sceneDevice[index].sceneName.toString()}"),
-                          title: Text(" ${sceneDevice[index].dId.toString()}"),
+                          leading: Column(
+                            children: [
+
+                              Text(" ${sceneDevice[index].sceneName.toString()}"),
+                              Text(" ${sceneDevice[index].dId.toString()}")
+                            ],
+                          ),
+                          // title:,
                         ),
                       ),
                     );
@@ -212,7 +262,28 @@ class _SceneDetailsState extends State<SceneDetails> {
     );
   }
 
-
+  _showDialogForDelete(id) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Delete"),
+        content: const Text("Are you sure to delete"),
+        actions: <Widget>[
+          MaterialButton(
+              child: const Text("Yes"),
+              onPressed: () async {
+               await deleteScene(id);
+                Navigator.pop(context);
+              }),
+          MaterialButton(
+              child: const Text("No"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+        ],
+      ),
+    );
+  }
 
 
   Future<List<String>> devicePinQueryFunc(dId) async {
@@ -783,111 +854,6 @@ class _SceneDetailsState extends State<SceneDetails> {
             )
                 : pinBoolBool
                 ? listViewPins()
-            // Padding(
-            //   padding: const EdgeInsets.all(18.0),
-            //   child: FutureBuilder<List<String>>(
-            //       future: devicePinNameVal,
-            //       builder: (context, snapshot) {
-            //         if (snapshot.hasData) {
-            //           if (snapshot.data!.isEmpty) {
-            //             return const Center(
-            //                 child: Text(
-            //                     "No Devices on this place"));
-            //           }
-            //           return Container(
-            //             child: SizedBox(
-            //               width: double.infinity,
-            //               height: 50.0,
-            //               child: Container(
-            //                 width: MediaQuery.of(context)
-            //                     .size
-            //                     .width *
-            //                     2,
-            //                 decoration: BoxDecoration(
-            //                     color: Colors.white,
-            //                     boxShadow: const [
-            //                       BoxShadow(
-            //                           color: Colors.black,
-            //                           blurRadius: 30,
-            //                           offset:
-            //                           Offset(20, 20))
-            //                     ],
-            //                     border: Border.all(
-            //                       color: Colors.black,
-            //                       width: 0.5,
-            //                     )),
-            //                 child:
-            //                 DropdownButtonFormField<
-            //                     String>(
-            //                   decoration: InputDecoration(
-            //                     contentPadding:
-            //                     const EdgeInsets.all(
-            //                         15),
-            //                     focusedBorder:
-            //                     OutlineInputBorder(
-            //                       borderSide:
-            //                       const BorderSide(
-            //                           color: Colors
-            //                               .white),
-            //                       borderRadius:
-            //                       BorderRadius
-            //                           .circular(10),
-            //                     ),
-            //                     enabledBorder:
-            //                     UnderlineInputBorder(
-            //                       borderSide:
-            //                       const BorderSide(
-            //                           color: Colors
-            //                               .black),
-            //                       borderRadius:
-            //                       BorderRadius
-            //                           .circular(50),
-            //                     ),
-            //                   ),
-            //                   dropdownColor:
-            //                   Colors.white70,
-            //                   icon: const Icon(
-            //                       Icons.arrow_drop_down),
-            //                   iconSize: 28,
-            //                   hint: const Text(
-            //                       'Select Device Pin Name'),
-            //                   isExpanded: true,
-            //                   style: const TextStyle(
-            //                     color: Colors.black,
-            //                     fontWeight:
-            //                     FontWeight.bold,
-            //                   ),
-            //                   items: namesDataList.map<DropdownMenuItem<String>>((String value) {
-            //                     return DropdownMenuItem<String>(
-            //                       value: value,
-            //                       child: Text(value.trim(),style:TextStyle(color:Colors.black),),
-            //                     );
-            //                   }).toList(),
-            //                   onChanged: (selectDevice) {
-            //                     setState(() {
-            //                       deviceBool = false;
-            //                       pinBoolBool = true;
-            //                       selectedPinName = selectDevice!;
-            //
-            //                       showOnOffOption = true;
-            //
-            //                     });
-            //                   },
-            //                 ),
-            //               ),
-            //             ),
-            //             margin:
-            //             const EdgeInsets.symmetric(
-            //                 vertical: 10,
-            //                 horizontal: 10),
-            //           );
-            //         } else {
-            //           return const Center(
-            //               child:
-            //               CircularProgressIndicator());
-            //         }
-            //       }),
-            // )
                 : Container()
           ],
         ),
@@ -976,7 +942,6 @@ class _SceneDetailsState extends State<SceneDetails> {
   List<int> value= List.filled(20,0);
   Future<void> addSceneDetails(value) async {
     String? token = await Utility.getToken();
-    int userId = await Utility.getUidShared();
     var url = api + 'scenedevice/';
     Map data = {
       "scene_id": widget.sceneId.toString(),
@@ -1091,6 +1056,8 @@ class _SceneDetailsState extends State<SceneDetails> {
           }, child: Text("Done "),),]
     );
   }
+
+
 
 
 }

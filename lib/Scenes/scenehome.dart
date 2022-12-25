@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:genorion_mac_android/ProfilePage/utility.dart';
 import 'package:genorion_mac_android/Scenes/scenedetails.dart';
@@ -67,6 +68,9 @@ class _SceneHomeState extends State<SceneHome> {
                                     scenesList[index].sceneType.toString(),
                                     style: const TextStyle(fontSize: 12),
                                   ),
+                                  trailing:   IconButton(onPressed: (){
+                                    _showDialogForDelete(scenesList[index].sceneId);
+                                  }, icon: Icon(Icons.delete)),
 
                                   onTap: () {
                                     Navigator.push(
@@ -98,6 +102,67 @@ class _SceneHomeState extends State<SceneHome> {
       ),
     );
   }
+
+  _showDialogForDelete(id) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Delete"),
+        content: const Text("Are you sure to delete"),
+        actions: <Widget>[
+          MaterialButton(
+              child: const Text("Yes"),
+              onPressed: () async {
+                await deleteScene(id);
+                Navigator.pop(context);
+              }),
+          MaterialButton(
+              child: const Text("No"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+        ],
+      ),
+    );
+  }
+
+
+
+  Future<void> deleteScene(id)async{
+    String? token = await Utility.getToken();
+    var url = api+"scenedevice/?user="+id.toString();
+    final response = await http.delete(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Token $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      setState(() {
+        sceneFuture = getScene();
+      });
+      const snackBar = SnackBar(
+        content: Text('Deleted'),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else {
+      if (kDebugMode) {
+        print(response.statusCode);
+      }
+    }
+
+
+  }
+
+
+
+
+
+
+
+
 
 
   _createAlertDialogForScene() {
