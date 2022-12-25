@@ -221,23 +221,9 @@ class _SceneDetailsState extends State<SceneDetails> {
                               children: [
 
                                 Text(sceneDevice[index].timing.toString()),
-                                // IconButton(onPressed: (){
-                                //   _showDialogForDelete(sceneDevice[index].scenedevicesId);
-                                // }, icon: Icon(Icons.delete)),
-                                IconButton(onPressed: ()async{
-                                     await devicePinQueryFunc(sceneDevice[index].dId);
-
-
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => EditSceneDetailPage(
-                                            sceneId: sceneDevice[index].sceneId,
-                                            colorFalse: colorFalse,
-                                            namesDataList: namesDataList,
-                                            cutDate: cutDate,
-                                          )));
-                                }, icon: Icon(Icons.edit)),
+                                IconButton(onPressed: (){
+                                  _createAlertDialogForAddMembers(context,sceneDevice[index].scenedevicesId,index);
+                                }, icon: Icon(Icons.more_horiz)),
 
                               ],
                             ),
@@ -259,6 +245,48 @@ class _SceneDetailsState extends State<SceneDetails> {
           );
         },
       ),
+    );
+  }
+
+  _createAlertDialogForAddMembers(BuildContext context,id,index) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return SimpleDialog(
+          title: Text("Choose"),
+          children: [
+            SimpleDialogOption(
+              onPressed: () {
+                _showDialogForDelete(id);
+              },
+              child: const Text(
+                'Delete',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ),
+            SimpleDialogOption(
+              onPressed: ()async {
+                await devicePinQueryFunc(sceneDevice[index].dId);
+
+
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EditSceneDetailPage(
+                          sceneId: sceneDevice[index].sceneId,
+                          colorFalse: colorFalse,
+                          namesDataList: namesDataList,
+                          cutDate: cutDate,
+                        )));
+              },
+              child: const Text(
+                'Update Scene',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -1008,7 +1036,9 @@ class _SceneDetailsState extends State<SceneDetails> {
           ),
           ListView.builder(
               padding: const EdgeInsets.all(4),
+              scrollDirection: Axis.vertical,
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemCount: namesDataList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(

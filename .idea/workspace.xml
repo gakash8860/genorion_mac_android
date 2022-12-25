@@ -12,12 +12,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Master">
-      <change afterPath="$PROJECT_DIR$/lib/Scenes/editSceneDetailsPage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Update Scene Details">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Scenes/editSceneDetailsPage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Scenes/editSceneDetailsPage.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Scenes/scenedetails.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Scenes/scenedetails.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Scenes/scenehome.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Scenes/scenehome.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,13 +139,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639203997973</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Commit From Akash">
-      <created>1641124614893</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1641124614893</updated>
     </task>
     <task id="LOCAL-00013" summary="Commit From Akash">
       <created>1641238943699</created>
@@ -485,7 +476,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671728790382</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="Update Scene Details">
+      <created>1671961650350</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1671961650352</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -534,7 +532,8 @@
     <MESSAGE value="Temp User" />
     <MESSAGE value="Websocket branch changes" />
     <MESSAGE value="Master" />
-    <option name="LAST_COMMIT_MESSAGE" value="Master" />
+    <MESSAGE value="Update Scene Details" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update Scene Details" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

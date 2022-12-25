@@ -63,8 +63,9 @@ class _EditSceneDetailPageState extends State<EditSceneDetailPage> {
                       ),
                     ),
                     ListView.builder(
-
+                      scrollDirection: Axis.vertical,
                         shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
                         itemCount: widget.namesDataList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Card(
