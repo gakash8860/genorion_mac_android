@@ -588,7 +588,7 @@ class _TempAccessFloorState extends State<TempAccessFloor>
                                                   BorderRadius.circular(50),
                                             ),
                                           ),
-                                          dropdownColor: Colors.white70,
+                                          dropdownColor: dropDownColor,
                                           icon:
                                               const Icon(Icons.arrow_drop_down),
                                           iconSize: 28,

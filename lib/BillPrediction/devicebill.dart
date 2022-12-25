@@ -46,6 +46,7 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
     '50 minute',
     '60 minute'
   ];
+  Color dropDownColor = Colors.white;
   String selecteddeviceId = "";
   var last10Minute = 'Please Select';
   var pleaseSelect = 'Please Select';
@@ -282,7 +283,7 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
                                         borderRadius: BorderRadius.circular(50),
                                       ),
                                     ),
-                                    dropdownColor: Colors.white70,
+                                    dropdownColor: dropDownColor,
                                     icon: const Icon(Icons.arrow_drop_down),
                                     iconSize: 28,
                                     hint: const Text('Select Floor'),
@@ -363,7 +364,7 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
                                                 BorderRadius.circular(50),
                                           ),
                                         ),
-                                        dropdownColor: Colors.white70,
+                                        dropdownColor: dropDownColor,
                                         icon: const Icon(Icons.arrow_drop_down),
                                         iconSize: 28,
                                         hint: const Text('Select Flat'),
@@ -451,7 +452,7 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
                                                     BorderRadius.circular(50),
                                               ),
                                             ),
-                                            dropdownColor: Colors.white70,
+                                            dropdownColor: dropDownColor,
                                             icon: const Icon(
                                                 Icons.arrow_drop_down),
                                             iconSize: 28,
@@ -546,7 +547,7 @@ class _DeviceBillPredState extends State<DeviceBillPred> {
                                                             50),
                                                   ),
                                                 ),
-                                                dropdownColor: Colors.white70,
+                                                dropdownColor: dropDownColor,
                                                 icon: const Icon(
                                                     Icons.arrow_drop_down),
                                                 iconSize: 28,

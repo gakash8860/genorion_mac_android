@@ -377,7 +377,7 @@ class _AddSubUserState extends State<AddSubUser> {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: dropDownColor,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Place'),

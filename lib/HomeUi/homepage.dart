@@ -202,6 +202,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     '011'
   ];
 
+
   PhotoModel? photo;
   bool isAllFunctionRunningBackground = true;
 
@@ -2110,7 +2111,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: dropDownColor,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Place'),
@@ -2184,7 +2185,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: dropDownColor,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Floor'),
@@ -2233,7 +2234,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           child: Container(
                             width: MediaQuery.of(context).size.width * 2,
                             decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: dropDownColor,
                                 boxShadow: const [
                                   BoxShadow(
                                       color: Colors.black,
@@ -2258,7 +2259,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor:dropDownColor,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Flat'),
@@ -2486,7 +2487,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: dropDownColor,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Floor'),
@@ -2560,7 +2561,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                   borderRadius: BorderRadius.circular(50),
                                 ),
                               ),
-                              dropdownColor: Colors.white70,
+                              dropdownColor: dropDownColor,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 28,
                               hint: const Text('Select Flat'),
@@ -2706,7 +2707,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                     borderRadius: BorderRadius.circular(50),
                                   ),
                                 ),
-                                dropdownColor: Colors.white70,
+                                dropdownColor: dropDownColor,
                                 icon: const Icon(Icons.arrow_drop_down),
                                 iconSize: 28,
                                 hint: const Text('Select Flat'),
@@ -3011,7 +3012,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                           BorderRadius.circular(50),
                                         ),
                                       ),
-                                      dropdownColor: Colors.white70,
+                                      dropdownColor: dropDownColor,
                                       icon: const Icon(Icons.arrow_drop_down),
                                       iconSize: 28,
                                       hint: const Text('Select Flat'),
