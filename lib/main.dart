@@ -7,7 +7,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:genorion_mac_android/StartingScreen/frontscreen.dart';
-import 'package:genorion_mac_android/cooldrop.dart';
 
 
 
@@ -50,9 +49,6 @@ Future<void> main() async {
  }
  }
 
-// const api = 'http://genorion1.herokuapp.com/';
-// const api = 'http://3.110.45.229:8000/';
-// const api = 'https://genorion.pythonanywhere.com/';
 const api = 'http://146.190.32.184:8000/';
 bool changeDone = false;
  var changeColor;
