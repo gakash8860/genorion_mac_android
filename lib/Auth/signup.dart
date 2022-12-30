@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:genorion_mac_android/main.dart';
 import 'package:http/http.dart' as http;
 
+import '../templogin/templogin.dart';
 import 'loginscreen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -394,7 +395,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       height: 15,
                     ),
                     _buildSignUpBtn(),
-                    _buildLoginBtn()
+                    _buildLoginBtn(),
+                    tempLogin()
                   ],
                 ),
               ),
@@ -511,6 +513,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
             fontWeight: FontWeight.bold,
             fontFamily: 'OpenSans',
           ),
+        ),
+      ),
+    );
+  }
+
+
+  Widget tempLogin(){
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const TempLogin()));
+      },
+      child: RichText(
+        text: const TextSpan(
+          children: [
+
+            TextSpan(
+              text: 'Temp Login? ',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
         ),
       ),
     );

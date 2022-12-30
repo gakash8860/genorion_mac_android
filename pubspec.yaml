@@ -69,6 +69,10 @@ dependencies:
   cool_dropdown: ^1.4.2
   flutter_screenutil: ^5.6.0
   web_socket_channel: ^2.2.0
+  flutter_otp: ^0.3.2
+  pin_code_text_field: ^1.8.0
+  intl_phone_field: ^3.1.0
+  otp_autofill: ^2.1.0
   
 dependency_overrides:
   firebase_core_platform_interface: 4.5.1
