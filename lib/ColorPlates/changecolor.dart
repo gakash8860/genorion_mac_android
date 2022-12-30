@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:genorion_mac_android/main.dart';
@@ -12,6 +11,7 @@ class ChangedTheme extends StatefulWidget {
 }
 
 class _ChangedThemeState extends State<ChangedTheme> {
+  int ans = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,10 +38,10 @@ class _ChangedThemeState extends State<ChangedTheme> {
                   ),
                 ),
                 Row(
-                  children:  [
+                  children: [
                     Text("Changed Theme",
                         style: TextStyle(
-                            color: changeColor,
+                            color: changeColor ?? Colors.white,
                             fontSize: 28,
                             fontWeight: FontWeight.bold)),
                   ],
@@ -71,122 +71,41 @@ class _ChangedThemeState extends State<ChangedTheme> {
               pickerColor: pickerColor,
               onColorChanged: (Color onColorChanged) async {
                 setState(() {
-                  changeColor = onColorChanged;
+                  changeColor = onColorChanged as MaterialColor?;
                   changeDone = true;
-                  pickerColor = onColorChanged;
+                  // pickerColor = onColorChanged;
                 });
-                // saveColor2(onColorChanged.value);
+                print("Color ${onColorChanged.value}");
+                await saveColor2(onColorChanged.value);
                 // saveColor(onColorChanged.red, onColorChanged.green,
                 //     onColorChanged.blue, onColorChanged.alpha);
-                // var ans = getColor1();
-                //
-                // int an = int.parse(ans.toString());
-                // final Color color1 =
-                //     Color(an).withOpacity(1);
-                // changeColor = color1;
+
+
+                int an = int.parse(ans.toString());
+                print(an);
+                final Color color1 =
+                    Color(an.toInt()).withOpacity(1);
+                changeColor = color1 as MaterialColor?;
               })
         ],
       )),
     );
   }
 
-  Widget colorPlates() {
-    return Container(
-      color: Colors.white,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              InkWell(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 14),
-                  width: 38,
-                  height: 38,
-
-                  decoration: const BoxDecoration(
-                      color: Colors.blue, shape: BoxShape.circle),
-                  // child: ...
-                ),
-                onTap: () {
-                  setState(() {
-                    changeColor = Colors.blue;
-                  });
-                },
-              ),
-              InkWell(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 14),
-                  width: 38,
-                  height: 38,
-
-                  decoration: const BoxDecoration(
-                      color: Colors.redAccent, shape: BoxShape.circle),
-                  // child: ...
-                ),
-                onTap: () {
-                  setState(() {
-                    changeColor = Colors.redAccent;
-                  });
-                },
-              ),
-              InkWell(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 14),
-                  width: 38,
-                  height: 38,
-
-                  decoration: const BoxDecoration(
-                      color: Colors.redAccent, shape: BoxShape.circle),
-                  // child: ...
-                ),
-                onTap: () {
-                  setState(() {
-                    changeColor = Colors.redAccent;
-                  });
-                },
-              ),
-              InkWell(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 14),
-                  width: 38,
-                  height: 38,
-
-                  decoration: const BoxDecoration(
-                      color: Colors.amberAccent, shape: BoxShape.circle),
-                  // child: ...
-                ),
-                onTap: () {
-                  setState(() {
-                    changeColor = Colors.amberAccent;
-                  });
-                },
-              ),
-              InkWell(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 14),
-                  width: 38,
-                  height: 38,
-
-                  decoration: const BoxDecoration(
-                      color: Colors.orangeAccent, shape: BoxShape.circle),
-                  // child: ...
-                ),
-                onTap: () {
-
-                  // 4294951175
-                },
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
   saveColor2(value) async {
     final pref = await SharedPreferences.getInstance();
     pref.setInt("color", value);
+  }
+
+  getColor1() async {
+    final pref = await SharedPreferences.getInstance();
+
+    setState(() {
+      ans = pref.getInt("color")!;
+    });
+     print("KKKKKKKKKKKKK ${ans}");
+
+    return ans;
   }
 
   saveColor(int r, int g, int b, int alpha) async {
@@ -197,12 +116,7 @@ class _ChangedThemeState extends State<ChangedTheme> {
     prefs.setInt('a', alpha);
   }
 
-  getColor1() async {
-    final pref = await SharedPreferences.getInstance();
-    var ans = pref.get("color");
-   
-    return ans;
-  }
+
 
   Future<Color> getColor() async {
     final prefs = await SharedPreferences.getInstance();
@@ -217,8 +131,8 @@ class _ChangedThemeState extends State<ChangedTheme> {
   Color pickerColor = const Color(0xff443a49);
   Color currentColor = const Color(0xff443a49);
 
-// ValueChanged<Color> callback
-  void changeColor2(Color color) {
-    setState(() => pickerColor = color);
+  saveColorStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("changeDone", changeDone);
   }
 }

@@ -12,7 +12,15 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Update Scene Details" />
+    <list default="true" id="e386bada-56ff-44f2-b10a-22c0cca2abc1" name="Default Changelist" comment="Delete DropDown Cool">
+      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ColorPlates/changecolor.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ColorPlates/changecolor.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/DrawerPages/setting.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/DrawerPages/setting.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/HomeUi/homepage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/ProfilePage/utility.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/ProfilePage/utility.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/main.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -135,27 +143,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1639203997973</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Commit From Akash">
-      <created>1641736635498</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1641736635498</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Commit From Akash">
-      <created>1659511551487</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1659511551487</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Commit From Akash">
-      <created>1659548013995</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1659548013995</updated>
     </task>
     <task id="LOCAL-00018" summary="Commit From Akash">
       <created>1659680147299</created>
@@ -479,7 +466,28 @@
       <option name="project" value="LOCAL" />
       <updated>1671962725636</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Update Scene Details">
+      <created>1671962849702</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1671962849702</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Update Scene Details">
+      <created>1671962886384</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1671962886384</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Delete DropDown Cool">
+      <created>1671962919080</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1671962919080</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -529,7 +537,8 @@
     <MESSAGE value="Websocket branch changes" />
     <MESSAGE value="Master" />
     <MESSAGE value="Update Scene Details" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update Scene Details" />
+    <MESSAGE value="Delete DropDown Cool" />
+    <option name="LAST_COMMIT_MESSAGE" value="Delete DropDown Cool" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

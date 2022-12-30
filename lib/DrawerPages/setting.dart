@@ -32,15 +32,15 @@ class _SettingPageState extends State<SettingPage> {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      icon: const Icon(
+                      icon:  Icon(
                         Icons.arrow_back_ios,
-                        color: Colors.white,
+                        color: changeColor ?? Colors.white,
                       )),
                   Row(
-                    children: const [
+                    children:  [
                       Text("Setting",
                           style: TextStyle(
-                              color: Colors.white,
+                              color:changeColor ?? Colors.white,
                               fontSize: 28,
                               fontWeight: FontWeight.bold)),
                     ],

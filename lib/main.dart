@@ -6,6 +6,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:genorion_mac_android/DrawerPages/setting.dart';
+import 'package:genorion_mac_android/ProfilePage/utility.dart';
 import 'package:genorion_mac_android/StartingScreen/frontscreen.dart';
 
 
@@ -51,7 +53,7 @@ Future<void> main() async {
 
 const api = 'http://146.190.32.184:8000/';
 bool changeDone = false;
- var changeColor;
+ MaterialColor? changeColor;
  Image? setImage;
 Color dropDownColor = Colors.white;
  
@@ -65,10 +67,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
   @override
   void initState() {
     super.initState();
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;

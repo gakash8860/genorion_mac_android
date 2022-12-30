@@ -172,6 +172,15 @@ class Utility {
     }
   }
 
+  static Future<bool> getChangeColorStatus()async{
+    bool  value = false;
+    final prefs = await SharedPreferences.getInstance();
+     value = prefs.getBool("changeDone")!;
+    print("VALUE   -> $value");
+    return value;
+  }
+
+
   static thereIsNoData(context) {
     return AwesomeDialog(
       context: context,
@@ -186,5 +195,11 @@ class Utility {
         Navigator.of(context).pop();
       },
     )..show();
+  }
+  static Future<Object?> getColor1() async {
+    final pref = await SharedPreferences.getInstance();
+    var ans = pref.get("color");
+
+    return ans;
   }
 }

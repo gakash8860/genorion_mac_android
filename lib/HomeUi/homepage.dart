@@ -4788,12 +4788,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Padding(
+                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18.0),
                     child: Text(
                       'Turn Off All Appliances',
                       style: TextStyle(
-                        color: Colors.white,
+                        color:  Colors.white,
                         fontSize: 14.5,
                         fontWeight: FontWeight.bold,
                       ),
