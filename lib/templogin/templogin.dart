@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:genorion_mac_android/ProfilePage/utility.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:otp_autofill/otp_autofill.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
+import 'package:http/http.dart' as http;
+import '../main.dart';
 
 class TempLogin extends StatefulWidget {
   const TempLogin({Key? key}) : super(key: key);
@@ -56,6 +61,7 @@ class _TempLoginState extends State<TempLogin> {
     await controller.stopListen();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -67,32 +73,43 @@ class _TempLoginState extends State<TempLogin> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 24,),
-          Text(
-            "Phone number",
-            style: GoogleFonts.montserrat(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+          Container(
+            margin:EdgeInsets.only(left: 15,top: 10) ,
+            child: Text(
+              "Phone number",
+              style: GoogleFonts.montserrat(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        IntlPhoneField(
-      controller: phoneController,
-      showCountryFlag: false,
-      showDropdownIcon: false,
-      initialValue: countryDial,
-      onCountryChanged: (country) {
-        setState(() {
-          countryDial = "+" + country.dialCode;
-        });
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
+        Container(
+        width: 351,
 
-          borderRadius: BorderRadius.circular(16),
-        ),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-        ),
-      ),
+          margin:EdgeInsets.only(left: 15,top: 10) ,
+          child: IntlPhoneField(
+            style: TextStyle(color: Colors.white),
+      controller: phoneController,
+      showCountryFlag: true,
+      showDropdownIcon: true,
+      initialValue: countryDial,
+
+      onCountryChanged: (country) {
+          setState(() {
+            countryDial = "+" + country.dialCode;
+          });
+      },
+            decoration: InputDecoration(
+              iconColor: Colors.white,
+              border: OutlineInputBorder(
+
+                borderRadius: BorderRadius.circular(6),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+            ),
+          ),
         ),
           _buildTempBtn()
         ],
@@ -105,10 +122,8 @@ class _TempLoginState extends State<TempLogin> {
       width: double.infinity,
       child: MaterialButton(
         elevation: 5.0,
-        onPressed: () {
-           setState(() {
-             otpPage = true;
-           });
+        onPressed: () async{
+          await sendOtp();
         },
         child: const Text(
           'Send OTP',
@@ -210,5 +225,33 @@ controller: controller,
       ),
     );
   }
+
+
+  Future sendOtp()async{
+  var url = api+"loginotpsend/";
+  var postData = {
+    "mobile":countryDial.toString(),
+  };
+  final response = await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+  });
+  if(response.statusCode == 200){
+    setState(() {
+      otpPage = true;
+    });
+  }else if(response.statusCode == 500){
+    var snackBar = SnackBar(
+      content: Text("server error"),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }else{
+    var snackBar = SnackBar(
+      content: Text(response.statusCode.toString()),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  }
+
 }
 

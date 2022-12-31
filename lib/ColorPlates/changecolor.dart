@@ -85,7 +85,7 @@ class _ChangedThemeState extends State<ChangedTheme> {
                 print(an);
                 final Color color1 =
                     Color(an.toInt()).withOpacity(1);
-                changeColor = color1 as MaterialColor?;
+                changeColor = color1 as MaterialColor ;
               })
         ],
       )),
