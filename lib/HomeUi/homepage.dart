@@ -1589,17 +1589,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             delegate:
                             SliverChildBuilderDelegate(
                                     (context, index) {
-                                  if (index <
-                                      widget.dv.length) {
-                                    if (widget.dv.isEmpty) {
-                                      return Container();
-                                    }
-                                    // return Container();
+                                  if (index < widget.dv.length) {
                                     return deviceContainer(
                                         widget.dv[index].dId,
                                         index);
+
                                   } else {
-                                    return null;
+                                    return Container();
                                   }
                                 }),
                           )
@@ -4788,7 +4784,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 18.0),
                     child: Text(
                       'Turn Off All Appliances',
@@ -5191,6 +5187,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
 
   }
+
 
   _createAlertDialogForSSIDAndEmergencyNumber(context, String dId) async {
     return showDialog(
