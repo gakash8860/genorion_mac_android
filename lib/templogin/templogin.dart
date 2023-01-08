@@ -123,6 +123,7 @@ class _TempLoginState extends State<TempLogin> {
       child: MaterialButton(
         elevation: 5.0,
         onPressed: () async{
+          print("á ghghhgg ${phoneController.text}");
           await sendOtp();
         },
         child: const Text(
@@ -229,11 +230,14 @@ controller: controller,
 
   Future sendOtp()async{
   var url = api+"sendotp/";
+  String token = "b6a3d58855878d7e6994739d64a46221b50e018e";
   var postData = {
-    "mobile":countryDial.toString(),
+    "mobile":phoneController.text.toString(),
   };
   final response = await http.post(Uri.parse(url), body: jsonEncode(postData), headers: {
-    'Content-Type': 'application/json; charset=UTF-8',
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Token $token',
   });
   if(response.statusCode == 200){
     setState(() {
