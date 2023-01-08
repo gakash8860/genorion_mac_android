@@ -218,7 +218,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     userPersonalData();
     getUidShared();
-    // Utility.getImage();
+    Utility.getImage();
     fetchPlace();
     setState(() {
       _alarmTimeString = DateFormat('HH:mm').format(DateTime.now());
