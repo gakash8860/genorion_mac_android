@@ -228,7 +228,7 @@ controller: controller,
 
 
   Future sendOtp()async{
-  var url = api+"loginotpsend/";
+  var url = api+"sendotp/";
   var postData = {
     "mobile":countryDial.toString(),
   };
@@ -246,7 +246,7 @@ controller: controller,
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }else{
     var snackBar = SnackBar(
-      content: Text(response.statusCode.toString()),
+      content: Text(response.body.toString()),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
