@@ -4386,112 +4386,123 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         builder: (context) {
           return AlertDialog(
             title: const Text('Enter the Name of Floor'),
-            content: SizedBox(
-              height: 320,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    controller: floorEditing,
-                    textInputAction: TextInputAction.next,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    style: const TextStyle(
-                        fontSize: 18, color: Colors.black54),
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.place),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Enter Floor Name',
-                      contentPadding: const EdgeInsets.all(15),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
+            content: Form(
+              key: _formKey,
+              child: SizedBox(
+                height: 320,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      validator: (value) =>
+                      value!.isEmpty ? 'Name cannot be blank' : null,
+                      autofocus: true,
+                      controller: floorEditing,
+                      textInputAction: TextInputAction.next,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: const TextStyle(
+                          fontSize: 18, color: Colors.black54),
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.place),
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Enter Floor Name',
+                        contentPadding: const EdgeInsets.all(15),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    controller: flatEditing,
-                    textInputAction: TextInputAction.next,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    style: const TextStyle(
-                        fontSize: 18, color: Colors.black54),
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.place),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Enter Flat Name',
-                      contentPadding: const EdgeInsets.all(15),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      validator: (value) =>
+                      value!.isEmpty ? 'Name cannot be blank' : null,
+                      autofocus: true,
+                      controller: flatEditing,
+                      textInputAction: TextInputAction.next,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: const TextStyle(
+                          fontSize: 18, color: Colors.black54),
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.place),
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Enter Flat Name',
+                        contentPadding: const EdgeInsets.all(15),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    controller: roomEditingWithFloor,
-                    textInputAction: TextInputAction.next,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    style: const TextStyle(
-                        fontSize: 18, color: Colors.black54),
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.place),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Enter Room Name',
-                      contentPadding: const EdgeInsets.all(15),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    TextFormField(
+                      validator: (value) =>
+                      value!.isEmpty ? 'Name cannot be blank' : null,
+                      autofocus: true,
+                      controller: roomEditingWithFloor,
+                      textInputAction: TextInputAction.next,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: const TextStyle(
+                          fontSize: 18, color: Colors.black54),
+                      decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.place),
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Enter Room Name',
+                        contentPadding: const EdgeInsets.all(15),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.white),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: MaterialButton(
-                      elevation: 5.0,
-                      child: const Text('Submit'),
-                      onPressed: () async {
-                        setState(() {
-                          submitClicked = true;
-                        });
-                        await addFloor(floorEditing.text);
-                        await addFlat2(flatEditing.text);
-                        Navigator.of(context).pop();
-                        await getAllCurrentFloor();
-                        await getAllFlatByAddedFloor();
-                        await getAllRoomByAddedFlat();
-                        setState(() {
-                          submitClicked = true;
-                        });
-                      },
-                    ),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MaterialButton(
+                        elevation: 5.0,
+                        child: const Text('Submit'),
+                        onPressed: () async {
+                          if(_formKey.currentState!.validate()) {
+                            setState(() {
+                              submitClicked = true;
+                            });
+                            await addFloor(floorEditing.text);
+                            await addFlat2(flatEditing.text);
+                            Navigator.of(context).pop();
+                            await getAllCurrentFloor();
+                            await getAllFlatByAddedFloor();
+                            await getAllRoomByAddedFlat();
+                            setState(() {
+                              submitClicked = true;
+                            });
+                          }
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );
@@ -6294,8 +6305,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         builder: (context) {
           return AlertDialog(
             title: const Text("Enter Flat Name"),
-            content: TextField(
-              controller: flatNameEditing,
+            content: Form(
+                key: _formKey,
+              child:TextFormField(
+                validator: (value) =>
+                value!.isEmpty ? 'Name cannot be blank' : null,
+                controller: flatNameEditing,
+              )
             ),
             actions: [
               Padding(
@@ -6304,8 +6320,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   // elevation: 5.0,
                   child: const Text('Submit'),
                   onPressed: () async {
-                    await addFlatName(flatNameEditing.text);
-                    Navigator.of(context).pop();
+                   if(_formKey.currentState!.validate()){
+                     await addFlatName(flatNameEditing.text);
+                     Navigator.of(context).pop();
+                   }
                   },
                 ),
               )
@@ -6353,84 +6371,95 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return  AlertDialog(
             title: const Text('Enter the Name of Flat'),
-            content: SizedBox(
-              height: MediaQuery.of(context).size.height / 3.5,
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    controller: flatEditing,
-                    textInputAction: TextInputAction.next,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    style: const TextStyle(fontSize: 18, color: Colors.black54),
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.place),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Enter Flat Name',
-                      contentPadding: const EdgeInsets.all(15),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
+            content: Form(
+                key: _formKey,
+                child:SizedBox(
+                  height: MediaQuery.of(context).size.height / 3.5,
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      const SizedBox(
+                        height: 15,
                       ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
+                      TextFormField(
+                        autofocus: true,
+                        validator: (value) =>
+                        value!.isEmpty ? 'Name cannot be blank' : null,
+                        controller: flatEditing,
+                        textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        style: const TextStyle(fontSize: 18, color: Colors.black54),
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.place),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Enter Flat Name',
+                          contentPadding: const EdgeInsets.all(15),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    controller: roomEditing,
-                    textInputAction: TextInputAction.next,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    style: const TextStyle(fontSize: 18, color: Colors.black54),
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.place),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: 'Enter Room Name',
-                      contentPadding: const EdgeInsets.all(15),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
+                      const SizedBox(
+                        height: 15,
                       ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.white),
-                        borderRadius: BorderRadius.circular(50),
+                      TextFormField(
+                        autofocus: true,
+                        validator: (value) =>
+                        value!.isEmpty ? 'Name cannot be blank' : null,
+                        controller: roomEditing,
+                        textInputAction: TextInputAction.next,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        style: const TextStyle(fontSize: 18, color: Colors.black54),
+                        decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.place),
+                          filled: true,
+                          fillColor: Colors.white,
+                          hintText: 'Enter Room Name',
+                          contentPadding: const EdgeInsets.all(15),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: const BorderSide(color: Colors.white),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: MaterialButton(
-                      elevation: 5.0,
-                      child: const Text('Submit'),
-                      onPressed: () async {
-                        await addFlat(flatEditing.text);
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: MaterialButton(
+                          elevation: 5.0,
+                          child: const Text('Submit'),
+                          onPressed: () async {
+                          if(_formKey.currentState!.validate()){
 
-                        Navigator.of(context).pop();
-                        const snackBar = SnackBar(
-                          content: Text('Floor Added'),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        await getAllCurrentFlat();
-                        await getAllRoomByAddedFlat();
-                      },
-                    ),
-                  )
-                ],
-              ),
+                            await addFlat(flatEditing.text);
+
+                            Navigator.of(context).pop();
+                            const snackBar = SnackBar(
+                              content: Text('Floor Added'),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            await getAllCurrentFlat();
+                            await getAllRoomByAddedFlat();
+
+                          }
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                )
             ),
           );
         });
@@ -7046,6 +7075,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               textInputAction: TextInputAction.next,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: phoneController,
+              validator: (value) =>
+              value!.isEmpty ? 'Mobile cannot be blank' : null,
               // onSaved: (String value) {
               //   phone = value;
               // },

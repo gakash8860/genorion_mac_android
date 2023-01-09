@@ -77,6 +77,10 @@ class _ChangedThemeState extends State<ChangedTheme> {
                 });
                 print("Color ${onColorChanged.value}");
                 await saveColor2(onColorChanged.value);
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => super.widget));
                 // saveColor(onColorChanged.red, onColorChanged.green,
                 //     onColorChanged.blue, onColorChanged.alpha);
 
