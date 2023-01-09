@@ -1590,14 +1590,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             delegate:
                             SliverChildBuilderDelegate(
                                     (context, index) {
-                                  if (index < widget.dv.length) {
-                                    return deviceContainer(
-                                        widget.dv[index].dId,
-                                        index);
-
-                                  } else {
-                                    return Container();
-                                  }
+                                      if (index <
+                                          widget.dv.length) {
+                                        if (widget.dv.isEmpty) {
+                                          return Container();
+                                        }
+                                        // return Container();
+                                        return deviceContainer(
+                                            widget.dv[index].dId,
+                                            index);
+                                      } else {
+                                        return null;
+                                      }
                                 }),
                           )
                         ],
