@@ -149,6 +149,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   TimeOfDay? time;
   var cutTime;
   int checkSwitch = 0;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? _alarmTimeString = "";
   DateTime pickedDate = DateTime.now();
   var cutDate;
@@ -175,7 +176,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Stream? broadcastStream;
   var email;
   List<bool> loading = List.filled(9, false);
-  List changeIcon = List.filled(9, null);
+  List changeIcon = List.filled(12, null);
   var icon1 = Icons.ac_unit;
   var icon2 = FontAwesomeIcons.iceCream;
   var icon3 = FontAwesomeIcons.lightbulb;
@@ -1799,25 +1800,30 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         builder: (context) {
           return AlertDialog(
             title: const Text('Enter the Name of Room'),
-            content: TextFormField(
-              autofocus: true,
-              controller: roomEditing,
-              textInputAction: TextInputAction.next,
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              style: const TextStyle(fontSize: 18, color: Colors.black54),
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.place),
-                filled: true,
-                fillColor: Colors.white,
-                hintText: 'Enter Room Name',
-                contentPadding: const EdgeInsets.all(15),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(50),
+            content: Form(
+              key: _formKey,
+              child: TextFormField(
+                validator: (value) =>
+                value!.isEmpty ? 'Name cannot be blank' : null,
+                autofocus: true,
+                controller: roomEditing,
+                textInputAction: TextInputAction.next,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                style: const TextStyle(fontSize: 18, color: Colors.black54),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.place),
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: 'Enter Room Name',
+                  contentPadding: const EdgeInsets.all(15),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                 ),
               ),
             ),
@@ -1828,10 +1834,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   elevation: 5.0,
                   child: const Text('Submit'),
                   onPressed: () async {
-                    await addRoom(roomEditing.text);
-                    await getRooms(widget.flat!.fltId);
-                    await roomQueryFunc(widget.flat!.fltId);
-                    Navigator.of(context).pop();
+                    if(_formKey.currentState!.validate()) {
+                      await addRoom(roomEditing.text);
+                      await getRooms(widget.flat!.fltId);
+                      await roomQueryFunc(widget.flat!.fltId);
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
               )
@@ -4017,6 +4025,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   String hintText = "";
 
+
   _createAlertDialogForNameDeviceBox(context, index, dId) {
     return showDialog(
         context: context,
@@ -4058,14 +4067,19 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 const Text('Enter the Name of Device'),
               ],
             ),
-            content: TextFormField(
-              controller: pinNameController,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14.0),
+            content: Form(
+              key: _formKey,
+              child: TextFormField(
+                validator: (value)=>
+                  value!.isEmpty ? 'Name cannot be blank' : null,
+                controller: pinNameController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.only(top: 14.0),
 
-                hintText: hintText,
-                // hintStyle: kHintTextStyle,
+                  hintText: hintText,
+                  // hintStyle: kHintTextStyle,
+                ),
               ),
             ),
             actions: <Widget>[
@@ -4075,6 +4089,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   elevation: 5.0,
                   child: const Text('Submit'),
                   onPressed: () async {
+                    if(_formKey.currentState!.validate()){
                     if (_chosenValue == "Air Conditioner") {
                       setState(() {
                         iconCode[index] = "001";
@@ -4114,6 +4129,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     Navigator.pop(context);
                     await getPinNames(dId);
                     await getPinNameByLocal(dId, index);
+                    }
                   },
                 ),
               )
@@ -5000,15 +5016,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                               ),
                                             ),
                                             onPressed: () async {
-                                              int newIndex = index + 9;
                                               pinNameController.clear();
                                               setState(() {
                                                 hintText =
-                                                    namesDataList[newIndex]
+                                                    namesDataList[index]
                                                         .toString();
                                               });
                                               _createAlertDialogForNameDeviceBox(
-                                                  context, newIndex, dId);
+                                                  context, index, dId);
                                             },
                                           );
                                         } else {
@@ -5030,10 +5045,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                                                 onChanged: (value) async {
                                                   if(responseGetData[index] == 1){
-                                                   setState(() {
-                                                     responseGetData[index] = 0;
-                                                   });
-                                                   print("IF CONDITION $responseGetData");
+                                                    setState(() {
+                                                      responseGetData[index] = 0;
+                                                    });
+                                                    print("IF CONDITION $responseGetData");
                                                   }else{
                                                     setState(() {
                                                       responseGetData[index] = 1;
@@ -5043,7 +5058,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
                                                   print("iffff responseGetData   ${responseGetData}   ");
 
-                                                 await dataUpdateWebSocket(responseGetData,dId);
+                                                  await dataUpdateWebSocket(responseGetData,dId);
 
                                                 });
 
@@ -5073,107 +5088,197 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     scrollDirection: Axis.vertical,
                     physics: const NeverScrollableScrollPhysics(),
                     children: List.generate(3, (index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                            alignment: const FractionalOffset(1.0, 0.0),
-                            // alignment: Alignment.bottomRight,
-                            height: 120,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 1, vertical: 10),
-                            margin: index % 2 == 0
-                                ? const EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5)
-                                : const EdgeInsets.fromLTRB(7.5, 7.5, 15, 7.5),
-                            // margin: EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5),
-                            decoration: BoxDecoration(
-                                boxShadow: const <BoxShadow>[
-                                  BoxShadow(
-                                      blurRadius: 10,
-                                      offset: Offset(8, 10),
-                                      color: Colors.black)
-                                ],
-                                color: Colors.white,
-                                border: Border.all(
-                                    width: 1,
-                                    style: BorderStyle.solid,
-                                    color: const Color(0xffa3a3a3)),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: FutureBuilder(
-                                        future: nameFuture,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.data != null) {
-                                            return TextButton(
-                                              child: AutoSizeText(
-                                                // '$index',
-                                                namesDataList[index + 9]
-                                                    .toString(),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
+                      return InkWell(
+                        onLongPress: () {
+                          showModalBottomSheet(
+                              useRootNavigator: true,
+                              context: context,
+                              clipBehavior: Clip.antiAlias,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(24),
+                                ),
+                              ),
+                              builder: (context) {
+                                return StatefulBuilder(
+                                    builder: (context, setModalState) {
+                                      return Container(
+                                          padding: const EdgeInsets.all(32),
+                                          child: Column(children: [
+                                            SizedBox(
+                                              width: 145,
+                                              child: GestureDetector(
+                                                  child: Text(
+                                                    cutDate.toString(),
+                                                  ),
+                                                  onTap: () {
+                                                    pickDate();
+                                                  }),
+                                            ),
+
+                                            // ignore: deprecated_member_use
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                await pickTime(index);
+                                                setState(() {
+                                                  _alarmTimeString = cutTime;
+                                                });
+                                              },
+                                              child: Text(
+                                                _alarmTimeString!,
                                                 style: const TextStyle(
-                                                  fontSize: 10,
+                                                  fontSize: 32,
                                                 ),
                                               ),
-                                              onPressed: () async {
-                                                int newIndex = index + 9;
-                                                pinNameController.clear();
-                                                setState(() {
-                                                  hintText =
-                                                      namesDataList[newIndex]
-                                                          .toString();
-                                                });
-                                                _createAlertDialogForNameDeviceBox(
-                                                    context, newIndex, dId);
-                                              },
-                                            );
-                                          } else {
-                                            return Container();
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                    FutureBuilder(
-                                        future: switchFuture,
-                                        builder: (context, snapshot) {
-                                          if (snapshot.data != null) {
-                                            return SizedBox(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                                  3.9,
-                                              child: Slider(
-                                                  value: double.parse(
-                                                      responseGetData[index + 9]
-                                                          .toString()),
-                                                  min: 0,
-                                                  max: 10,
-                                                  label:
-                                                  '${double.parse(responseGetData[index + 9].toString())}',
-                                                  onChanged: (onChanged) async {
-                                                    setState(() {
-                                                      responseGetData[
-                                                      index + 9] =
-                                                          onChanged.round();
-                                                    });
-                                                    await Utility.dataUpdate(dId,responseGetData);
+                                            ),
+                                            const ListTile(
+                                              title: Text(
+                                                'What Do You Want ??',
+                                              ),
+                                              trailing: Icon(Icons.timer),
+                                            ),
+                                            Center(
+                                              child: ListTile(
+                                                  title: Slider(
+                                                      value: sliderValue.toDouble(),
+                                                      min: 1,
+                                                      max: 10,
+                                                      label:
+                                                      'Select Range',
+                                                      onChanged: (onChanged) async {
+                                                        setState(() {
+                                                          sliderValue =
+                                                              onChanged.round();
+                                                        });
 
-                                                  }),
-                                            );
-                                          } else {
-                                            return Container();
-                                          }
-                                        }),
+                                                      },   semanticFormatterCallback: (double newValue) {
+                                                    return '${newValue.round()} dollars';
+                                                  }  ),
+                                                // title: ToggleSwitch(
+                                                //   minWidth: 100,
+                                                //   initialLabelIndex: 0,
+                                                //   labels: const ['Off', 'On'],
+                                                //   onToggle: (index) {
+                                                //     checkSwitch = index!;
+                                                //   },
+                                                //   totalSwitches: 2,
+                                                // ),
+                                              ),
+                                            ),
+                                            FloatingActionButton.extended(
+                                              onPressed: () async {
+                                                await schedulingDevicePin(dId, index);
+                                                Navigator.pop(context);
+                                              },
+                                              icon: const Icon(Icons.alarm),
+                                              label: const Text('Save'),
+                                            ),
+                                          ]));
+                                    });
+                              });
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(
+                              alignment: const FractionalOffset(1.0, 0.0),
+                              // alignment: Alignment.bottomRight,
+                              height: 120,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 1, vertical: 10),
+                              margin: index % 2 == 0
+                                  ? const EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5)
+                                  : const EdgeInsets.fromLTRB(7.5, 7.5, 15, 7.5),
+                              // margin: EdgeInsets.fromLTRB(15, 7.5, 7.5, 7.5),
+                              decoration: BoxDecoration(
+                                  boxShadow: const <BoxShadow>[
+                                    BoxShadow(
+                                        blurRadius: 10,
+                                        offset: Offset(8, 10),
+                                        color: Colors.black)
                                   ],
-                                ),
-                                GestureDetector(
-                                    onTap: () {},
-                                    child: Icon(changeIcon[index] ?? Icons.add))
-                              ],
-                            )),
+                                  color: Colors.white,
+                                  border: Border.all(
+                                      width: 1,
+                                      style: BorderStyle.solid,
+                                      color: const Color(0xffa3a3a3)),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: FutureBuilder(
+                                          future: nameFuture,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.data != null) {
+                                              return TextButton(
+                                                child: AutoSizeText(
+                                                  // '$index',
+                                                  namesDataList[index + 9]
+                                                      .toString(),
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                  style: const TextStyle(
+                                                    fontSize: 10,
+                                                  ),
+                                                ),
+                                                onPressed: () async {
+                                                  int newIndex = index + 9;
+                                                  pinNameController.clear();
+                                                  setState(() {
+                                                    hintText =
+                                                        namesDataList[newIndex]
+                                                            .toString();
+                                                  });
+                                                  _createAlertDialogForNameDeviceBox(
+                                                      context, newIndex, dId);
+                                                },
+                                              );
+                                            } else {
+                                              return Container();
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      FutureBuilder(
+                                          future: switchFuture,
+                                          builder: (context, snapshot) {
+                                            if (snapshot.data != null) {
+                                              return SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                    3.9,
+                                                child: Slider(
+                                                    value: double.parse(
+                                                        responseGetData[index + 9]
+                                                            .toString()),
+                                                    min: 0,
+                                                    max: 10,
+                                                    label:
+                                                    '${double.parse(responseGetData[index + 9].toString())}',
+                                                    onChanged: (onChanged) async {
+                                                      setState(() {
+                                                        responseGetData[
+                                                        index + 9] =
+                                                            onChanged.round();
+                                                      });
+                                                      await Utility.dataUpdate(dId,responseGetData);
+
+                                                    }),
+                                              );
+                                            } else {
+                                              return Container();
+                                            }
+                                          }),
+                                    ],
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {},
+                                      child: Icon(changeIcon[index] ?? Icons.add))
+                                ],
+                              )),
+                        ),
                       );
                     }),
                   ),
